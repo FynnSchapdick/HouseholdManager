@@ -1,0 +1,47 @@
+﻿using System.Net;
+using System.Net.Mime;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Shared.Validation;
+using ShoppingService.Data;
+using ShoppingService.Domain;
+using ShoppingService.Endpoints.GetShoppingList;
+
+namespace ShoppingService.Endpoints.CreateShoppingList;
+
+public static class CreateShoppingListEndpoint
+{
+    private const string PostShoppingListRoute = "shoppinglists";
+    private const string ShoppingListsSwaggerTag = "ShoppingLists";
+
+    public static void MapPostShoppingListEndpoint(this WebApplication app)
+    {
+        app.MapPost(PostShoppingListRoute, CreateShoppingList)
+            .Accepts<CreateShoppingListRequest>(MediaTypeNames.Application.Json)
+            .Produces((int) HttpStatusCode.Created)
+            .Produces((int) HttpStatusCode.Conflict)
+            .Produces((int) HttpStatusCode.BadRequest)
+            .Produces((int) HttpStatusCode.InternalServerError)
+            .AddEndpointFilter<ValidationFilter<CreateShoppingListRequest>>()
+            .WithTags(ShoppingListsSwaggerTag);
+    }
+
+    private static async Task<IResult> CreateShoppingList(CreateShoppingListRequest request, ShoppingContext shoppingContext, CancellationToken cancellationToken)
+    {
+        try
+        {
+            ShoppingList shoppingList = ShoppingList.CreateNew(request.Name);
+            await shoppingContext.AddAsync(shoppingList, cancellationToken);
+            await shoppingContext.SaveChangesAsync(cancellationToken);
+            return Results.CreatedAtRoute(GetShoppingListEndpoint.InternalRouteName, new { ShoppingListId = shoppingList.Id });
+        }
+        catch (DbUpdateException dbUpdateException)
+        {
+            return Results.Conflict(dbUpdateException.InnerException?.Message);
+        }
+        catch (Exception exception)
+        {
+            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int) HttpStatusCode.InternalServerError });
+        }
+    }
+}
