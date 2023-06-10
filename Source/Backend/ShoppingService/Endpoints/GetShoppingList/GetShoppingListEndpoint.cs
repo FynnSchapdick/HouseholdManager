@@ -23,12 +23,12 @@ public static class GetShoppingListEndpoint
 
     private static async Task<IResult> GetShoppingList(
         [AsParameters] GetShoppingListParameters parameters,
-        ShoppingContext shoppingContext,
+        ShoppingDbContext shoppingDbContext,
         CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingContext
+            ShoppingList? shoppingList = await shoppingDbContext
                 .ShoppingLists
                 .Include(x => x.Items)
                 .FirstOrDefaultAsync(x => x.Id == parameters.ShoppingListId, cancellationToken);

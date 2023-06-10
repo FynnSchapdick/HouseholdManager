@@ -22,7 +22,7 @@ public static class WebApplicationBuilderExtensions
         });
 
         builder.Services.ConfigureOptions<ShoppingDbOptionsConfiguration>();
-        builder.Services.AddDbContext<ShoppingContext>();
+        builder.Services.AddDbContext<ShoppingDbContext>();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateShoppingListRequestValidator>();
         builder.Services.AddSwaggerGen();
         builder.Services.AddEndpointsApiExplorer();

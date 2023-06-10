@@ -23,14 +23,14 @@ public static class CreateShoppingListEndpoint
             .WithTags("ShoppingLists");
     }
 
-    private static async Task<IResult> CreateShoppingList(CreateShoppingListRequest request, ShoppingContext shoppingContext, CancellationToken cancellationToken)
+    private static async Task<IResult> CreateShoppingList(CreateShoppingListRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
     {
         try
         {
             var shoppingList = ShoppingList.CreateNew(request.Name);
 
-            await shoppingContext.AddAsync(shoppingList, cancellationToken);
-            await shoppingContext.SaveChangesAsync(cancellationToken);
+            await shoppingDbContext.AddAsync(shoppingList, cancellationToken);
+            await shoppingDbContext.SaveChangesAsync(cancellationToken);
 
             return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new { ShoppingListId = shoppingList.Id });
         }

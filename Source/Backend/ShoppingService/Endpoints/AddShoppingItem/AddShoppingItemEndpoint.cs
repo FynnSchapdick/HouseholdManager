@@ -23,11 +23,11 @@ public static class AddShoppingItemEndpoint
             .WithTags("ShoppingLists");
     }
 
-    private static async Task<IResult> AddShoppingItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingContext shoppingContext, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingContext
+            ShoppingList? shoppingList = await shoppingDbContext
                 .ShoppingLists
                 .AsTracking()
                 .Include(x => x.Items)
@@ -49,9 +49,9 @@ public static class AddShoppingItemEndpoint
                 var item = ShoppingListItem.CreateNew(shoppingList.Id, request.Ean, request.Amount);
 
                 shoppingList.Items.Add(item);
-                shoppingContext.ShoppingLists.Update(shoppingList);
+                shoppingDbContext.ShoppingLists.Update(shoppingList);
 
-                await shoppingContext.SaveChangesAsync(cancellationToken);
+                await shoppingDbContext.SaveChangesAsync(cancellationToken);
 
                 return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppingList.Id));
             }
@@ -60,7 +60,7 @@ public static class AddShoppingItemEndpoint
             {
                 item.IncreaseAmountBy(request.Amount);
 
-                await shoppingContext.SaveChangesAsync(cancellationToken);
+                await shoppingDbContext.SaveChangesAsync(cancellationToken);
 
                 return Results.Ok();
             }
