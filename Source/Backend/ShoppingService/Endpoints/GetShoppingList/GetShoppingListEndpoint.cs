@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingService.Data;
@@ -9,14 +10,13 @@ namespace ShoppingService.Endpoints.GetShoppingList;
 public static class GetShoppingListEndpoint
 {
     private const string GetShoppingListRoute = "shoppinglists/{shoppinglistId:guid}";
-    private const string ContentType = "application/json";
     public const string InternalRouteName = "GetShoppingListById";
     private const string ShoppingListsSwaggerTag = "ShoppingLists";
 
     public static void MapGetGetShoppingListEndpoint(this WebApplication app)
     {
         app.MapGet(GetShoppingListRoute, GetShoppingList)
-            .Produces<ShoppingListDto>(contentType: ContentType)
+            .Produces<ShoppingListDto>(contentType: MediaTypeNames.Application.Json)
             .Produces((int) HttpStatusCode.InternalServerError)
             .Produces((int) HttpStatusCode.NotFound)
             .WithName(InternalRouteName)

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shared.Validation;
@@ -10,13 +11,12 @@ namespace ShoppingService.Endpoints.AddShoppingItem;
 public static class AddShoppingItemEndpoint
 {
     private const string PostShoppingItemRoute = "shoppinglists/{shoppinglistId:guid}/shoppingitems";
-    private const string ContentType = "application/json";
     private const string ShoppingListsSwaggerTag = "ShoppingLists";
 
     public static void MapPostShoppingItemEndpoint(this WebApplication app)
     {
         app.MapPost(PostShoppingItemRoute, AddShoppingItem)
-            .Accepts<AddShoppingItemRequest>(ContentType)
+            .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int) HttpStatusCode.Created)
             .Produces((int) HttpStatusCode.Conflict)
             .Produces((int) HttpStatusCode.BadRequest)

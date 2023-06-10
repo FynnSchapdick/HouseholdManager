@@ -5,8 +5,6 @@ namespace ProductService.Domain;
 
 public sealed record Product
 {
-    
-    
     public required Guid Id { get; init; }
     public required string Name { get; init; }
     public string? Ean { get; init; }
@@ -21,7 +19,9 @@ public sealed record Product
                 .IfEmpty()
                 .IfShorterThan(Conventions.NameMinLength)
                 .IfLongerThan(Conventions.NameMaxLength),
-            Ean = ean?.Throw().IfNotEan8Or13()
+            Ean = ean?
+                .Throw()
+                .IfNotEan8Or13()
         };
     }
 
