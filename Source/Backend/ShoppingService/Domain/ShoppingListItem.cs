@@ -3,20 +3,20 @@ using Throw;
 
 namespace ShoppingService.Domain;
 
-public sealed record ShoppingItem
+public sealed record ShoppingListItem
 {
     public required Guid ShoppingListId { get; init; }
     public required string Ean { get; init; }
     public int Amount { get; private set; } = 1;
 
-    public void IncreaseAmount(int amount)
+    public void IncreaseAmountBy(int amount)
     {
         Amount += amount.Throw().IfLessThan(1);
     }
 
-    public static ShoppingItem CreateNew(Guid shoppingListId, string ean, int amount)
+    public static ShoppingListItem CreateNew(Guid shoppingListId, string ean, int amount)
     {
-        return new ShoppingItem
+        return new ShoppingListItem
         {
             ShoppingListId = shoppingListId,
             Ean = ean.Throw().IfNotEan8Or13(),

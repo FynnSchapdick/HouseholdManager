@@ -15,6 +15,7 @@ public static class WebApplicationExtensions
         app.MapPostShoppingItemEndpoint();
         app.UseSwagger();
         app.UseSwaggerUI();
+
         return app;
     }
 }

@@ -5,54 +5,65 @@ using Microsoft.EntityFrameworkCore;
 using Shared.Validation;
 using ShoppingService.Data;
 using ShoppingService.Domain;
+using ShoppingService.Endpoints.GetShoppingList;
 
 namespace ShoppingService.Endpoints.AddShoppingItem;
 
 public static class AddShoppingItemEndpoint
 {
-    private const string PostShoppingItemRoute = "shoppinglists/{shoppinglistId:guid}/shoppingitems";
-    private const string ShoppingListsSwaggerTag = "ShoppingLists";
-
     public static void MapPostShoppingItemEndpoint(this WebApplication app)
     {
-        app.MapPost(PostShoppingItemRoute, AddShoppingItem)
+        app.MapPost("shoppinglists/{shoppinglistId:guid}/items", AddShoppingItem)
             .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
-            .Produces((int) HttpStatusCode.Created)
-            .Produces((int) HttpStatusCode.Conflict)
-            .Produces((int) HttpStatusCode.BadRequest)
-            .Produces((int) HttpStatusCode.InternalServerError)
+            .Produces((int)HttpStatusCode.Created)
+            .Produces((int)HttpStatusCode.Conflict)
+            .Produces((int)HttpStatusCode.BadRequest)
+            .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<AddShoppingItemRequest>>()
-            .WithTags(ShoppingListsSwaggerTag);
+            .WithTags("ShoppingLists");
     }
 
-    private static async Task<IResult> AddShoppingItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingContext shoppingContext, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingContext
+            ShoppingList? shoppingList = await shoppingDbContext
                 .ShoppingLists
                 .AsTracking()
-                .Include(x => x.ShoppingItems)
+                .Include(x => x.Items)
                 .FirstOrDefaultAsync(x => x.Id == shoppinglistId, cancellationToken);
-        
+
             if (shoppingList is null)
             {
                 return Results.NotFound();
             }
 
-            ShoppingItem? shoppingItem = shoppingList.ShoppingItems.SingleOrDefault(x => x.Ean == request.Ean);
-            if (shoppingItem is not null)
+            return shoppingList.Items.SingleOrDefault(x => x.Ean == request.Ean) switch
             {
-                shoppingItem.IncreaseAmount(request.Amount);
-                await shoppingContext.SaveChangesAsync(cancellationToken);
+                { } item => await UpdateItem(item),
+                _ => await CreateItem()
+            };
+
+            async Task<IResult> CreateItem()
+            {
+                var item = ShoppingListItem.CreateNew(shoppingList.Id, request.Ean, request.Amount);
+
+                shoppingList.Items.Add(item);
+                shoppingDbContext.ShoppingLists.Update(shoppingList);
+
+                await shoppingDbContext.SaveChangesAsync(cancellationToken);
+
+                return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppingList.Id));
+            }
+
+            async Task<IResult> UpdateItem(ShoppingListItem item)
+            {
+                item.IncreaseAmountBy(request.Amount);
+
+                await shoppingDbContext.SaveChangesAsync(cancellationToken);
+
                 return Results.Ok();
             }
-            
-            shoppingItem = ShoppingItem.CreateNew(shoppingList.Id, request.Ean, request.Amount);
-            shoppingList.ShoppingItems.Add(shoppingItem);
-            shoppingContext.ShoppingLists.Update(shoppingList);
-            await shoppingContext.SaveChangesAsync(cancellationToken);
-            return Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
         {
@@ -60,7 +71,7 @@ public static class AddShoppingItemEndpoint
         }
         catch (Exception exception)
         {
-            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int) HttpStatusCode.InternalServerError });
+            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int)HttpStatusCode.InternalServerError });
         }
     }
 }

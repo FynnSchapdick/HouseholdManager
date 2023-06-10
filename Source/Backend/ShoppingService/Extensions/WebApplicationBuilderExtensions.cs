@@ -20,11 +20,13 @@ public static class WebApplicationBuilderExtensions
                 .Enrich.WithMachineName()
                 .WriteTo.Console();
         });
+
         builder.Services.ConfigureOptions<ShoppingDbOptionsConfiguration>();
-        builder.Services.AddDbContext<ShoppingContext>();
+        builder.Services.AddDbContext<ShoppingDbContext>();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateShoppingListRequestValidator>();
         builder.Services.AddSwaggerGen();
         builder.Services.AddEndpointsApiExplorer();
+
         return builder;
     }
 }

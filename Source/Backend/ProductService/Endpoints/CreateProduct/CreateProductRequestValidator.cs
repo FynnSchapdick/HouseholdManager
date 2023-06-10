@@ -6,9 +6,9 @@ namespace ProductService.Endpoints.CreateProduct;
 
 public sealed partial class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {
-    [GeneratedRegex("^\\d{8}$", RegexOptions.Compiled)]
+    [GeneratedRegex(@"^\d{8}$", RegexOptions.Compiled)]
     private static partial Regex Ean8Regex();
-    
+
     [GeneratedRegex(@"^\d{13}$", RegexOptions.Compiled)]
     private static partial Regex Ean13Regex();
 
@@ -16,8 +16,8 @@ public sealed partial class CreateProductRequestValidator : AbstractValidator<Cr
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .MinimumLength(Product.Conventions.NameMinLength)
-            .MaximumLength(Product.Conventions.NameMaxLength);
+            .MinimumLength(Product.Conventions.NAME_MIN_LENGTH)
+            .MaximumLength(Product.Conventions.NAME_MAX_LENGTH);
 
         When(x => !string.IsNullOrEmpty(x.Ean), () =>
         {
@@ -25,7 +25,7 @@ public sealed partial class CreateProductRequestValidator : AbstractValidator<Cr
                 .Must(BeValidEan!);
         });
     }
-    
+
     private static bool BeValidEan(string ean)
         => Ean8Regex().IsMatch(ean) || Ean13Regex().IsMatch(ean);
 }

@@ -5,20 +5,20 @@ using ShoppingService.Domain;
 
 namespace ShoppingService.Data;
 
-public sealed class ShoppingContext : DbContext
+public sealed class ShoppingDbContext : DbContext
 {
     private readonly ShoppingDbOptions _contextOptions;
-    
-    public ShoppingContext(IOptions<ShoppingDbOptions> options)
+
+    public ShoppingDbContext(IOptions<ShoppingDbOptions> options)
     {
         _contextOptions = options.Value;
     }
-    
-    public DbSet<ShoppingList> ShoppingLists { get; set; }
+
+    public DbSet<ShoppingList> ShoppingLists { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingDbContext).Assembly);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)

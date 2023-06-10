@@ -21,7 +21,7 @@ public static class WebApplicationBuilderExtensions
                 .WriteTo.Console();
         });
         builder.Services.ConfigureOptions<ProductDbOptionsConfiguration>();
-        builder.Services.AddDbContext<ProductContext>();
+        builder.Services.AddDbContext<ProductDbContext>();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequestValidator>();
         builder.Services.AddSwaggerGen();
         builder.Services.AddEndpointsApiExplorer();

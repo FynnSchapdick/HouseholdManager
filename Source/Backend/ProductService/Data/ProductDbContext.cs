@@ -5,16 +5,16 @@ using ProductService.Domain;
 
 namespace ProductService.Data;
 
-public sealed class ProductContext : DbContext
+public sealed class ProductDbContext : DbContext
 {
     private readonly ProductDbOptions _contextOptions;
-    
-    public ProductContext(IOptions<ProductDbOptions> options)
+
+    public ProductDbContext(IOptions<ProductDbOptions> options)
     {
         _contextOptions = options.Value;
     }
-    
-    public DbSet<Product> Products { get; set; }
+
+    public DbSet<Product> Products { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
