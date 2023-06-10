@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0A1EE5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Validation", "Source\Shared\Shared.Validation\Shared.Validation.csproj", "{67DCCED7-72B2-4F04-8051-97B679DF1A60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Versioning", "Source\Shared\Shared.Versioning\Shared.Versioning.csproj", "{44F9B898-CC82-45F6-BE89-43EA252CC1FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,7 @@ Global
 		{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0} = {F9D2805E-79E0-418B-80A2-74647A2B56BA}
 		{0A1EE55C-9FBA-4BF8-94AB-478D5202D7BC} = {9FAFD3A4-A8AB-4419-981F-25583C759EC2}
 		{67DCCED7-72B2-4F04-8051-97B679DF1A60} = {0A1EE55C-9FBA-4BF8-94AB-478D5202D7BC}
+		{44F9B898-CC82-45F6-BE89-43EA252CC1FC} = {0A1EE55C-9FBA-4BF8-94AB-478D5202D7BC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D1F40223-F87D-435A-BA5F-C8930302AF93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -46,5 +49,9 @@ Global
 		{67DCCED7-72B2-4F04-8051-97B679DF1A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67DCCED7-72B2-4F04-8051-97B679DF1A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67DCCED7-72B2-4F04-8051-97B679DF1A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F9B898-CC82-45F6-BE89-43EA252CC1FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F9B898-CC82-45F6-BE89-43EA252CC1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F9B898-CC82-45F6-BE89-43EA252CC1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F9B898-CC82-45F6-BE89-43EA252CC1FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,15 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Shared.Validation;
 using ShoppingService.Data;
 using ShoppingService.Domain;
-using ShoppingService.Endpoints.GetShoppingList;
 
 namespace ShoppingService.Endpoints.AddShoppingItem;
 
-public static class AddShoppingItemEndpoint
+public static class AddShoppingListItemEndpoint
 {
-    public static void MapPostShoppingItemEndpoint(this WebApplication app)
+    public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder)
     {
-        app.MapPost("shoppinglists/{shoppinglistId:guid}/items", AddShoppingItem)
+        builder.MapPost("shoppinglists/{shoppinglistId:guid}/items", AddShoppingItem)
             .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int)HttpStatusCode.Conflict)
@@ -21,6 +20,8 @@ public static class AddShoppingItemEndpoint
             .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<AddShoppingItemRequest>>()
             .WithTags("ShoppingLists");
+
+        return builder;
     }
 
     private static async Task<IResult> AddShoppingItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
@@ -30,7 +31,6 @@ public static class AddShoppingItemEndpoint
             ShoppingList? shoppingList = await shoppingDbContext
                 .ShoppingLists
                 .AsTracking()
-                .Include(x => x.Items)
                 .FirstOrDefaultAsync(x => x.Id == shoppinglistId, cancellationToken);
 
             if (shoppingList is null)
@@ -38,32 +38,10 @@ public static class AddShoppingItemEndpoint
                 return Results.NotFound();
             }
 
-            return shoppingList.Items.SingleOrDefault(x => x.Ean == request.Ean) switch
-            {
-                { } item => await UpdateItem(item),
-                _ => await CreateItem()
-            };
+            shoppingList.AddItem(request.ProductId, request.Amount);
 
-            async Task<IResult> CreateItem()
-            {
-                var item = ShoppingListItem.CreateNew(shoppingList.Id, request.Ean, request.Amount);
-
-                shoppingList.Items.Add(item);
-                shoppingDbContext.ShoppingLists.Update(shoppingList);
-
-                await shoppingDbContext.SaveChangesAsync(cancellationToken);
-
-                return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppingList.Id));
-            }
-
-            async Task<IResult> UpdateItem(ShoppingListItem item)
-            {
-                item.IncreaseAmountBy(request.Amount);
-
-                await shoppingDbContext.SaveChangesAsync(cancellationToken);
-
-                return Results.Ok();
-            }
+            await shoppingDbContext.SaveChangesAsync(cancellationToken);
+            return Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
         {

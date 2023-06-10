@@ -11,14 +11,16 @@ public static class GetProductEndpoint
 {
     public const string ENDPOINT_NAME = "GetProductById";
 
-    public static void MapGetGetProductEndpoint(this WebApplication app)
+    public static IEndpointRouteBuilder MapGetProductEndpoint(this IEndpointRouteBuilder builder)
     {
-        app.MapGet("products/{productId:guid}", GetProduct)
+        builder.MapGet("products/{productId:guid}", GetProduct)
             .Produces<ProductDto>(contentType: MediaTypeNames.Application.Json)
-            .Produces((int) HttpStatusCode.InternalServerError)
-            .Produces((int) HttpStatusCode.NotFound)
+            .Produces((int)HttpStatusCode.InternalServerError)
+            .Produces((int)HttpStatusCode.NotFound)
             .WithName(ENDPOINT_NAME)
             .WithTags("Products");
+
+        return builder;
     }
 
     private static async Task<IResult> GetProduct(
@@ -41,7 +43,7 @@ public static class GetProductEndpoint
             return Results.Problem(new ProblemDetails
             {
                 Detail = exception.Message,
-                Status = (int) HttpStatusCode.InternalServerError
+                Status = (int)HttpStatusCode.InternalServerError
             });
         }
     }

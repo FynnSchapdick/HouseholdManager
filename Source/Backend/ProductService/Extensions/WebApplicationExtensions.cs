@@ -9,10 +9,16 @@ public static class WebApplicationExtensions
     public static WebApplication UseApi(this WebApplication app)
     {
         app.UseSerilogRequestLogging();
-        app.MapCreateProductEndpoint();
-        app.MapGetGetProductEndpoint();
+
+        app.NewVersionedApi()
+            .MapGroup("/v{version:apiVersion}")
+            .HasApiVersion(1.0)
+            .MapCreateProductEndpoint()
+            .MapGetProductEndpoint();
+
         app.UseSwagger();
         app.UseSwaggerUI();
+
         return app;
     }
 }

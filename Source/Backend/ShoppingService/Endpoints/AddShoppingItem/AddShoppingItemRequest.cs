@@ -1,3 +1,3 @@
 ﻿namespace ShoppingService.Endpoints.AddShoppingItem;
 
-public sealed record AddShoppingItemRequest(string Ean, int Amount = 1);
+public sealed record AddShoppingItemRequest(Guid ProductId, int Amount = 1);

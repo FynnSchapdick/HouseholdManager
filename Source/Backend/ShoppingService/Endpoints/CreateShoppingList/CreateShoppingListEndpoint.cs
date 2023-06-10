@@ -11,16 +11,18 @@ namespace ShoppingService.Endpoints.CreateShoppingList;
 
 public static class CreateShoppingListEndpoint
 {
-    public static void MapPostShoppingListEndpoint(this WebApplication app)
+    public static IEndpointRouteBuilder MapCreateShoppingListEndpoint(this IEndpointRouteBuilder builder)
     {
-        app.MapPost("shoppinglists", CreateShoppingList)
+        builder.MapPost("shoppinglists", CreateShoppingList)
             .Accepts<CreateShoppingListRequest>(MediaTypeNames.Application.Json)
-            .Produces((int) HttpStatusCode.Created)
-            .Produces((int) HttpStatusCode.Conflict)
-            .Produces((int) HttpStatusCode.BadRequest)
-            .Produces((int) HttpStatusCode.InternalServerError)
+            .Produces((int)HttpStatusCode.Created)
+            .Produces((int)HttpStatusCode.Conflict)
+            .Produces((int)HttpStatusCode.BadRequest)
+            .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<CreateShoppingListRequest>>()
             .WithTags("ShoppingLists");
+
+        return builder;
     }
 
     private static async Task<IResult> CreateShoppingList(CreateShoppingListRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
@@ -29,10 +31,10 @@ public static class CreateShoppingListEndpoint
         {
             var shoppingList = ShoppingList.CreateNew(request.Name);
 
-            await shoppingDbContext.AddAsync(shoppingList, cancellationToken);
+            shoppingDbContext.Add(shoppingList);
             await shoppingDbContext.SaveChangesAsync(cancellationToken);
 
-            return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new { ShoppingListId = shoppingList.Id });
+            return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppingList.Id));
         }
         catch (DbUpdateException dbUpdateException)
         {
@@ -40,7 +42,7 @@ public static class CreateShoppingListEndpoint
         }
         catch (Exception exception)
         {
-            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int) HttpStatusCode.InternalServerError });
+            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int)HttpStatusCode.InternalServerError });
         }
     }
 }

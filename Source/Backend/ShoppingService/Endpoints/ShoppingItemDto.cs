@@ -1,3 +1,11 @@
-﻿namespace ShoppingService.Endpoints;
+﻿using ShoppingService.Domain;
 
-public sealed record ShoppingItemDto(string Ean, int Amount);
+namespace ShoppingService.Endpoints;
+
+public sealed record ShoppingItemDto(Guid ProductId, int Amount)
+{
+    public static ShoppingItemDto FromDomain(ShoppingListItem item)
+    {
+        return new ShoppingItemDto(item.ProductId, item.Amount);
+    }
+}

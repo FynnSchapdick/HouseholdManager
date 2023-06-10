@@ -7,11 +7,8 @@ namespace ShoppingService.Data;
 
 public sealed class ShoppingDbContext : DbContext
 {
-    private readonly ShoppingDbOptions _contextOptions;
-
-    public ShoppingDbContext(IOptions<ShoppingDbOptions> options)
+    public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options) : base(options)
     {
-        _contextOptions = options.Value;
     }
 
     public DbSet<ShoppingList> ShoppingLists { get; set; } = null!;
@@ -19,12 +16,5 @@ public sealed class ShoppingDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingDbContext).Assembly);
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
-    {
-        builder.UseNpgsql(_contextOptions.ConnectionString);
-        builder.UseSnakeCaseNamingConvention();
-        builder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 }
