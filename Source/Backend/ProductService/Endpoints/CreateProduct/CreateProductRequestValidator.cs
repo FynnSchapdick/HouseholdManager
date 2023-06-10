@@ -6,9 +6,9 @@ namespace ProductService.Endpoints.CreateProduct;
 
 public sealed partial class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {
-    [GeneratedRegex("^\\d{8}$", RegexOptions.Compiled)]
+    [GeneratedRegex(@"^\d{8}$", RegexOptions.Compiled)]
     private static partial Regex Ean8Regex();
-    
+
     [GeneratedRegex(@"^\d{13}$", RegexOptions.Compiled)]
     private static partial Regex Ean13Regex();
 
@@ -25,7 +25,7 @@ public sealed partial class CreateProductRequestValidator : AbstractValidator<Cr
                 .Must(BeValidEan!);
         });
     }
-    
+
     private static bool BeValidEan(string ean)
         => Ean8Regex().IsMatch(ean) || Ean13Regex().IsMatch(ean);
 }
