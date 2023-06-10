@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using ShoppingService.Data.Options;
 using ShoppingService.Domain;
 
 namespace ShoppingService.Data;

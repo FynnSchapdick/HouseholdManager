@@ -6,7 +6,6 @@ using Serilog;
 using Serilog.Exceptions;
 using Shared.Versioning;
 using ShoppingService.Data;
-using ShoppingService.Data.Options;
 using ShoppingService.Endpoints.CreateShoppingList;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -25,8 +24,6 @@ public static class WebApplicationBuilderExtensions
                 .Enrich.WithMachineName()
                 .WriteTo.Console();
         });
-
-        builder.Services.ConfigureOptions<ShoppingDbOptionsConfiguration>();
 
         builder.Services.AddDbContext<ShoppingDbContext>(opt =>
         {

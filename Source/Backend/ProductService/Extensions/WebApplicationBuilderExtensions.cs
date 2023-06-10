@@ -1,8 +1,8 @@
 ﻿using Asp.Versioning;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ProductService.Data;
-using ProductService.Data.Options;
 using ProductService.Endpoints.CreateProduct;
 using Serilog;
 using Serilog.Exceptions;
@@ -25,9 +25,15 @@ public static class WebApplicationBuilderExtensions
                 .WriteTo.Console();
         });
 
-        builder.Services.ConfigureOptions<ProductDbOptionsConfiguration>();
+        builder.Services.AddDbContext<ProductDbContext>(opt =>
+        {
+            opt.UseNpgsql(builder.Configuration.GetConnectionString("ProductDb"));
+            opt.EnableDetailedErrors();
+            opt.EnableSensitiveDataLogging();
+            opt.UseSnakeCaseNamingConvention();
+            opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
 
-        builder.Services.AddDbContext<ProductDbContext>();
         builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequestValidator>();
 
         builder.Services.AddProblemDetails();
