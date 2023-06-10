@@ -11,13 +11,12 @@ public sealed class ShoppingListConfiguration : IEntityTypeConfiguration<Shoppin
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Name)
-            .HasMaxLength(ShoppingList.NameMaxLength);
+            .HasMaxLength(ShoppingList.Conventions.NAME_MAX_LENGTH);
 
-        builder.OwnsMany(
-            p => p.ShoppingItems, a =>
+        builder.OwnsMany(p => p.Items, item =>
             {
-                a.WithOwner().HasForeignKey(x => x.ShoppingListId);
-                a.HasKey(x => new { x.ShoppingListId, x.Ean });
+                item.WithOwner().HasForeignKey(x => x.ShoppingListId);
+                item.HasKey(x => new { x.ShoppingListId, x.Ean });
             });
     }
 }

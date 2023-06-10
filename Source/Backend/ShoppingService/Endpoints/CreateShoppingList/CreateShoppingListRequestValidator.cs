@@ -9,7 +9,7 @@ public sealed class CreateShoppingListRequestValidator : AbstractValidator<Creat
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .MinimumLength(ShoppingList.NameMinLength)
-            .MaximumLength(ShoppingList.NameMaxLength);
+            .MinimumLength(ShoppingList.Conventions.NAME_MIN_LENGTH)
+            .MaximumLength(ShoppingList.Conventions.NAME_MAX_LENGTH);
     }
 }

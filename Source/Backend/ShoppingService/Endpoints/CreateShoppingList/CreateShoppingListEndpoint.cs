@@ -11,29 +11,28 @@ namespace ShoppingService.Endpoints.CreateShoppingList;
 
 public static class CreateShoppingListEndpoint
 {
-    private const string PostShoppingListRoute = "shoppinglists";
-    private const string ShoppingListsSwaggerTag = "ShoppingLists";
-
     public static void MapPostShoppingListEndpoint(this WebApplication app)
     {
-        app.MapPost(PostShoppingListRoute, CreateShoppingList)
+        app.MapPost("shoppinglists", CreateShoppingList)
             .Accepts<CreateShoppingListRequest>(MediaTypeNames.Application.Json)
             .Produces((int) HttpStatusCode.Created)
             .Produces((int) HttpStatusCode.Conflict)
             .Produces((int) HttpStatusCode.BadRequest)
             .Produces((int) HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<CreateShoppingListRequest>>()
-            .WithTags(ShoppingListsSwaggerTag);
+            .WithTags("ShoppingLists");
     }
 
     private static async Task<IResult> CreateShoppingList(CreateShoppingListRequest request, ShoppingContext shoppingContext, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingList shoppingList = ShoppingList.CreateNew(request.Name);
+            var shoppingList = ShoppingList.CreateNew(request.Name);
+
             await shoppingContext.AddAsync(shoppingList, cancellationToken);
             await shoppingContext.SaveChangesAsync(cancellationToken);
-            return Results.CreatedAtRoute(GetShoppingListEndpoint.InternalRouteName, new { ShoppingListId = shoppingList.Id });
+
+            return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new { ShoppingListId = shoppingList.Id });
         }
         catch (DbUpdateException dbUpdateException)
         {

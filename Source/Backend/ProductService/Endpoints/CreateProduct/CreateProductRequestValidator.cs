@@ -16,8 +16,8 @@ public sealed partial class CreateProductRequestValidator : AbstractValidator<Cr
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .MinimumLength(Product.Conventions.NameMinLength)
-            .MaximumLength(Product.Conventions.NameMaxLength);
+            .MinimumLength(Product.Conventions.NAME_MIN_LENGTH)
+            .MaximumLength(Product.Conventions.NAME_MAX_LENGTH);
 
         When(x => !string.IsNullOrEmpty(x.Ean), () =>
         {

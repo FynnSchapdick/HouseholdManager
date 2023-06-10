@@ -11,8 +11,6 @@ namespace ProductService.Endpoints.CreateProduct;
 
 public static class CreateProductEndpoint
 {
-    private const string ProductsSwaggerTag = "Products";
-    
     public static void MapCreateProductEndpoint(this WebApplication app)
     {
         app.MapPost("products", CreateProduct)
@@ -22,17 +20,17 @@ public static class CreateProductEndpoint
             .Produces((int) HttpStatusCode.BadRequest)
             .Produces((int) HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()
-            .WithTags(ProductsSwaggerTag);
+            .WithTags("Products");
     }
 
-    private static async Task<IResult> CreateProduct(CreateProductRequest request, ProductContext productContext, CancellationToken cancellationToken)
+    private static async Task<IResult> CreateProduct(CreateProductRequest request, ProductDbContext productDbContext, CancellationToken cancellationToken)
     {
         try
         {
             Product product = Product.CreateNew(request.Name, request.Ean);
-            await productContext.AddAsync(product, cancellationToken);
-            await productContext.SaveChangesAsync(cancellationToken);
-            return Results.CreatedAtRoute(GetProductEndpoint.InternalRouteName, new { ProductId = product.Id });
+            await productDbContext.AddAsync(product, cancellationToken);
+            await productDbContext.SaveChangesAsync(cancellationToken);
+            return Results.CreatedAtRoute(GetProductEndpoint.ENDPOINT_NAME, new GetProductParameters(product.Id));
         }
         catch (DbUpdateException dbUpdateException)
         {

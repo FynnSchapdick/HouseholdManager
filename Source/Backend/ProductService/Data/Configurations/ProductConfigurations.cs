@@ -12,6 +12,6 @@ public sealed class ProductConfigurations : IEntityTypeConfiguration<Product>
 
         builder.Property(x => x.Name)
             .IsRequired()
-            .HasMaxLength(Product.Conventions.NameMaxLength);
+            .HasMaxLength(Product.Conventions.NAME_MAX_LENGTH);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingService.Data;
@@ -8,38 +9,38 @@ namespace ShoppingService.Endpoints.GetShoppingList;
 
 public static class GetShoppingListEndpoint
 {
-    private const string GetShoppingListRoute = "shoppinglists/{shoppinglistId:guid}";
-    private const string ContentType = "application/json";
-    public const string InternalRouteName = "GetShoppingListById";
-    private const string ShoppingListsSwaggerTag = "ShoppingLists";
+    public const string ENDPOINT_NAME = "GetShoppingListById";
 
     public static void MapGetGetShoppingListEndpoint(this WebApplication app)
     {
-        app.MapGet(GetShoppingListRoute, GetShoppingList)
-            .Produces<ShoppingListDto>(contentType: ContentType)
-            .Produces((int) HttpStatusCode.InternalServerError)
-            .Produces((int) HttpStatusCode.NotFound)
-            .WithName(InternalRouteName)
-            .WithTags(ShoppingListsSwaggerTag);
+        app.MapGet("shoppinglists/{shoppinglistId:guid}", GetShoppingList)
+            .Produces<ShoppingListDto>()
+            .Produces((int)HttpStatusCode.InternalServerError)
+            .Produces((int)HttpStatusCode.NotFound)
+            .WithName(ENDPOINT_NAME)
+            .WithTags("ShoppingLists");
     }
 
-    private static async Task<IResult> GetShoppingList(Guid shoppinglistId, ShoppingContext shoppingContext, CancellationToken cancellationToken)
+    private static async Task<IResult> GetShoppingList(
+        [AsParameters] GetShoppingListParameters parameters,
+        ShoppingContext shoppingContext,
+        CancellationToken cancellationToken)
     {
         try
         {
             ShoppingList? shoppingList = await shoppingContext
                 .ShoppingLists
-                .Include(x => x.ShoppingItems)
-                .FirstOrDefaultAsync(x => x.Id == shoppinglistId, cancellationToken);
+                .Include(x => x.Items)
+                .FirstOrDefaultAsync(x => x.Id == parameters.ShoppingListId, cancellationToken);
 
             return shoppingList is null
-                ? Results.NotFound(new {ShoppingListId = shoppinglistId})
-                : Results.Ok(new ShoppingListDto(shoppingList.Id, shoppingList.Name, shoppingList.ShoppingItems.Select(x => new ShoppingItemDto(x.Ean, x.Amount))));
+                ? Results.NotFound(new { parameters.ShoppingListId })
+                : Results.Ok(new ShoppingListDto(shoppingList.Id, shoppingList.Name, shoppingList.Items.Select(x => new ShoppingItemDto(x.Ean, x.Amount))));
         }
         catch (Exception exception)
         {
             return Results.Problem(new ProblemDetails
-                {Detail = exception.Message, Status = (int) HttpStatusCode.InternalServerError});
+                { Detail = exception.Message, Status = (int)HttpStatusCode.InternalServerError });
         }
     }
 }

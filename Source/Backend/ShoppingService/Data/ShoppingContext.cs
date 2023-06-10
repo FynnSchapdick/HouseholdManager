@@ -8,13 +8,13 @@ namespace ShoppingService.Data;
 public sealed class ShoppingContext : DbContext
 {
     private readonly ShoppingDbOptions _contextOptions;
-    
+
     public ShoppingContext(IOptions<ShoppingDbOptions> options)
     {
         _contextOptions = options.Value;
     }
-    
-    public DbSet<ShoppingList> ShoppingLists { get; set; }
+
+    public DbSet<ShoppingList> ShoppingLists { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
