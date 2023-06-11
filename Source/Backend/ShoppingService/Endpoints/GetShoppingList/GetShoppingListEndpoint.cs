@@ -37,10 +37,13 @@ public static class GetShoppingListEndpoint
                 ? Results.NotFound(new { parameters.ShoppingListId })
                 : Results.Ok(ShoppingListDto.FromDomain(shoppingList));
         }
-        catch (Exception exception)
+        catch (Exception exception) when (exception is not ArgumentException)
         {
             return Results.Problem(new ProblemDetails
-                { Detail = exception.Message, Status = (int)HttpStatusCode.InternalServerError });
+            {
+                Detail = exception.Message,
+                Status = (int)HttpStatusCode.InternalServerError
+            });
         }
     }
 }

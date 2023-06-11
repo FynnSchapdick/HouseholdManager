@@ -38,11 +38,19 @@ public static class CreateShoppingListEndpoint
         }
         catch (DbUpdateException dbUpdateException)
         {
-            return Results.Conflict(dbUpdateException.InnerException?.Message);
+            return Results.Problem(new ProblemDetails
+            {
+                Detail = dbUpdateException.InnerException?.Message ?? dbUpdateException.Message,
+                Status = (int) HttpStatusCode.Conflict
+            });
         }
-        catch (Exception exception)
+        catch (Exception exception) when (exception is not ArgumentException)
         {
-            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int)HttpStatusCode.InternalServerError });
+            return Results.Problem(new ProblemDetails
+            {
+                Detail = exception.Message,
+                Status = (int)HttpStatusCode.InternalServerError
+            });
         }
     }
 }
