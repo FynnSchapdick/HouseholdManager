@@ -1,9 +1,13 @@
-﻿using FluentValidation;
+﻿using Asp.Versioning;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ProductService.Data;
-using ProductService.Data.Options;
 using ProductService.Endpoints.CreateProduct;
 using Serilog;
 using Serilog.Exceptions;
+using Shared.Versioning;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ProductService.Extensions;
 
@@ -20,11 +24,35 @@ public static class WebApplicationBuilderExtensions
                 .Enrich.WithMachineName()
                 .WriteTo.Console();
         });
-        builder.Services.ConfigureOptions<ProductDbOptionsConfiguration>();
-        builder.Services.AddDbContext<ProductDbContext>();
+
+        builder.Services.AddDbContext<ProductDbContext>(opt =>
+        {
+            opt.UseNpgsql(builder.Configuration.GetConnectionString("ProductDb"));
+            opt.EnableDetailedErrors();
+            opt.EnableSensitiveDataLogging();
+            opt.UseSnakeCaseNamingConvention();
+            opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
+
         builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequestValidator>();
-        builder.Services.AddSwaggerGen();
+
+        builder.Services.AddProblemDetails();
         builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddApiVersioning(v =>
+        {
+            v.DefaultApiVersion = new ApiVersion(1.0);
+            v.AssumeDefaultVersionWhenUnspecified = true;
+            v.ReportApiVersions = true;
+            v.ApiVersionReader = new UrlSegmentApiVersionReader();
+        }).AddApiExplorer(opt =>
+        {
+            opt.GroupNameFormat = "'v'VVV";
+            opt.SubstituteApiVersionInUrl = true;
+        });
+
+        builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+        builder.Services.AddSwaggerGen(options => options.OperationFilter<SwaggerDefaultValues>());
+
         return builder;
     }
 }

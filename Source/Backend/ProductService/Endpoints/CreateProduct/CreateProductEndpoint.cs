@@ -11,16 +11,18 @@ namespace ProductService.Endpoints.CreateProduct;
 
 public static class CreateProductEndpoint
 {
-    public static void MapCreateProductEndpoint(this WebApplication app)
+    public static IEndpointRouteBuilder MapCreateProductEndpoint(this IEndpointRouteBuilder builder)
     {
-        app.MapPost("products", CreateProduct)
+        builder.MapPost("products", CreateProduct)
             .Accepts<CreateProductRequest>(MediaTypeNames.Application.Json)
-            .Produces((int) HttpStatusCode.Created)
-            .Produces((int) HttpStatusCode.Conflict)
-            .Produces((int) HttpStatusCode.BadRequest)
-            .Produces((int) HttpStatusCode.InternalServerError)
+            .Produces((int)HttpStatusCode.Created)
+            .Produces((int)HttpStatusCode.Conflict)
+            .Produces((int)HttpStatusCode.BadRequest)
+            .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()
             .WithTags("Products");
+
+        return builder;
     }
 
     private static async Task<IResult> CreateProduct(CreateProductRequest request, ProductDbContext productDbContext, CancellationToken cancellationToken)
@@ -28,7 +30,7 @@ public static class CreateProductEndpoint
         try
         {
             Product product = Product.CreateNew(request.Name, request.Ean);
-            await productDbContext.AddAsync(product, cancellationToken);
+            productDbContext.Add(product);
             await productDbContext.SaveChangesAsync(cancellationToken);
             return Results.CreatedAtRoute(GetProductEndpoint.ENDPOINT_NAME, new GetProductParameters(product.Id));
         }
@@ -38,7 +40,7 @@ public static class CreateProductEndpoint
         }
         catch (Exception exception) when (exception is not ArgumentException)
         {
-            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int) HttpStatusCode.InternalServerError });
+            return Results.Problem(new ProblemDetails { Detail = exception.Message, Status = (int)HttpStatusCode.InternalServerError });
         }
     }
 }

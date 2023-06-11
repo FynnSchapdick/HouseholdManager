@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingService.Data;
@@ -11,14 +10,16 @@ public static class GetShoppingListEndpoint
 {
     public const string ENDPOINT_NAME = "GetShoppingListById";
 
-    public static void MapGetGetShoppingListEndpoint(this WebApplication app)
+    public static IEndpointRouteBuilder MapGetShoppingListEndpoint(this IEndpointRouteBuilder builder)
     {
-        app.MapGet("shoppinglists/{shoppinglistId:guid}", GetShoppingList)
+        builder.MapGet("shoppinglists/{shoppinglistId:guid}", GetShoppingList)
             .Produces<ShoppingListDto>()
             .Produces((int)HttpStatusCode.InternalServerError)
             .Produces((int)HttpStatusCode.NotFound)
             .WithName(ENDPOINT_NAME)
             .WithTags("ShoppingLists");
+
+        return builder;
     }
 
     private static async Task<IResult> GetShoppingList(
@@ -30,12 +31,11 @@ public static class GetShoppingListEndpoint
         {
             ShoppingList? shoppingList = await shoppingDbContext
                 .ShoppingLists
-                .Include(x => x.Items)
                 .FirstOrDefaultAsync(x => x.Id == parameters.ShoppingListId, cancellationToken);
 
             return shoppingList is null
                 ? Results.NotFound(new { parameters.ShoppingListId })
-                : Results.Ok(new ShoppingListDto(shoppingList.Id, shoppingList.Name, shoppingList.Items.Select(x => new ShoppingItemDto(x.Ean, x.Amount))));
+                : Results.Ok(ShoppingListDto.FromDomain(shoppingList));
         }
         catch (Exception exception)
         {
