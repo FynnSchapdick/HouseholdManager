@@ -38,7 +38,7 @@ public static class CreateProductEndpoint
         {
             return Results.Problem(new ProblemDetails
             {
-                Detail = dbUpdateException.InnerException?.Message,
+                Detail = dbUpdateException.InnerException?.Message ?? dbUpdateException.Message,
                 Status = (int) HttpStatusCode.Conflict
             });
         }
