@@ -15,7 +15,9 @@ public record ShoppingList
         return new ShoppingList
         {
             Id = Guid.NewGuid(),
-            Name = name.Throw()
+            Name = name
+                .ThrowIfNull()
+                .IfEmpty()
                 .IfShorterThan(Conventions.NAME_MIN_LENGTH)
                 .IfLongerThan(Conventions.NAME_MAX_LENGTH)
         };
