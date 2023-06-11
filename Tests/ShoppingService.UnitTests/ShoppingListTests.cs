@@ -53,7 +53,7 @@ public sealed class ShoppingListTests
     }
 
     [Fact]
-    public void AddShoppingListItem_ShouldThrowArgumentOutOfRangeException_WhenAmountIsSmallerOne()
+    public void AddShoppingListItem_ShouldThrowArgumentOutOfRangeException_WhenAmountIsLessThanOne()
     {
         // Arrange
         ShoppingList shoppingList = ShoppingList.CreateNew(_validShoppingListName);
