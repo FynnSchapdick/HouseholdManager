@@ -37,7 +37,7 @@ public sealed class ShoppingListTests
     [Fact]
     public void CreateShoppingList_ShouldThrowArgumentNullException_WhenNameIsNull()
     {
-        Assert.Throws<ArgumentNullException>(() => ShoppingList.CreateNew(null));
+        Assert.Throws<ArgumentNullException>(() => ShoppingList.CreateNew(null!));
     }
 
     [Fact]
