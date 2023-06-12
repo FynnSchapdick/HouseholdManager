@@ -3,6 +3,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using ShoppingService.Domain;
 using ShoppingService.UnitTests.Assertions;
+using Testing.Shared.Assertions.Assertions;
 
 namespace ShoppingService.UnitTests;
 
@@ -23,7 +24,8 @@ public sealed class Test_ShoppingList_AddItem
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.NewGuid(), amount))
-            .Should().Throw<ArgumentOutOfRangeException>("because buying 0 or less of something does not work in real life");
+            .Should().Throw<ArgumentOutOfRangeException>("because buying 0 or less of something does not work in real life")
+            .WhichShouldHaveAMessage();
     }
 
     [Fact]
@@ -34,7 +36,8 @@ public sealed class Test_ShoppingList_AddItem
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.Empty, 1))
-            .Should().Throw<ArgumentException>("because a valid product id is required to create an item");
+            .Should().Throw<ArgumentException>("because a valid product id is required to create an item")
+            .WhichShouldHaveAMessage();
     }
 
     [Fact]
