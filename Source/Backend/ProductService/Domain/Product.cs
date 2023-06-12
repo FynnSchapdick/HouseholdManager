@@ -15,8 +15,9 @@ public sealed record Product
         {
             Id = Guid.NewGuid(),
             Name = name
-                .Throw()
+                .ThrowIfNull()
                 .IfEmpty()
+                .IfWhiteSpace()
                 .IfShorterThan(Conventions.NAME_MIN_LENGTH)
                 .IfLongerThan(Conventions.NAME_MAX_LENGTH),
             Ean = ean?.Throw().IfNotEan8Or13()

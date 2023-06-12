@@ -20,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Versioning", "Source
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingService.UnitTests", "Tests\ShoppingService.UnitTests\ShoppingService.UnitTests.csproj", "{6579950D-C016-441A-8930-C77E8AB4887F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{034A5EB1-4B02-4099-8B40-4A21A21401C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing.Shared.Assertions", "Tests\Shared\Testing.Shared.Assertions\Testing.Shared.Assertions.csproj", "{4A1494D8-5DD2-42E4-B2E5-FB714E25D84F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,8 @@ Global
 		{67DCCED7-72B2-4F04-8051-97B679DF1A60} = {0A1EE55C-9FBA-4BF8-94AB-478D5202D7BC}
 		{44F9B898-CC82-45F6-BE89-43EA252CC1FC} = {0A1EE55C-9FBA-4BF8-94AB-478D5202D7BC}
 		{6579950D-C016-441A-8930-C77E8AB4887F} = {F9D2805E-79E0-418B-80A2-74647A2B56BA}
+		{034A5EB1-4B02-4099-8B40-4A21A21401C6} = {F9D2805E-79E0-418B-80A2-74647A2B56BA}
+		{4A1494D8-5DD2-42E4-B2E5-FB714E25D84F} = {034A5EB1-4B02-4099-8B40-4A21A21401C6}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D1F40223-F87D-435A-BA5F-C8930302AF93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -60,5 +66,9 @@ Global
 		{6579950D-C016-441A-8930-C77E8AB4887F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6579950D-C016-441A-8930-C77E8AB4887F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6579950D-C016-441A-8930-C77E8AB4887F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A1494D8-5DD2-42E4-B2E5-FB714E25D84F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1494D8-5DD2-42E4-B2E5-FB714E25D84F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1494D8-5DD2-42E4-B2E5-FB714E25D84F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1494D8-5DD2-42E4-B2E5-FB714E25D84F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
