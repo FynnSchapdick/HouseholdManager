@@ -1,0 +1,7 @@
+{
+  "stryker-config":
+  {
+    "solution": "../../HouseholdManager.sln",
+    "project": "ProductService.csproj"
+  }
+}

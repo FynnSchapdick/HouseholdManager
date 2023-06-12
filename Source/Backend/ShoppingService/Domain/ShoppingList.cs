@@ -6,6 +6,7 @@ public record ShoppingList
 {
     public required Guid Id { get; init; }
     public required string Name { get; init; }
+    
     private readonly HashSet<ShoppingListItem> _items = new();
 
     public IEnumerable<ShoppingListItem> Items => _items.ToList();

@@ -1,5 +1,7 @@
 using FluentAssertions;
+using FluentAssertions.Execution;
 using ProductService.Domain;
+using ProductService.UnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 
 namespace ProductService.UnitTests;
@@ -75,5 +77,37 @@ public sealed class Test_Product_Create
         Action sut = () => Product.CreateNew("   ");
         sut.Should().Throw<ArgumentException>("because product names may not be whitespace")
             .WhichShouldHaveAMessage();
+    }
+
+    [Fact]
+    public void Should_CreateProduct_WhenNameIsValid()
+    {
+        // Arrange
+        string name = "testname";
+        
+        // Act
+        var product = Product.CreateNew(name);
+
+        // Assert
+        using var scope = new AssertionScope();
+        product.Should().NotHaveDefaultId()
+            .And.HaveName(name);
+    }
+    
+    [Fact]
+    public void Should_CreateProduct_WhenNameAndEanAreValid()
+    {
+        // Arrange
+        string name = "testname";
+        string ean = "30034440";
+        
+        // Act
+        var product = Product.CreateNew(name, ean);
+
+        // Assert
+        using var scope = new AssertionScope();
+        product.Should().NotHaveDefaultId()
+            .And.HaveName(name)
+            .And.HaveEan(ean);
     }
 }

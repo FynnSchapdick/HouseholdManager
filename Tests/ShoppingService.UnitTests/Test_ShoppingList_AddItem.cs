@@ -55,7 +55,8 @@ public sealed class Test_ShoppingList_AddItem
         using var scope = new AssertionScope();
         shoppingList
             .Items.Should().ContainSingle("because only a single item was added")
-            .Which.Should().HaveAmount(amount, "because that is the amount of the added item")
+            .Which.Should().BeForShoppingListId(shoppingList.Id)
+            .And.HaveAmount(amount, "because that is the amount of the added item")
             .And.BeForProductId(productId, "because that is the product id of the added item");
     }
 
