@@ -91,7 +91,7 @@ public sealed class Test_Product_Create
         // Assert
         using var scope = new AssertionScope();
         product.Should().NotHaveDefaultId("because product id may not be default")
-            .And.HaveName(name, $"because product was instantiated with name {name}");
+            .And.HaveName(name, $"because product was instantiated with name {0}", name);
     }
     
     [Fact]
