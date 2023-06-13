@@ -6,15 +6,16 @@ using Shared.Validation;
 using ShoppingService.Data;
 using ShoppingService.Domain;
 
-namespace ShoppingService.Endpoints.AddShoppingItem;
+namespace ShoppingService.Endpoints.AddShoppingListItem;
 
 public static class AddShoppingListItemEndpoint
 {
     public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder)
     {
-        builder.MapPost("shoppinglists/{shoppinglistId:guid}/items", AddShoppingItem)
+        builder.MapPost("shoppinglists/{shoppinglistId:guid}/items", AddShoppingListItem)
             .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.Created)
+            .Produces((int) HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.InternalServerError)
@@ -24,7 +25,7 @@ public static class AddShoppingListItemEndpoint
         return builder;
     }
 
-    private static async Task<IResult> AddShoppingItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingListItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
     {
         try
         {
@@ -39,7 +40,7 @@ public static class AddShoppingListItemEndpoint
             }
 
             shoppingList.AddItem(request.ProductId, request.Amount);
-
+            
             await shoppingDbContext.SaveChangesAsync(cancellationToken);
             return Results.Ok();
         }
