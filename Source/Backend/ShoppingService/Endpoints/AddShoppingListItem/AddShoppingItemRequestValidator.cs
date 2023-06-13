@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ShoppingService.Endpoints.AddShoppingItem;
+namespace ShoppingService.Endpoints.AddShoppingListItem;
 
 public sealed class AddShoppingItemRequestValidator : AbstractValidator<AddShoppingItemRequest>
 {

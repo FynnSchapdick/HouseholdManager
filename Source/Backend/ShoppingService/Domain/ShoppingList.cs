@@ -38,6 +38,12 @@ public record ShoppingList
         }
     }
 
+    public bool RemoveItem(Guid productId)
+    {
+        ShoppingListItem? shoppingListItem = _items.SingleOrDefault(x => x.ProductId == productId);
+        return shoppingListItem is not null && _items.Remove(shoppingListItem);
+    }
+
     public sealed class Conventions
     {
         public const int NAME_MAX_LENGTH = 100;
