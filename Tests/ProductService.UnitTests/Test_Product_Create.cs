@@ -32,7 +32,7 @@ public sealed class Test_Product_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenEanIsEanInvalid()
     {
-        var invalidEan = "41023805013308";
+        string invalidEan = "41023805013308";
 
         Action sut = () => Product.CreateNew("Testname", invalidEan);
         sut.Should().Throw<ArgumentException>("because {0} is not a valid ean", invalidEan)
@@ -86,7 +86,7 @@ public sealed class Test_Product_Create
         string name = "testname";
         
         // Act
-        var product = Product.CreateNew(name);
+        Product product = Product.CreateNew(name);
 
         // Assert
         using var scope = new AssertionScope();
@@ -102,7 +102,7 @@ public sealed class Test_Product_Create
         string ean = "30034440";
         
         // Act
-        var product = Product.CreateNew(name, ean);
+        Product product = Product.CreateNew(name, ean);
 
         // Assert
         using var scope = new AssertionScope();

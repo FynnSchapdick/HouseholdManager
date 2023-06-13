@@ -27,7 +27,7 @@ public sealed class Test_ShoppingList_RemoveItem
         
         // Assert
         using var scope = new AssertionScope();
-        removed.Should().BeTrue("because the product {productId} is included in the list", productId);
+        removed.Should().BeTrue("because the product {0} is included in the list", productId);
     }
     
     [Fact]
@@ -42,6 +42,6 @@ public sealed class Test_ShoppingList_RemoveItem
         
         // Assert
         using var scope = new AssertionScope();
-        removed.Should().BeFalse("because the product {productId} is not included in the list", productId);
+        removed.Should().BeFalse("because the product {0} is not included in the list", productId);
     }
 }

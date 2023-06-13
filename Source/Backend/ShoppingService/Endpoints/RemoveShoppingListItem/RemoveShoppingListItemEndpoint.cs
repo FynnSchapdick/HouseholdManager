@@ -34,11 +34,12 @@ public static class RemoveShoppingListItemEndpoint
                 return Results.NotFound();
             }
 
-            if (shoppingList.RemoveItem(productId))
+            if (!shoppingList.RemoveItem(productId))
             {
-                await shoppingDbContext.SaveChangesAsync(cancellationToken);
+                return Results.NotFound();
             }
             
+            await shoppingDbContext.SaveChangesAsync(cancellationToken);
             return Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
