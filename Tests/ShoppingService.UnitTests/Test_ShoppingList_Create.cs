@@ -1,6 +1,7 @@
 using Bogus;
 using FluentAssertions;
 using ShoppingService.Domain;
+using ShoppingService.UnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 
 namespace ShoppingService.UnitTests;
@@ -26,8 +27,11 @@ public sealed class Test_ShoppingList_Create
     [Fact]
     public void Should_NotThrowArgumentException_WhenNameIsValid()
     {
-        Action sut = () => ShoppingList.CreateNew(_validShoppingListName);
-        sut.Should().NotThrow("because {0} is a valid name", _validShoppingListName);
+        var sut = () => ShoppingList.CreateNew(_validShoppingListName);
+        sut.Should().NotThrow("because {0} is a valid name", _validShoppingListName)
+            .Which.Should().NotHaveDefaultId("because a default id is not valid for a ShoppingList")
+            .And.HaveName(_validShoppingListName)
+            .And.BeEmpty();
     }
 
     [Fact]
