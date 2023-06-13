@@ -90,8 +90,8 @@ public sealed class Test_Product_Create
 
         // Assert
         using var scope = new AssertionScope();
-        product.Should().NotHaveDefaultId()
-            .And.HaveName(name);
+        product.Should().NotHaveDefaultId("because product id may not be default")
+            .And.HaveName(name, $"because product was instantiated with name {name}");
     }
     
     [Fact]
@@ -106,8 +106,8 @@ public sealed class Test_Product_Create
 
         // Assert
         using var scope = new AssertionScope();
-        product.Should().NotHaveDefaultId()
-            .And.HaveName(name)
-            .And.HaveEan(ean);
+        product.Should().NotHaveDefaultId("because product id may not be default")
+            .And.HaveName(name, $"because product was instantiated with name {name}")
+            .And.HaveEan(ean, $"because product was instantiated with ean {ean}");
     }
 }
