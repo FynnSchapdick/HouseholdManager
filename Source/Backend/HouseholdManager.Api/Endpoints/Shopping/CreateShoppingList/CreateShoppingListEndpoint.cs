@@ -4,6 +4,7 @@ using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ namespace HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 
 public static class CreateShoppingListEndpoint
 {
-    public static IEndpointRouteBuilder MapCreateShoppingListEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
+    public static IEndpointRouteBuilder MapCreateShoppingListEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPost(route, CreateShoppingList)
             .Accepts<CreateShoppingListRequest>(MediaTypeNames.Application.Json)

@@ -4,6 +4,7 @@ using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ namespace HouseholdManager.Api.Endpoints.Products.CreateProduct;
 
 public static class CreateProductEndpoint
 {
-    public static IEndpointRouteBuilder MapCreateProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
+    public static IEndpointRouteBuilder MapCreateProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPost(route, CreateProduct)
             .Accepts<CreateProductRequest>(MediaTypeNames.Application.Json)

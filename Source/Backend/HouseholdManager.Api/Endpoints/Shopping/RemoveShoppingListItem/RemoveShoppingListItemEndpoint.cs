@@ -2,6 +2,7 @@
 using System.Net;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,7 @@ namespace HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
 
 public static class RemoveShoppingListItemEndpoint
 {
-    public static IEndpointRouteBuilder MapRemoveShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
+    public static IEndpointRouteBuilder MapRemoveShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapDelete(route, RemoveShoppingListItem)
             .Produces((int) HttpStatusCode.OK)

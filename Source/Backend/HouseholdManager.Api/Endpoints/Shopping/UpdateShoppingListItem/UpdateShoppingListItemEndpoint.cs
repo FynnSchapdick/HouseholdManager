@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +11,9 @@ namespace HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 
 public static class UpdateShoppingListItemEndpoint
 {
-    public static IEndpointRouteBuilder MapUpdateShoppingListItemEndpoint(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapUpdateShoppingListItemEndpoint(this IEndpointRouteBuilder builder,[StringSyntax("Route"), RouteTemplate] string route)
     {
-        builder.MapPatch("shoppinglists/{shoppinglistId:guid}/items/{productId:guid}", UpdateShoppingListItem)
+        builder.MapPut(route, UpdateShoppingListItem)
             .Accepts<UpdateShoppingListItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int) HttpStatusCode.OK)
             .Produces((int) HttpStatusCode.NotFound)
@@ -19,7 +21,7 @@ public static class UpdateShoppingListItemEndpoint
             .Produces((int) HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<UpdateShoppingListItemRequest>>()
             .WithTags("ShoppingLists");
-        
+
         return builder;
     }
 
@@ -41,7 +43,7 @@ public static class UpdateShoppingListItemEndpoint
             {
                 return Results.NotFound();
             }
-            
+
             await shoppingDbContext.SaveChangesAsync(cancellationToken);
             return Results.Ok();
         }

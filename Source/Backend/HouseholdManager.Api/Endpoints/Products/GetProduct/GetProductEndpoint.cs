@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ public static class GetProductEndpoint
 {
     public const string ENDPOINT_NAME = "GetProductById";
 
-    public static IEndpointRouteBuilder MapGetProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
+    public static IEndpointRouteBuilder MapGetProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapGet(route, GetProduct)
             .Produces<ProductDto>(contentType: MediaTypeNames.Application.Json)

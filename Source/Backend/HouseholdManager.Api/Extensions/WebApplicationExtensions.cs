@@ -1,10 +1,12 @@
 ﻿using Asp.Versioning.ApiExplorer;
+using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
 using HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
 using HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
+using HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 using Serilog;
 
 namespace HouseholdManager.Api.Extensions;
@@ -27,6 +29,7 @@ public static class WebApplicationExtensions
             .MapCreateShoppingListEndpoint("/")
             .MapGetShoppingListEndpoint("{shoppingListId:guid}")
             .MapAddShoppingListItemEndpoint("{shoppingListId:guid}/items")
+            .MapUpdateShoppingListItemEndpoint("{shoppinglistId:guid}/items/{productId:guid}/amount")
             .MapRemoveShoppingListItemEndpoint("{shoppingListId:guid}/items/{productId:guid}");
 
         app.UseSwagger();
@@ -42,6 +45,14 @@ public static class WebApplicationExtensions
                 options.SwaggerEndpoint(url, name);
             }
         });
+
+
+        if (app.Environment.IsDevelopment())
+        {
+            using var scope = app.Services.CreateScope();
+            scope.ServiceProvider.GetRequiredService<ShoppingDbContext>().Database.EnsureCreated();
+            scope.ServiceProvider.GetRequiredService<ProductDbContext>().Database.EnsureCreated();
+        }
 
         return app;
     }

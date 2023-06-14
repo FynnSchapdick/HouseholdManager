@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +12,7 @@ namespace HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 
 public static class AddShoppingListItemEndpoint
 {
-    public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
+    public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPost(route, AddShoppingListItem)
             .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
@@ -42,7 +44,7 @@ public static class AddShoppingListItemEndpoint
             shoppingList.AddItem(request.ProductId, request.Amount);
 
             await shoppingDbContext.SaveChangesAsync(cancellationToken);
-            return Results.Ok();
+            return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppinglistId));
         }
         catch (DbUpdateException dbUpdateException)
         {
