@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using ShoppingService.Domain;
+using HouseholdManager.Api.Domain;
 using ShoppingService.UnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 
@@ -24,7 +24,8 @@ public sealed class Test_ShoppingList_AddItem
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.NewGuid(), amount))
-            .Should().Throw<ArgumentOutOfRangeException>("because buying 0 or less of something does not work in real life")
+            .Should().Throw<ArgumentOutOfRangeException>(
+                "because buying 0 or less of something does not work in real life")
             .WhichShouldHaveAMessage();
     }
 
@@ -53,8 +54,7 @@ public sealed class Test_ShoppingList_AddItem
 
         // Assert
         using var scope = new AssertionScope();
-        shoppingList
-            .Items.Should().ContainSingle("because only a single item was added")
+        shoppingList.Items.Should().ContainSingle("because only a single item was added")
             .Which.Should().BeForShoppingListId(shoppingList.Id, "because that is the id of the shoppingList")
             .And.HaveAmount(amount, "because that is the amount of the added item")
             .And.BeForProductId(productId, "because that is the product id of the added item");
@@ -64,7 +64,7 @@ public sealed class Test_ShoppingList_AddItem
     public void Should_IncreaseAmount_WhenProductIsAlreadyIncludedInItems()
     {
         // Arrange
-        int[] amounts = { 1, 99 };
+        int[] amounts = {1, 99};
         var productId = Guid.NewGuid();
         var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
         shoppingList.AddItem(productId, amounts[0]);

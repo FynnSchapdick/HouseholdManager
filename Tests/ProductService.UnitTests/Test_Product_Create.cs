@@ -1,6 +1,6 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
-using ProductService.Domain;
+using HouseholdManager.Api.Domain;
 using ProductService.UnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 

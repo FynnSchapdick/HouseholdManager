@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Source\Backend\ProductService\ProductService.csproj" />
+        <ProjectReference Include="..\..\Source\Backend\HouseholdManager.Api\HouseholdManager.Api.csproj" />
         <ProjectReference Include="..\Shared\Testing.Shared.Assertions\Testing.Shared.Assertions.csproj" />
     </ItemGroup>
 

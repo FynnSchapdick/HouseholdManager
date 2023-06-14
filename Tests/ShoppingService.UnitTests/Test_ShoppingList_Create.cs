@@ -1,6 +1,6 @@
 using Bogus;
 using FluentAssertions;
-using ShoppingService.Domain;
+using HouseholdManager.Api.Domain;
 using ShoppingService.UnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 
