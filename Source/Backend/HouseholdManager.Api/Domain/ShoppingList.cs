@@ -1,12 +1,11 @@
-﻿using System.Text.Json.Serialization;
-using Throw;
+﻿using Throw;
 
 namespace HouseholdManager.Api.Domain;
 
 public record ShoppingList : Aggregate
 {
-    public required Guid Id { get; init; }
-    public required string Name { get; init; }
+    public Guid Id { get; private init; }
+    public string Name { get; private init; }
 
     private readonly HashSet<ShoppingListItem> _items = new();
 

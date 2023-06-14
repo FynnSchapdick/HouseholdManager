@@ -20,15 +20,10 @@ public sealed class ShoppingListItemAssertions : ReferenceTypeAssertions<Shoppin
         Subject.ProductId.Should().Be(productId, because, becauseArgs);
         return new AndConstraint<ShoppingListItemAssertions>(this);
     }
-    
+
     public AndConstraint<ShoppingListItemAssertions> BeForShoppingListId(Guid shoppingListId, string because = "", params object[] becauseArgs)
     {
         Subject.ShoppingListId.Should().Be(shoppingListId, because, becauseArgs);
         return new AndConstraint<ShoppingListItemAssertions>(this);
     }
-}
-
-public static class ShoppingListItemAssertionsExtensions
-{
-    public static ShoppingListItemAssertions Should(this ShoppingListItem instance) => new(instance);
 }

@@ -83,31 +83,31 @@ public sealed class Test_Product_Create
     public void Should_CreateProduct_WhenNameIsValid()
     {
         // Arrange
-        string name = "testname";
-        
+        const string name = "testname";
+
         // Act
-        Product product = Product.CreateNew(name);
+        var product = Product.CreateNew(name);
 
         // Assert
         using var scope = new AssertionScope();
         product.Should().NotHaveDefaultId("because product id may not be default")
-            .And.HaveName(name, $"because product was instantiated with name {0}", name);
+            .And.HaveName(name, "because product was instantiated with name {0}", name);
     }
-    
+
     [Fact]
     public void Should_CreateProduct_WhenNameAndEanAreValid()
     {
         // Arrange
-        string name = "testname";
-        string ean = "30034440";
-        
+        const string name = "testname";
+        const string ean = "30034440";
+
         // Act
-        Product product = Product.CreateNew(name, ean);
+        var product = Product.CreateNew(name, ean);
 
         // Assert
         using var scope = new AssertionScope();
         product.Should().NotHaveDefaultId("because product id may not be default")
-            .And.HaveName(name, $"because product was instantiated with name {0}", name)
-            .And.HaveEan(ean, $"because product was instantiated with ean {0}", ean);
+            .And.HaveName(name, "because product was instantiated with name {0}", name)
+            .And.HaveEan(ean, "because product was instantiated with ean {0}", ean);
     }
 }

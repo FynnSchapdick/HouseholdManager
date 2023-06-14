@@ -31,10 +31,12 @@ public sealed class ShoppingDbContext : DbContext
 
         foreach (Aggregate aggregate in aggregates)
         {
-            while (aggregate.Events.TryDequeue(out DomainEvent? @event))
+            foreach (DomainEvent @event in aggregate.Events)
             {
                 await _dispatcher.Publish((object)@event, cancellationToken);
             }
+
+            aggregate.ClearEvents();
         }
 
         return result;
