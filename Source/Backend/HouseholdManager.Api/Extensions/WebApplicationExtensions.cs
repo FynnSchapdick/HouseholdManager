@@ -15,19 +15,19 @@ public static class WebApplicationExtensions
     {
         app.UseSerilogRequestLogging();
 
-        app.NewVersionedApi("ShoppingLists")
+        app.NewVersionedApi("Products")
+            .MapGroup("/v{version:apiVersion}")
+            .HasApiVersion(1.0)
+            .MapCreateProductEndpoint()
+            .MapGetProductEndpoint();
+
+        app.NewVersionedApi("Shopping")
             .MapGroup("/v{version:apiVersion}")
             .HasApiVersion(1.0)
             .MapCreateShoppingListEndpoint()
             .MapGetShoppingListEndpoint()
             .MapAddShoppingListItemEndpoint()
             .MapRemoveShoppingListItemEndpoint();
-        
-        app.NewVersionedApi()
-            .MapGroup("/v{version:apiVersion}")
-            .HasApiVersion(1.0)
-            .MapCreateProductEndpoint()
-            .MapGetProductEndpoint();
 
         app.UseSwagger();
         app.UseSwaggerUI(options =>
