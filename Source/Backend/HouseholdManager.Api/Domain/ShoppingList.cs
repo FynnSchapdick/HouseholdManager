@@ -1,12 +1,13 @@
-﻿using Throw;
+﻿using System.Text.Json.Serialization;
+using Throw;
 
 namespace HouseholdManager.Api.Domain;
 
-public record ShoppingList
+public record ShoppingList : Aggregate
 {
     public required Guid Id { get; init; }
     public required string Name { get; init; }
-    
+
     private readonly HashSet<ShoppingListItem> _items = new();
 
     public IEnumerable<ShoppingListItem> Items => _items.ToList();
@@ -33,7 +34,14 @@ public record ShoppingList
                 break;
 
             case null:
-                _items.Add(ShoppingListItem.CreateNew(Id, productId, amount));
+                var newItem = ShoppingListItem.CreateNew(Id, productId, amount);
+                _items.Add(newItem);
+                EnqueueEvent(new ShoppingListItemAddedEvent
+                {
+                    ShoppingListId = Id,
+                    ProductId = productId,
+                    Amount = amount
+                });
                 break;
         }
     }
@@ -51,7 +59,7 @@ public record ShoppingList
         {
             return false;
         }
-        
+
         shoppingListItem.SetAmount(amount);
         return true;
     }
@@ -61,4 +69,11 @@ public record ShoppingList
         public const int NAME_MAX_LENGTH = 100;
         public const int NAME_MIN_LENGTH = 5;
     }
+}
+
+public record ShoppingListItemAddedEvent : DomainEvent
+{
+    public required Guid ShoppingListId { get; init; }
+    public required Guid ProductId { get; init; }
+    public required int Amount { get; init; }
 }

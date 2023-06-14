@@ -8,6 +8,8 @@ public sealed record ShoppingListItem
     public Guid ProductId { get; private init; }
     public int Amount { get; private set; } = Conventions.MIN_AMOUNT;
 
+    public ProductInfo? ProductInfo { get; private set; }
+
     public static ShoppingListItem CreateNew(Guid shoppingListId, Guid productId, int amount)
     {
         return new ShoppingListItem
@@ -28,8 +30,15 @@ public sealed record ShoppingListItem
         Amount = amount.Throw().IfLessThan(Conventions.MIN_AMOUNT);
     }
 
+    public void SetProductInfo(ProductInfo productInfo)
+    {
+        ProductInfo = productInfo.ThrowIfNull();
+    }
+
     public sealed class Conventions
     {
         public const int MIN_AMOUNT = 1;
     }
 }
+
+public sealed record ProductInfo(string ProductName);
