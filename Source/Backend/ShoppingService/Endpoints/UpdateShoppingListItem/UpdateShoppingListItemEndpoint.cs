@@ -35,7 +35,7 @@ public static class UpdateShoppingListItemEndpoint
 
             if (shoppingList is null)
             {
-                return Results.NoContent();
+                return Results.NotFound();
             }
 
             if (!shoppingList.UpdateItem(parameters.ProductId, request.Amount))
