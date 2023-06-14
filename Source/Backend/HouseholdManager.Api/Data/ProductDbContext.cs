@@ -1,3 +1,4 @@
+using HouseholdManager.Api.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace HouseholdManager.Api.Data;
@@ -8,7 +9,7 @@ public sealed class ProductDbContext : DbContext
     {
     }
 
-    public DbSet<Domain.Product> Products { get; set; } = null!;
+    public DbSet<Product> Products { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
