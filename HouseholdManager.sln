@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{9E22
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F9D2805E-79E0-418B-80A2-74647A2B56BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.UnitTests", "Tests\Product.UnitTests\Product.UnitTests.csproj", "{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductUnitTests", "Tests\ProductUnitTests\ProductUnitTests.csproj", "{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0A1EE55C-9FBA-4BF8-94AB-478D5202D7BC}"
 EndProject
@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Validation", "Source
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Versioning", "Source\Shared\Shared.Versioning\Shared.Versioning.csproj", "{44F9B898-CC82-45F6-BE89-43EA252CC1FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.UnitTests", "Tests\Shopping.UnitTests\Shopping.UnitTests.csproj", "{6579950D-C016-441A-8930-C77E8AB4887F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingUnitTests", "Tests\ShoppingUnitTests\ShoppingUnitTests.csproj", "{6579950D-C016-441A-8930-C77E8AB4887F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{034A5EB1-4B02-4099-8B40-4A21A21401C6}"
 EndProject

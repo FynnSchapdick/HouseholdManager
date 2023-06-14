@@ -1,10 +1,10 @@
 using Bogus;
 using FluentAssertions;
 using HouseholdManager.Api.Domain;
-using Shopping.UnitTests.Assertions;
+using ShoppingUnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 
-namespace Shopping.UnitTests;
+namespace ShoppingUnitTests;
 
 public sealed class Test_ShoppingList_Create
 {
