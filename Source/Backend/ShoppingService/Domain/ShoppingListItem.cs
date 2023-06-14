@@ -23,6 +23,11 @@ public sealed record ShoppingListItem
         Amount += amount.Throw().IfLessThan(Conventions.MIN_AMOUNT);
     }
 
+    public void SetAmount(int amount)
+    {
+        Amount = amount.Throw().IfLessThan(Conventions.MIN_AMOUNT);
+    }
+
     public sealed class Conventions
     {
         public const int MIN_AMOUNT = 1;

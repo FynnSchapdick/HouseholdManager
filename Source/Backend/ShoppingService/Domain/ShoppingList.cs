@@ -44,6 +44,18 @@ public record ShoppingList
         return shoppingListItem is not null && _items.Remove(shoppingListItem);
     }
 
+    public bool UpdateItem(Guid productId, int amount)
+    {
+        ShoppingListItem? shoppingListItem = _items.SingleOrDefault(x => x.ProductId == productId);
+        if (shoppingListItem is null)
+        {
+            return false;
+        }
+        
+        shoppingListItem.SetAmount(amount);
+        return true;
+    }
+
     public sealed class Conventions
     {
         public const int NAME_MAX_LENGTH = 100;
