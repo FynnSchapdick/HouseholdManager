@@ -7,8 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Exceptions;
-using Shared.Versioning;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using ConfigureSwaggerOptions = HouseholdManager.Api.Versioning.ConfigureSwaggerOptions;
+using SwaggerDefaultValues = HouseholdManager.Api.Versioning.SwaggerDefaultValues;
 
 namespace HouseholdManager.Api.Extensions;
 

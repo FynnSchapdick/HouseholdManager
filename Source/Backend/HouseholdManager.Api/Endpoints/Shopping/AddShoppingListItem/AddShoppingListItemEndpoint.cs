@@ -5,7 +5,6 @@ using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shared.Validation;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 
