@@ -2,9 +2,9 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using HouseholdManager.Api.Domain;
-using ShoppingService.UnitTests.Assertions;
+using Shopping.UnitTests.Assertions;
 
-namespace ShoppingService.UnitTests;
+namespace Shopping.UnitTests;
 
 public sealed class Test_ShoppingList_UpdateItem
 {

@@ -2,10 +2,10 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using HouseholdManager.Api.Domain;
-using ShoppingService.UnitTests.Assertions;
+using Shopping.UnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 
-namespace ShoppingService.UnitTests;
+namespace Shopping.UnitTests;
 
 public sealed class Test_ShoppingList_AddItem
 {
