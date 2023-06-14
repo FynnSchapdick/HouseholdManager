@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
@@ -11,9 +12,9 @@ public static class GetProductEndpoint
 {
     public const string ENDPOINT_NAME = "GetProductById";
 
-    public static IEndpointRouteBuilder MapGetProductEndpoint(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapGetProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
     {
-        builder.MapGet("products/{productId:guid}", GetProduct)
+        builder.MapGet(route, GetProduct)
             .Produces<ProductDto>(contentType: MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.InternalServerError)
             .Produces((int)HttpStatusCode.NotFound)

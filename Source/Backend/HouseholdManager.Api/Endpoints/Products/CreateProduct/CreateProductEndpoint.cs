@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
@@ -11,9 +12,9 @@ namespace HouseholdManager.Api.Endpoints.Products.CreateProduct;
 
 public static class CreateProductEndpoint
 {
-    public static IEndpointRouteBuilder MapCreateProductEndpoint(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapCreateProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
     {
-        builder.MapPost("products", CreateProduct)
+        builder.MapPost(route, CreateProduct)
             .Accepts<CreateProductRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int)HttpStatusCode.Conflict)

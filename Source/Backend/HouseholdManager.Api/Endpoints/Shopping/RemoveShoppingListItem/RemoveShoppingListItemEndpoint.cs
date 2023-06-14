@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -8,18 +9,18 @@ namespace HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
 
 public static class RemoveShoppingListItemEndpoint
 {
-    public static IEndpointRouteBuilder MapRemoveShoppingListItemEndpoint(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapRemoveShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
     {
-        builder.MapDelete("shoppinglists/{shoppinglistId:guid}/items/{productId:guid}", RemoveShoppingListItem)
+        builder.MapDelete(route, RemoveShoppingListItem)
             .Produces((int) HttpStatusCode.OK)
             .Produces((int) HttpStatusCode.NotFound)
             .Produces((int) HttpStatusCode.Conflict)
             .Produces((int) HttpStatusCode.InternalServerError)
             .WithTags("ShoppingLists");
-        
+
         return builder;
     }
-    
+
     private static async Task<IResult> RemoveShoppingListItem([AsParameters] RemoveShoppingListItemParameters parameters, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
     {
         try
@@ -38,7 +39,7 @@ public static class RemoveShoppingListItemEndpoint
             {
                 return Results.NotFound();
             }
-            
+
             await shoppingDbContext.SaveChangesAsync(cancellationToken);
             return Results.Ok();
         }

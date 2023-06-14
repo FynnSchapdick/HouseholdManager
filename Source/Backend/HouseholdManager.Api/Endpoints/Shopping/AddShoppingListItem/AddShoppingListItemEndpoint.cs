@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
@@ -10,9 +11,9 @@ namespace HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 
 public static class AddShoppingListItemEndpoint
 {
-    public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
     {
-        builder.MapPost("shoppinglists/{shoppinglistId:guid}/items", AddShoppingListItem)
+        builder.MapPost(route, AddShoppingListItem)
             .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int) HttpStatusCode.NotFound)
@@ -40,7 +41,7 @@ public static class AddShoppingListItemEndpoint
             }
 
             shoppingList.AddItem(request.ProductId, request.Amount);
-            
+
             await shoppingDbContext.SaveChangesAsync(cancellationToken);
             return Results.Ok();
         }

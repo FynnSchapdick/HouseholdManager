@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ public static class GetShoppingListEndpoint
 {
     public const string ENDPOINT_NAME = "GetShoppingListById";
 
-    public static IEndpointRouteBuilder MapGetShoppingListEndpoint(this IEndpointRouteBuilder builder)
+    public static IEndpointRouteBuilder MapGetShoppingListEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route")] string route)
     {
-        builder.MapGet("shoppinglists/{shoppinglistId:guid}", GetShoppingList)
+        builder.MapGet(route, GetShoppingList)
             .Produces<ShoppingListDto>()
             .Produces((int)HttpStatusCode.InternalServerError)
             .Produces((int)HttpStatusCode.NotFound)
