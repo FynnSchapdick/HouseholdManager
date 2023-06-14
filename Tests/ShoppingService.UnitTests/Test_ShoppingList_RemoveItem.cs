@@ -18,8 +18,8 @@ public sealed class Test_ShoppingList_RemoveItem
     public void Should_ReturnTrue_WhenProductIsIncludedInItems()
     {
         // Arrange
-        Guid productId = Guid.NewGuid();
-        ShoppingList shoppingList = ShoppingList.CreateNew(_validShoppingListName);
+        var productId = Guid.NewGuid();
+        var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
         shoppingList.AddItem(productId, 10);
 
         // Act
