@@ -3,7 +3,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using HouseholdManager.Api.Domain;
 
-namespace Shopping.UnitTests;
+namespace ShoppingUnitTests;
 
 public sealed class Test_ShoppingList_RemoveItem
 {
