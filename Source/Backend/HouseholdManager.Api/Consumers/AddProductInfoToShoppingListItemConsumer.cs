@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HouseholdManager.Api.Consumers;
 
-public sealed class ShoppingListItemAddedConsumer : IConsumer<ShoppingListItemAddedEvent>
+public sealed class AddProductInfoToShoppingListItemConsumer : IConsumer<ShoppingListItemAddedEvent>
 {
     private readonly ShoppingDbContext _shoppingDbContext;
     private readonly ProductDbContext _productDbContext;
 
-    public ShoppingListItemAddedConsumer(ShoppingDbContext shoppingDbContext, ProductDbContext productDbContext)
+    public AddProductInfoToShoppingListItemConsumer(ShoppingDbContext shoppingDbContext, ProductDbContext productDbContext)
     {
         _shoppingDbContext = shoppingDbContext;
         _productDbContext = productDbContext;
