@@ -24,8 +24,7 @@ public sealed class Test_ShoppingList_AddItem
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.NewGuid(), amount))
-            .Should().Throw<ArgumentOutOfRangeException>(
-                "because buying 0 or less of something does not work in real life")
+            .Should().Throw<ArgumentOutOfRangeException>("because buying 0 or less of something does not work in real life")
             .WhichShouldHaveAMessage();
     }
 
