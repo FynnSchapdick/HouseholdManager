@@ -18,8 +18,8 @@ public sealed class Test_ShoppingList_UpdateItem
     {
         // Arrange
         Guid productId = Guid.NewGuid();
-        int initValue = 1;
-        int updatedValue = 100;
+        const int initValue = 1;
+        const int updatedValue = 100;
         ShoppingList shoppingList = ShoppingList.CreateNew(_validShoppingListName);
         shoppingList.AddItem(productId, initValue);
 
