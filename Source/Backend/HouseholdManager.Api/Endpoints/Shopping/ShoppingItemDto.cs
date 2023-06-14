@@ -2,7 +2,7 @@
 
 namespace HouseholdManager.Api.Endpoints.Shopping;
 
-public sealed record ShoppingItemDto(Guid ProductId, int Amount, ProductInfo ProductInfo)
+public sealed record ShoppingItemDto(Guid ProductId, int Amount, ProductInfo? ProductInfo)
 {
     public static ShoppingItemDto FromDomain(ShoppingListItem item)
     {
