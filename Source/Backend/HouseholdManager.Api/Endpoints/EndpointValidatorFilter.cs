@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using Microsoft.AspNetCore.Http;
 
-namespace Shared.Validation;
+namespace HouseholdManager.Api.Endpoints;
 
 public sealed class ValidationFilter<T> : IEndpointFilter where T : class
 {

@@ -25,17 +25,14 @@
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.0.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0"/>
     </ItemGroup>
     
     <ItemGroup>
       <Folder Include="Data\Configurations\" />
       <Folder Include="Data\Migrations\Product\" />
       <Folder Include="Data\Migrations\Shopping\" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <ProjectReference Include="..\..\Shared\Shared.Validation\Shared.Validation.csproj" />
-      <ProjectReference Include="..\..\Shared\Shared.Versioning\Shared.Versioning.csproj" />
     </ItemGroup>
 
 </Project>

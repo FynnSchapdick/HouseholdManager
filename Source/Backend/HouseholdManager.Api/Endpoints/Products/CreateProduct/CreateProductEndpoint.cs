@@ -5,7 +5,6 @@ using HouseholdManager.Api.Domain;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shared.Validation;
 
 namespace HouseholdManager.Api.Endpoints.Products.CreateProduct;
 
