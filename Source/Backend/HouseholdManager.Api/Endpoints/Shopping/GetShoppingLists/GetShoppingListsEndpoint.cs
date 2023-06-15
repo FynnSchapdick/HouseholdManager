@@ -26,6 +26,7 @@ public static class GetShoppingListsEndpoint
         {
             List<ShoppingListDto> shoppingLists = await shoppingDbContext
                 .ShoppingLists
+                .OrderBy(x => x.Name)
                 .Select(shoppingList => new ShoppingListDto(shoppingList.Id, shoppingList.Name))
                 .ToListAsync(cancellationToken);
 
