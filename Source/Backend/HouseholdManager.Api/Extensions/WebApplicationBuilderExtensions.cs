@@ -2,6 +2,7 @@
 using FluentValidation;
 using HouseholdManager.Api.Consumers;
 using HouseholdManager.Api.Data;
+using HouseholdManager.Api.Domain.Shopping;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 using MassTransit;
@@ -75,6 +76,8 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         builder.Services.AddSwaggerGen(options => options.OperationFilter<SwaggerDefaultValues>());
+
+        builder.Services.AddTransient<IShoppingListRepository>(x => x.GetRequiredService<ShoppingDbContext>());
 
         return builder;
     }

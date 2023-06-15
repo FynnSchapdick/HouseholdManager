@@ -1,3 +1,5 @@
-﻿namespace HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public sealed record UpdateShoppingListItemParameters(Guid ShoppingListId, Guid ProductId);
+namespace HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
+
+public sealed record UpdateShoppingListItemParameters(Guid ShoppingListId, Guid ProductId, [FromBody] UpdateShoppingListItemRequest Body);
