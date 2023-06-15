@@ -17,18 +17,55 @@ namespace HouseholdManager.Api.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplicationBuilder AddApi(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder ConfigureApi(this WebApplicationBuilder builder)
     {
-        builder.Host.UseSerilog((context, configuration) =>
+        builder.Services.AddProblemDetails();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddApiVersioning(v =>
         {
-            configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .Enrich.FromLogContext()
-                .Enrich.WithExceptionDetails()
-                .Enrich.WithMachineName()
-                .WriteTo.Console();
+            v.DefaultApiVersion = new ApiVersion(1.0);
+            v.AssumeDefaultVersionWhenUnspecified = true;
+            v.ReportApiVersions = true;
+            v.ApiVersionReader = new UrlSegmentApiVersionReader();
+        }).AddApiExplorer(opt =>
+        {
+            opt.GroupNameFormat = "'v'VVV";
+            opt.SubstituteApiVersionInUrl = true;
         });
 
+        return builder;
+    }
+
+    public static WebApplicationBuilder ConfigureSwagger(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+        builder.Services.AddSwaggerGen(options => options.OperationFilter<SwaggerDefaultValues>());
+        return builder;
+    }
+
+    public static WebApplicationBuilder ConfigureEndpointValidators(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddValidatorsFromAssemblyContaining<CreateShoppingListRequestValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequestValidator>();
+        return builder;
+    }
+
+    public static WebApplicationBuilder ConfigureMessaging(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddMassTransit(mt =>
+        {
+            mt.AddConsumer<AddProductInfoToShoppingListItemConsumer, AddProductInfoToShoppingListItemConsumerDefinition>();
+            mt.UsingInMemory((context, configurator) =>
+            {
+                context.ConfigureEndpoints(configurator, new SnakeCaseEndpointNameFormatter(false));
+            });
+        });
+        
+        return builder;
+    }
+
+    public static WebApplicationBuilder ConfigureDatabase(this WebApplicationBuilder builder)
+    {
         builder.Services.AddDbContext<ShoppingDbContext>(opt =>
         {
             opt.UseNpgsql(builder.Configuration.GetConnectionString("ShoppingDb"));
@@ -47,34 +84,20 @@ public static class WebApplicationBuilderExtensions
             opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
 
-        builder.Services.AddMassTransit(mt =>
+        return builder;
+    }
+
+    public static WebApplicationBuilder ConfigureLogging(this WebApplicationBuilder builder)
+    {
+        builder.Host.UseSerilog((context, configuration) =>
         {
-            mt.AddConsumer<AddProductInfoToShoppingListItemConsumer, AddProductInfoToShoppingListItemConsumerDefinition>();
-            mt.UsingInMemory((context, configurator) =>
-            {
-                context.ConfigureEndpoints(configurator, new SnakeCaseEndpointNameFormatter(false));
-            });
+            configuration
+                .ReadFrom.Configuration(context.Configuration)
+                .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
+                .Enrich.WithMachineName()
+                .WriteTo.Console();
         });
-
-        builder.Services.AddValidatorsFromAssemblyContaining<CreateShoppingListRequestValidator>();
-        builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequestValidator>();
-
-        builder.Services.AddProblemDetails();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddApiVersioning(v =>
-        {
-            v.DefaultApiVersion = new ApiVersion(1.0);
-            v.AssumeDefaultVersionWhenUnspecified = true;
-            v.ReportApiVersions = true;
-            v.ApiVersionReader = new UrlSegmentApiVersionReader();
-        }).AddApiExplorer(opt =>
-        {
-            opt.GroupNameFormat = "'v'VVV";
-            opt.SubstituteApiVersionInUrl = true;
-        });
-
-        builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-        builder.Services.AddSwaggerGen(options => options.OperationFilter<SwaggerDefaultValues>());
 
         return builder;
     }
