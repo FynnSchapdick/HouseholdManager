@@ -40,7 +40,7 @@ public sealed class AddProductInfoToShoppingListItemConsumer : IConsumer<Shoppin
 
         if (item is null) throw new NotImplementedException();
 
-        item.SetProductInfo(new ProductInfo(product.Name));
+        item.SetProductInfo(ProductInfo.Create(product.Name));
 
         await _shoppingListRepository.SaveAsync(shoppingList, context.CancellationToken);
     }
