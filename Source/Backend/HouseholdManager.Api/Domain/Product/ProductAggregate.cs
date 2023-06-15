@@ -3,15 +3,14 @@ using Throw;
 
 namespace HouseholdManager.Api.Domain.Product;
 
-public sealed record Product
+public sealed record ProductAggregate
 {
     public required Guid Id { get; init; }
     public required string Name { get; init; }
     public string? Ean { get; init; }
-
-    public static Product CreateNew(string name, string? ean = null)
+    public static ProductAggregate CreateNew(string name, string? ean = null)
     {
-        return new Product
+        return new ProductAggregate
         {
             Id = Guid.NewGuid(),
             Name = name

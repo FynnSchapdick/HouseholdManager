@@ -49,7 +49,7 @@ public static class WebApplicationBuilderExtensions
 
         builder.Services.AddMassTransit(mt =>
         {
-            mt.AddConsumer<AddProductInfoToShoppingListItemConsumer>();
+            mt.AddConsumer<AddProductInfoToShoppingListItemConsumer, AddProductInfoToShoppingListItemConsumerDefinition>();
             mt.UsingInMemory((context, configurator) =>
             {
                 context.ConfigureEndpoints(configurator, new SnakeCaseEndpointNameFormatter(false));

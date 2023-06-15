@@ -1,4 +1,5 @@
 ﻿using HouseholdManager.Api.Domain.Shopping.Events;
+using HouseholdManager.Api.Domain.Shopping.ValueObjects;
 using Throw;
 
 namespace HouseholdManager.Api.Domain.Shopping;

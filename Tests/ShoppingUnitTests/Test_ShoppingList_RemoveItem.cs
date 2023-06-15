@@ -1,7 +1,6 @@
 ﻿using Bogus;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using HouseholdManager.Api.Domain;
 using HouseholdManager.Api.Domain.Shopping;
 
 namespace ShoppingUnitTests;

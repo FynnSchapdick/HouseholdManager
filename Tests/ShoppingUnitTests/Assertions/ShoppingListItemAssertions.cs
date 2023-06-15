@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Primitives;
-using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Api.Domain.Shopping.ValueObjects;
 
 namespace ShoppingUnitTests.Assertions;
 

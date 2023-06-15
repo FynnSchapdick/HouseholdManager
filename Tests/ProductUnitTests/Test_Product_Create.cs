@@ -1,6 +1,5 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
-using HouseholdManager.Api.Domain;
 using HouseholdManager.Api.Domain.Product;
 using ProductUnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
@@ -12,21 +11,21 @@ public sealed class Test_Product_Create
     [Fact]
     public void Should_NotThrowArgumentException_WhenEanIsNull()
     {
-        Action sut = () => Product.CreateNew("Testname");
+        Action sut = () => ProductAggregate.CreateNew("Testname");
         sut.Should().NotThrow("because products without ean are custom products");
     }
 
     [Fact]
     public void Should_NotThrowArgumentException_WhenEanIsEan8()
     {
-        Action sut = () => Product.CreateNew("Testname", "30034440");
+        Action sut = () => ProductAggregate.CreateNew("Testname", "30034440");
         sut.Should().NotThrow("because products with a valid ean 8 are ok");
     }
 
     [Fact]
     public void Should_NotThrowArgumentException_WhenEanIsEan13()
     {
-        Action sut = () => Product.CreateNew("Testname", "4102380501330");
+        Action sut = () => ProductAggregate.CreateNew("Testname", "4102380501330");
         sut.Should().NotThrow("because products with a valid ean 13 are ok");
     }
 
@@ -35,7 +34,7 @@ public sealed class Test_Product_Create
     {
         string invalidEan = "41023805013308";
 
-        Action sut = () => Product.CreateNew("Testname", invalidEan);
+        Action sut = () => ProductAggregate.CreateNew("Testname", invalidEan);
         sut.Should().Throw<ArgumentException>("because {0} is not a valid ean", invalidEan)
             .WhichShouldHaveAMessage();
     }
@@ -43,7 +42,7 @@ public sealed class Test_Product_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenEanIsEmpty()
     {
-        Action sut = () => Product.CreateNew("Testname", "");
+        Action sut = () => ProductAggregate.CreateNew("Testname", "");
         sut.Should().Throw<ArgumentException>("because ean may not be empty if it is given")
             .WhichShouldHaveAMessage();
     }
@@ -51,7 +50,7 @@ public sealed class Test_Product_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenEanIsWhitespace()
     {
-        Action sut = () => Product.CreateNew("Testname", "   ");
+        Action sut = () => ProductAggregate.CreateNew("Testname", "   ");
         sut.Should().Throw<ArgumentException>("because ean may not be whitespace if it is given")
             .WhichShouldHaveAMessage();
     }
@@ -59,7 +58,7 @@ public sealed class Test_Product_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenNameIsNull()
     {
-        Action sut = () => Product.CreateNew(null!);
+        Action sut = () => ProductAggregate.CreateNew(null!);
         sut.Should().Throw<ArgumentException>("because product names may not be null")
             .WhichShouldHaveAMessage();
     }
@@ -67,7 +66,7 @@ public sealed class Test_Product_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenNameIsEmpty()
     {
-        Action sut = () => Product.CreateNew("");
+        Action sut = () => ProductAggregate.CreateNew("");
         sut.Should().Throw<ArgumentException>("because product names may not be empty")
             .WhichShouldHaveAMessage();
     }
@@ -75,7 +74,7 @@ public sealed class Test_Product_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenNameIsWhitespace()
     {
-        Action sut = () => Product.CreateNew("   ");
+        Action sut = () => ProductAggregate.CreateNew("   ");
         sut.Should().Throw<ArgumentException>("because product names may not be whitespace")
             .WhichShouldHaveAMessage();
     }
@@ -87,7 +86,7 @@ public sealed class Test_Product_Create
         const string name = "testname";
 
         // Act
-        var product = Product.CreateNew(name);
+        var product = ProductAggregate.CreateNew(name);
 
         // Assert
         using var scope = new AssertionScope();
@@ -103,7 +102,7 @@ public sealed class Test_Product_Create
         const string ean = "30034440";
 
         // Act
-        var product = Product.CreateNew(name, ean);
+        var product = ProductAggregate.CreateNew(name, ean);
 
         // Assert
         using var scope = new AssertionScope();

@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Mime;
-using HouseholdManager.Api.Data;
-using HouseholdManager.Api.Domain;
 using HouseholdManager.Api.Domain.Shopping;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
 using JetBrains.Annotations;

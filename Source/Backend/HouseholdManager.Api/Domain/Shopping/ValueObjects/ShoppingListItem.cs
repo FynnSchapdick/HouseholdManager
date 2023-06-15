@@ -1,6 +1,6 @@
 ﻿using Throw;
 
-namespace HouseholdManager.Api.Domain.Shopping;
+namespace HouseholdManager.Api.Domain.Shopping.ValueObjects;
 
 public sealed record ShoppingListItem
 {
@@ -40,5 +40,3 @@ public sealed record ShoppingListItem
         public const int MIN_AMOUNT = 1;
     }
 }
-
-public sealed record ProductInfo(string ProductName);

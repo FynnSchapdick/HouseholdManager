@@ -1,5 +1,4 @@
 using HouseholdManager.Api.Data.Configurations;
-using HouseholdManager.Api.Domain;
 using HouseholdManager.Api.Domain.Product;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ public sealed class ProductDbContext : DbContext
         _dispatcher = dispatcher;
     }
 
-    public DbSet<Product> Products { get; set; } = null!;
+    public DbSet<ProductAggregate> Products { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
