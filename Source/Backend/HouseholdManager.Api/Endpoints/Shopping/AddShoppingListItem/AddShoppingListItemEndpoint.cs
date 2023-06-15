@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
-using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
+using HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +44,7 @@ public static class AddShoppingListItemEndpoint
             shoppingList.AddItem(request.ProductId, request.Amount);
 
             await shoppingDbContext.SaveChangesAsync(cancellationToken);
-            return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppinglistId));
+            return Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(shoppinglistId));
         }
         catch (DbUpdateException dbUpdateException)
         {

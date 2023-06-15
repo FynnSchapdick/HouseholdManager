@@ -4,7 +4,8 @@ using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
 using HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
-using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
+using HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
+using HouseholdManager.Api.Endpoints.Shopping.GetShoppingLists;
 using HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
 using HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 using Serilog;
@@ -27,9 +28,10 @@ public static class WebApplicationExtensions
             .MapGroup("api/v{version:apiVersion}/shoppinglists")
             .HasApiVersion(1.0)
             .MapCreateShoppingListEndpoint("/")
-            .MapGetShoppingListEndpoint("{shoppingListId:guid}")
+            .MapGetShoppingListsEndpoint("/")
+            .MapGetShoppingListDetailEndpoint("{shoppingListId:guid}")
             .MapAddShoppingListItemEndpoint("{shoppingListId:guid}/items")
-            .MapUpdateShoppingListItemEndpoint("{shoppinglistId:guid}/items/{productId:guid}/amount")
+            .MapUpdateShoppingListItemEndpoint("{shoppingListId:guid}/items/{productId:guid}/amount")
             .MapRemoveShoppingListItemEndpoint("{shoppingListId:guid}/items/{productId:guid}");
 
         app.UseSwagger();
