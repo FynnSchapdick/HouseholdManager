@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ public static class AddShoppingListItemEndpoint
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingDbContext
+            ShoppingListAggregate? shoppingList = await shoppingDbContext
                 .ShoppingLists
                 .AsTracking()
                 .FirstOrDefaultAsync(x => x.Id == shoppinglistId, cancellationToken);

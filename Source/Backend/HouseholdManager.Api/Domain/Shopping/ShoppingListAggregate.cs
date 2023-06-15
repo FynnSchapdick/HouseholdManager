@@ -1,8 +1,9 @@
-﻿using Throw;
+﻿using HouseholdManager.Api.Domain.Shopping.Events;
+using Throw;
 
-namespace HouseholdManager.Api.Domain;
+namespace HouseholdManager.Api.Domain.Shopping;
 
-public record ShoppingList : Aggregate
+public record ShoppingListAggregate : Aggregate
 {
     public Guid Id { get; private init; }
     public string Name { get; private init; }
@@ -11,9 +12,9 @@ public record ShoppingList : Aggregate
 
     public IEnumerable<ShoppingListItem> Items => _items.ToList();
 
-    public static ShoppingList CreateNew(string name)
+    public static ShoppingListAggregate CreateNew(string name)
     {
-        return new ShoppingList
+        return new ShoppingListAggregate
         {
             Id = Guid.NewGuid(),
             Name = name
@@ -68,11 +69,4 @@ public record ShoppingList : Aggregate
         public const int NAME_MAX_LENGTH = 100;
         public const int NAME_MIN_LENGTH = 5;
     }
-}
-
-public record ShoppingListItemAddedEvent : DomainEvent
-{
-    public required Guid ShoppingListId { get; init; }
-    public required Guid ProductId { get; init; }
-    public required int Amount { get; init; }
 }

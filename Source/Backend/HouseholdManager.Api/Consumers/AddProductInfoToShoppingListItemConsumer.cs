@@ -1,5 +1,8 @@
 ﻿using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Product;
+using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Api.Domain.Shopping.Events;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +24,7 @@ public sealed class AddProductInfoToShoppingListItemConsumer : IConsumer<Shoppin
         ShoppingListItemAddedEvent msg = context.Message;
 
         Product? product = await _productDbContext.Products.FirstOrDefaultAsync(x => x.Id == msg.ProductId, context.CancellationToken);
-        ShoppingList? shoppingList = await _shoppingDbContext.ShoppingLists.AsTracking().FirstOrDefaultAsync(x => x.Id == msg.ShoppingListId, context.CancellationToken);
+        ShoppingListAggregate? shoppingList = await _shoppingDbContext.ShoppingLists.AsTracking().FirstOrDefaultAsync(x => x.Id == msg.ShoppingListId, context.CancellationToken);
 
         if (product is null || shoppingList is null) throw new NotImplementedException();
 

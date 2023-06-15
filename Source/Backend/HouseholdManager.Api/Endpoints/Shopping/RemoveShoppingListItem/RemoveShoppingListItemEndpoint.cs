@@ -2,6 +2,7 @@
 using System.Net;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ public static class RemoveShoppingListItemEndpoint
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingDbContext
+            ShoppingListAggregate? shoppingList = await shoppingDbContext
                 .ShoppingLists
                 .AsTracking()
                 .FirstOrDefaultAsync(x => x.Id == parameters.ShoppinglistId, cancellationToken);

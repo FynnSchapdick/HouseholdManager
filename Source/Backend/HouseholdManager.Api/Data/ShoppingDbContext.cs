@@ -1,5 +1,6 @@
 ﻿using HouseholdManager.Api.Data.Configurations;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ public sealed class ShoppingDbContext : DbContext
         _dispatcher = dispatcher;
     }
 
-    public DbSet<ShoppingList> ShoppingLists { get; set; } = null!;
+    public DbSet<ShoppingListAggregate> ShoppingLists { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

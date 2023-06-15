@@ -1,6 +1,6 @@
 ﻿using Throw;
 
-namespace HouseholdManager.Api.Domain;
+namespace HouseholdManager.Api.Domain.Shopping;
 
 public sealed record ShoppingListItem
 {

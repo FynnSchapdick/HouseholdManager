@@ -2,6 +2,8 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Api.Domain.Shopping.Events;
 using ShoppingUnitTests.Assertions;
 using Testing.Shared.Assertions.Assertions;
 
@@ -12,15 +14,15 @@ public sealed class Test_ShoppingList_AddItem
     private readonly string _validShoppingListName = new Faker()
         .Random
         .String(
-            ShoppingList.Conventions.NAME_MIN_LENGTH,
-            ShoppingList.Conventions.NAME_MAX_LENGTH);
+            ShoppingListAggregate.Conventions.NAME_MIN_LENGTH,
+            ShoppingListAggregate.Conventions.NAME_MAX_LENGTH);
 
     [Theory]
     [InlineData(0), InlineData(-1)]
     public void Should_ThrowArgumentOutOfRangeException_WhenAmountIsLessThanOne(int amount)
     {
         // Arrange
-        var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
+        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.NewGuid(), amount))
@@ -32,7 +34,7 @@ public sealed class Test_ShoppingList_AddItem
     public void Should_ThrowArgumentException_WhenProductIdIsEmpty()
     {
         // Arrange
-        var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
+        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.Empty, 1))
@@ -46,7 +48,7 @@ public sealed class Test_ShoppingList_AddItem
         // Arrange
         var productId = Guid.NewGuid();
         const int amount = 10;
-        var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
+        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
 
         // Act
         shoppingList.AddItem(productId, amount);
@@ -75,7 +77,7 @@ public sealed class Test_ShoppingList_AddItem
         // Arrange
         int[] amounts = { 1, 99 };
         var productId = Guid.NewGuid();
-        var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
+        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
         shoppingList.AddItem(productId, amounts[0]);
         shoppingList.ClearEvents();
 

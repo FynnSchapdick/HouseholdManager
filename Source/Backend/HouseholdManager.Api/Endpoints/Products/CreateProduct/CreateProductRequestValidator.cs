@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using FluentValidation;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Product;
 
 namespace HouseholdManager.Api.Endpoints.Products.CreateProduct;
 

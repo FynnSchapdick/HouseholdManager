@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Product;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;

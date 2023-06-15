@@ -2,6 +2,7 @@
 using System.Net;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ public static class GetShoppingListEndpoint
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingDbContext
+            ShoppingListAggregate? shoppingList = await shoppingDbContext
                 .ShoppingLists
                 .FirstOrDefaultAsync(x => x.Id == parameters.ShoppingListId, cancellationToken);
 

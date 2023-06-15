@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 
@@ -9,7 +10,7 @@ public sealed class CreateShoppingListRequestValidator : AbstractValidator<Creat
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .MinimumLength(ShoppingList.Conventions.NAME_MIN_LENGTH)
-            .MaximumLength(ShoppingList.Conventions.NAME_MAX_LENGTH);
+            .MinimumLength(ShoppingListAggregate.Conventions.NAME_MIN_LENGTH)
+            .MaximumLength(ShoppingListAggregate.Conventions.NAME_MAX_LENGTH);
     }
 }

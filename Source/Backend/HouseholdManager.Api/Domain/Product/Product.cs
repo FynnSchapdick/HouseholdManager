@@ -1,7 +1,7 @@
 ﻿using HouseholdManager.Api.Extensions;
 using Throw;
 
-namespace HouseholdManager.Api.Domain;
+namespace HouseholdManager.Api.Domain.Product;
 
 public sealed record Product
 {

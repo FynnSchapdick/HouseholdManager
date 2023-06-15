@@ -1,12 +1,13 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Primitives;
 using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 
 namespace ShoppingUnitTests.Assertions;
 
-public sealed class ShoppingListAssertions : ReferenceTypeAssertions<ShoppingList, ShoppingListAssertions>
+public sealed class ShoppingListAssertions : ReferenceTypeAssertions<ShoppingListAggregate, ShoppingListAssertions>
 {
-    public ShoppingListAssertions(ShoppingList shoppingList) : base(shoppingList){}
+    public ShoppingListAssertions(ShoppingListAggregate shoppingList) : base(shoppingList){}
     protected override string Identifier => "shoppinglist";
 
     public AndConstraint<ShoppingListAssertions> HaveName(string name, string because = "", params object[] becauseArgs)
