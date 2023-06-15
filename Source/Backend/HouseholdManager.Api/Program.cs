@@ -10,6 +10,6 @@ await WebApplication.CreateBuilder(args)
     .Build()
     .UseLogging()
     .UseApi()
-    .UseSwagger()
+    .UseVersionedSwagger()
     .UseDevelopmentConfiguration()
     .RunAsync();

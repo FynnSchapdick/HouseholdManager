@@ -19,7 +19,7 @@ public static class WebApplicationExtensions
         return app;
     }
 
-    public static WebApplication UseSwagger(this WebApplication app)
+    public static WebApplication UseVersionedSwagger(this WebApplication app)
     {
         app.UseSwagger();
         app.UseSwaggerUI(options =>

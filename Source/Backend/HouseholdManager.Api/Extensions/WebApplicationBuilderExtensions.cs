@@ -2,6 +2,7 @@
 using FluentValidation;
 using HouseholdManager.Api.Consumers;
 using HouseholdManager.Api.Data;
+using HouseholdManager.Api.Domain.Shopping;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 using MassTransit;
@@ -83,6 +84,8 @@ public static class WebApplicationBuilderExtensions
             opt.UseSnakeCaseNamingConvention();
             opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
+        
+        builder.Services.AddTransient<IShoppingListRepository>(x => x.GetRequiredService<ShoppingDbContext>());
 
         return builder;
     }
