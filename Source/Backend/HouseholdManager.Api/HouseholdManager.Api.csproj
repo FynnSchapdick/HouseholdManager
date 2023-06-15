@@ -36,6 +36,7 @@
       <Folder Include="Data\Configurations\" />
       <Folder Include="Data\Migrations\Product\" />
       <Folder Include="Data\Migrations\Shopping\" />
+      <Folder Include="Endpoints\Shopping\GetShoppingLists\" />
     </ItemGroup>
 
 </Project>

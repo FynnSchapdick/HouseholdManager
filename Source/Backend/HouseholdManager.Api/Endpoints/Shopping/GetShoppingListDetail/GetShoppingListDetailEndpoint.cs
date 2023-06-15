@@ -4,16 +4,16 @@ using HouseholdManager.Api.Domain.Shopping;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
+namespace HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
 
-public static class GetShoppingListEndpoint
+public static class GetShoppingListDetailEndpoint
 {
     public const string ENDPOINT_NAME = "GetShoppingListById";
 
-    public static IEndpointRouteBuilder MapGetShoppingListEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static IEndpointRouteBuilder MapGetShoppingListDetailEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapGet(route, GetShoppingList)
-            .Produces<ShoppingListDto>()
+            .Produces<ShoppingListDetailDto>()
             .Produces((int)HttpStatusCode.InternalServerError)
             .Produces((int)HttpStatusCode.NotFound)
             .WithName(ENDPOINT_NAME)
@@ -23,7 +23,7 @@ public static class GetShoppingListEndpoint
     }
 
     private static async Task<IResult> GetShoppingList(
-        [AsParameters] GetShoppingListParameters parameters,
+        [AsParameters] GetShoppingListDetailParameters parameters,
         IShoppingListRepository repository,
         CancellationToken cancellationToken)
     {
@@ -33,7 +33,7 @@ public static class GetShoppingListEndpoint
 
             return shoppingList is null
                 ? Results.NotFound(new { parameters.ShoppingListId })
-                : Results.Ok(ShoppingListDto.FromDomain(shoppingList));
+                : Results.Ok(ShoppingListDetailDto.FromDomain(shoppingList));
         }
         catch (Exception exception) when (exception is not ArgumentException)
         {
