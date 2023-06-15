@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using HouseholdManager.Api.Data;
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
 
@@ -26,14 +24,12 @@ public static class GetShoppingListEndpoint
 
     private static async Task<IResult> GetShoppingList(
         [AsParameters] GetShoppingListParameters parameters,
-        ShoppingDbContext shoppingDbContext,
+        IShoppingListRepository repository,
         CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingDbContext
-                .ShoppingLists
-                .FirstOrDefaultAsync(x => x.Id == parameters.ShoppingListId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ShoppingListId, cancellationToken);
 
             return shoppingList is null
                 ? Results.NotFound(new { parameters.ShoppingListId })

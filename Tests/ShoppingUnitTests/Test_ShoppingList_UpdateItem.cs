@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using ShoppingUnitTests.Assertions;
 
 namespace ShoppingUnitTests;
@@ -11,15 +11,15 @@ public sealed class Test_ShoppingList_UpdateItem
     private readonly string _validShoppingListName = new Faker()
         .Random
         .String(
-            ShoppingList.Conventions.NAME_MIN_LENGTH,
-            ShoppingList.Conventions.NAME_MAX_LENGTH);
+            ShoppingListAggregate.Conventions.NAME_MIN_LENGTH,
+            ShoppingListAggregate.Conventions.NAME_MAX_LENGTH);
 
     [Theory]
     [InlineData(1, 100), InlineData(100, 1)]
     public void Should_ReturnTrue_WhenAmountIsUpdated(int initialAmount, int targetAmount)
     {
         // Arrange
-        var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
+        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
 
         var productId = Guid.NewGuid();
         shoppingList.AddItem(productId, initialAmount);
@@ -39,7 +39,7 @@ public sealed class Test_ShoppingList_UpdateItem
     public void Should_ReturnFalse_WhenShoppingListDoesNotContainTheItem()
     {
         // Arrange
-        var shoppingList = ShoppingList.CreateNew(_validShoppingListName);
+        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
 
         Guid targetItemProductId = Guid.Parse("274D4C9D-12C0-4543-9996-CDDBBCF1C0D7");
         const int targetAmount = 100;

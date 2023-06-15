@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingList;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,7 @@ public static class CreateShoppingListEndpoint
     {
         try
         {
-            var shoppingList = ShoppingList.CreateNew(request.Name);
+            var shoppingList = ShoppingListAggregate.CreateNew(request.Name);
 
             shoppingDbContext.Add(shoppingList);
             await shoppingDbContext.SaveChangesAsync(cancellationToken);

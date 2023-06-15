@@ -1,12 +1,14 @@
 ﻿using Throw;
 
-namespace HouseholdManager.Api.Domain;
+namespace HouseholdManager.Api.Domain.Shopping.ValueObjects;
 
 public sealed record ShoppingListItem
 {
     public Guid ShoppingListId { get; private init; }
     public Guid ProductId { get; private init; }
     public int Amount { get; private set; } = Conventions.MIN_AMOUNT;
+
+    public ProductInfo? ProductInfo { get; private set; }
 
     public static ShoppingListItem CreateNew(Guid shoppingListId, Guid productId, int amount)
     {
@@ -26,6 +28,11 @@ public sealed record ShoppingListItem
     public void SetAmount(int amount)
     {
         Amount = amount.Throw().IfLessThan(Conventions.MIN_AMOUNT);
+    }
+
+    public void SetProductInfo(ProductInfo productInfo)
+    {
+        ProductInfo = productInfo.ThrowIfNull();
     }
 
     public sealed class Conventions

@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Data;
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Product;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,7 @@ public static class CreateProductEndpoint
     {
         try
         {
-            Product product = Product.CreateNew(request.Name, request.Ean);
+            ProductAggregate product = ProductAggregate.CreateNew(request.Name, request.Ean);
             productDbContext.Add(product);
             await productDbContext.SaveChangesAsync(cancellationToken);
             return Results.CreatedAtRoute(GetProductEndpoint.ENDPOINT_NAME, new GetProductParameters(product.Id));

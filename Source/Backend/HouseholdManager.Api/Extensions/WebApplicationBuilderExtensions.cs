@@ -1,8 +1,10 @@
 ﻿using Asp.Versioning;
 using FluentValidation;
+using HouseholdManager.Api.Consumers;
 using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -35,7 +37,7 @@ public static class WebApplicationBuilderExtensions
             opt.UseSnakeCaseNamingConvention();
             opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
-        
+
         builder.Services.AddDbContext<ProductDbContext>(opt =>
         {
             opt.UseNpgsql(builder.Configuration.GetConnectionString("ProductDb"));
@@ -43,6 +45,15 @@ public static class WebApplicationBuilderExtensions
             opt.EnableSensitiveDataLogging();
             opt.UseSnakeCaseNamingConvention();
             opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
+
+        builder.Services.AddMassTransit(mt =>
+        {
+            mt.AddConsumer<AddProductInfoToShoppingListItemConsumer, AddProductInfoToShoppingListItemConsumerDefinition>();
+            mt.UsingInMemory((context, configurator) =>
+            {
+                context.ConfigureEndpoints(configurator, new SnakeCaseEndpointNameFormatter(false));
+            });
         });
 
         builder.Services.AddValidatorsFromAssemblyContaining<CreateShoppingListRequestValidator>();

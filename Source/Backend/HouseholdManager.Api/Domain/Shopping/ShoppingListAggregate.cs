@@ -1,19 +1,21 @@
-﻿using Throw;
+﻿using HouseholdManager.Api.Domain.Shopping.Events;
+using HouseholdManager.Api.Domain.Shopping.ValueObjects;
+using Throw;
 
-namespace HouseholdManager.Api.Domain;
+namespace HouseholdManager.Api.Domain.Shopping;
 
-public record ShoppingList
+public record ShoppingListAggregate : Aggregate
 {
-    public required Guid Id { get; init; }
-    public required string Name { get; init; }
-    
+    public Guid Id { get; private init; }
+    public string Name { get; private init; }
+
     private readonly HashSet<ShoppingListItem> _items = new();
 
     public IEnumerable<ShoppingListItem> Items => _items.ToList();
 
-    public static ShoppingList CreateNew(string name)
+    public static ShoppingListAggregate CreateNew(string name)
     {
-        return new ShoppingList
+        return new ShoppingListAggregate
         {
             Id = Guid.NewGuid(),
             Name = name
@@ -33,7 +35,14 @@ public record ShoppingList
                 break;
 
             case null:
-                _items.Add(ShoppingListItem.CreateNew(Id, productId, amount));
+                var newItem = ShoppingListItem.CreateNew(Id, productId, amount);
+                _items.Add(newItem);
+                EnqueueEvent(new ShoppingListItemAddedEvent
+                {
+                    ShoppingListId = Id,
+                    ProductId = productId,
+                    Amount = amount
+                });
                 break;
         }
     }
@@ -51,7 +60,7 @@ public record ShoppingList
         {
             return false;
         }
-        
+
         shoppingListItem.SetAmount(amount);
         return true;
     }

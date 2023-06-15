@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using FluentValidation;
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Product;
 
 namespace HouseholdManager.Api.Endpoints.Products.CreateProduct;
 
@@ -16,8 +16,8 @@ public sealed partial class CreateProductRequestValidator : AbstractValidator<Cr
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .MinimumLength(Product.Conventions.NAME_MIN_LENGTH)
-            .MaximumLength(Product.Conventions.NAME_MAX_LENGTH);
+            .MinimumLength(ProductAggregate.Conventions.NAME_MIN_LENGTH)
+            .MaximumLength(ProductAggregate.Conventions.NAME_MAX_LENGTH);
 
         When(x => !string.IsNullOrEmpty(x.Ean), () =>
         {

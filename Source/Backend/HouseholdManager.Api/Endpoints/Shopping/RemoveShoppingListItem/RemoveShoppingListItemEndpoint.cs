@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using HouseholdManager.Api.Data;
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Shopping;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,14 +21,11 @@ public static class RemoveShoppingListItemEndpoint
         return builder;
     }
 
-    private static async Task<IResult> RemoveShoppingListItem([AsParameters] RemoveShoppingListItemParameters parameters, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
+    private static async Task<IResult> RemoveShoppingListItem([AsParameters] RemoveShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingList? shoppingList = await shoppingDbContext
-                .ShoppingLists
-                .AsTracking()
-                .FirstOrDefaultAsync(x => x.Id == parameters.ShoppinglistId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ProductId, cancellationToken);
 
             if (shoppingList is null)
             {
@@ -41,7 +37,7 @@ public static class RemoveShoppingListItemEndpoint
                 return Results.NotFound();
             }
 
-            await shoppingDbContext.SaveChangesAsync(cancellationToken);
+            await repository.SaveAsync(shoppingList, cancellationToken);
             return Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)

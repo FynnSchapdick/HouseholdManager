@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Primitives;
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Product;
 
 namespace ProductUnitTests.Assertions;
 
-public sealed class ProductAssertions : ReferenceTypeAssertions<Product, ProductAssertions>
+public sealed class ProductAssertions : ReferenceTypeAssertions<ProductAggregate, ProductAssertions>
 {
-    public ProductAssertions(Product product) : base(product){}
+    public ProductAssertions(ProductAggregate product) : base(product){}
     protected override string Identifier => "product";
 
     public AndConstraint<ProductAssertions> HaveName(string name, string because = "", params object[] becauseArgs)
@@ -30,5 +30,5 @@ public sealed class ProductAssertions : ReferenceTypeAssertions<Product, Product
 
 public static class ProductAssertionsExtensions
 {
-    public static ProductAssertions Should(this Product instance) => new(instance);
+    public static ProductAssertions Should(this ProductAggregate instance) => new(instance);
 }

@@ -1,17 +1,17 @@
-using HouseholdManager.Api.Domain;
+using HouseholdManager.Api.Domain.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HouseholdManager.Api.Data.Configurations;
 
-public sealed class ProductConfigurations : IEntityTypeConfiguration<Product>
+public sealed class ProductConfigurations : IEntityTypeConfiguration<ProductAggregate>
 {
-    public void Configure(EntityTypeBuilder<Product> builder)
+    public void Configure(EntityTypeBuilder<ProductAggregate> builder)
     {
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Name)
             .IsRequired()
-            .HasMaxLength(Product.Conventions.NAME_MAX_LENGTH);
+            .HasMaxLength(ProductAggregate.Conventions.NAME_MAX_LENGTH);
     }
 }
