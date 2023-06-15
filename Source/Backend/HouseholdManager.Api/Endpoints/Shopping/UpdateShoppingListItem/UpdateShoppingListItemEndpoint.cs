@@ -24,7 +24,7 @@ public static class UpdateShoppingListItemEndpoint
         return builder;
     }
 
-    private static async Task<IResult> UpdateShoppingListItem([AsParameters] UpdateShoppingListItemParameters parameters, [FromBody] UpdateShoppingListItemRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
+    private static async Task<IResult> UpdateShoppingListItem([AsParameters] UpdateShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
@@ -35,7 +35,7 @@ public static class UpdateShoppingListItemEndpoint
                 return Results.NotFound();
             }
 
-            if (!shoppingList.UpdateItem(parameters.ProductId, request.Amount))
+            if (!shoppingList.UpdateItem(parameters.ProductId, parameters.Body.Amount))
             {
                 return Results.NotFound();
             }
