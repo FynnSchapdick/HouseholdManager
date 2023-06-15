@@ -27,14 +27,12 @@ public static class GetShoppingListEndpoint
 
     private static async Task<IResult> GetShoppingList(
         [AsParameters] GetShoppingListParameters parameters,
-        ShoppingDbContext shoppingDbContext,
+        IShoppingListRepository repository,
         CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingListAggregate? shoppingList = await shoppingDbContext
-                .ShoppingLists
-                .FirstOrDefaultAsync(x => x.Id == parameters.ShoppingListId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ShoppingListId, cancellationToken);
 
             return shoppingList is null
                 ? Results.NotFound(new { parameters.ShoppingListId })

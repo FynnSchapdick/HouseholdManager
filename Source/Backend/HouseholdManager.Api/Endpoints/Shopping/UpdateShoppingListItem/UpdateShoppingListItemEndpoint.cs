@@ -26,14 +26,11 @@ public static class UpdateShoppingListItemEndpoint
         return builder;
     }
 
-    private static async Task<IResult> UpdateShoppingListItem([AsParameters] UpdateShoppingListItemParameters parameters, [FromBody] UpdateShoppingListItemRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
+    private static async Task<IResult> UpdateShoppingListItem([AsParameters] UpdateShoppingListItemParameters parameters, [FromBody] UpdateShoppingListItemRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingListAggregate? shoppingList = await shoppingDbContext
-                .ShoppingLists
-                .AsTracking()
-                .FirstOrDefaultAsync(x => x.Id == parameters.ShoppinglistId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ShoppingListId, cancellationToken);
 
             if (shoppingList is null)
             {
@@ -45,7 +42,7 @@ public static class UpdateShoppingListItemEndpoint
                 return Results.NotFound();
             }
 
-            await shoppingDbContext.SaveChangesAsync(cancellationToken);
+            await repository.SaveAsync(shoppingList, cancellationToken);
             return Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)

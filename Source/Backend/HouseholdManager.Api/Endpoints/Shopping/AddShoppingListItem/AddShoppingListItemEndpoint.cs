@@ -28,14 +28,11 @@ public static class AddShoppingListItemEndpoint
         return builder;
     }
 
-    private static async Task<IResult> AddShoppingListItem(Guid shoppinglistId, AddShoppingItemRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingListItem(Guid shoppingListId, AddShoppingItemRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingListAggregate? shoppingList = await shoppingDbContext
-                .ShoppingLists
-                .AsTracking()
-                .FirstOrDefaultAsync(x => x.Id == shoppinglistId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(shoppingListId, cancellationToken);
 
             if (shoppingList is null)
             {
@@ -44,8 +41,9 @@ public static class AddShoppingListItemEndpoint
 
             shoppingList.AddItem(request.ProductId, request.Amount);
 
-            await shoppingDbContext.SaveChangesAsync(cancellationToken);
-            return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppinglistId));
+            await repository.SaveAsync(shoppingList, cancellationToken);
+
+            return Results.CreatedAtRoute(GetShoppingListEndpoint.ENDPOINT_NAME, new GetShoppingListParameters(shoppingListId));
         }
         catch (DbUpdateException dbUpdateException)
         {
