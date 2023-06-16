@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Domain.Shopping;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 

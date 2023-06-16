@@ -38,5 +38,10 @@
       <Folder Include="Data\Migrations\Shopping\" />
       <Folder Include="Endpoints\Shopping\GetShoppingLists\" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\HouseholdManager.Domain.Product\HouseholdManager.Domain.Product.csproj" />
+      <ProjectReference Include="..\HouseholdManager.Domain.Shopping\HouseholdManager.Domain.Shopping.csproj" />
+    </ItemGroup>
 
 </Project>

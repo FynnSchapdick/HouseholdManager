@@ -1,4 +1,4 @@
-using HouseholdManager.Api.Domain.Product;
+using HouseholdManager.Domain.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

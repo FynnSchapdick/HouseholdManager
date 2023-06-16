@@ -1,6 +1,6 @@
 ﻿using Throw;
 
-namespace HouseholdManager.Api.Extensions;
+namespace HouseholdManager.Domain.Product.Extensions;
 
 public static class ValidatableExtensions
 {
