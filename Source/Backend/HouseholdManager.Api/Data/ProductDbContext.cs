@@ -1,5 +1,5 @@
 using HouseholdManager.Api.Data.Configurations;
-using HouseholdManager.Api.Domain.Product;
+using HouseholdManager.Domain.Product;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 

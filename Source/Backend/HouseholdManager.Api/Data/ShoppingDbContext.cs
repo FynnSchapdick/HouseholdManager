@@ -1,8 +1,8 @@
 ﻿using HouseholdManager.Api.Data.Configurations;
-using HouseholdManager.Api.Domain;
-using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Domain.Shopping;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Shared.Domain;
 
 namespace HouseholdManager.Api.Data;
 

@@ -1,43 +1,29 @@
-using Bogus;
 using FluentAssertions;
-using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Domain.Shopping;
 using ShoppingUnitTests.Assertions;
+using ShoppingUnitTests.Data;
 using Testing.Shared.Assertions.Assertions;
 
 namespace ShoppingUnitTests;
 
 public sealed class Test_ShoppingList_Create
 {
-    private readonly string _validShoppingListName = new Faker()
-        .Random
-        .String(
-            ShoppingListAggregate.Conventions.NAME_MIN_LENGTH,
-            ShoppingListAggregate.Conventions.NAME_MAX_LENGTH);
 
-    private readonly string _tooShortShoppingListName = new Faker()
-        .Random
-        .String(
-            ShoppingListAggregate.Conventions.NAME_MIN_LENGTH - 1);
-
-    private readonly string _tooLongShoppingListName = new Faker()
-        .Random
-        .String(
-            ShoppingListAggregate.Conventions.NAME_MAX_LENGTH + 1);
 
     [Fact]
     public void Should_NotThrowArgumentException_WhenNameIsValid()
     {
-        var sut = () => ShoppingListAggregate.CreateNew(_validShoppingListName);
-        sut.Should().NotThrow("because {0} is a valid name", _validShoppingListName)
+        Func<ShoppingListAggregate> sut = () => ShoppingListAggregate.CreateNew(Valid.ShoppingListName);
+        sut.Should().NotThrow("because {0} is a valid name", Valid.ShoppingListName)
             .Which.Should().NotHaveDefaultId("because a default id is not valid for a ShoppingList")
-            .And.HaveName(_validShoppingListName)
+            .And.HaveName(Valid.ShoppingListName)
             .And.BeEmpty();
     }
 
     [Fact]
     public void Should_ThrowArgumentException_WhenNameIsEmpty()
     {
-        Action sut = () => ShoppingListAggregate.CreateNew(string.Empty);
+        Action sut = () => ShoppingListAggregate.CreateNew(Invalid.EmptyShoppingListName);
 
         sut.Should().Throw<ArgumentException>("because the name should not be empty")
             .WhichShouldHaveAMessage();
@@ -46,7 +32,7 @@ public sealed class Test_ShoppingList_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenNameIsWhitespace()
     {
-        Action sut = () => ShoppingListAggregate.CreateNew("   ");
+        Action sut = () => ShoppingListAggregate.CreateNew(Invalid.WhitespaceShoppingListName);
 
         sut.Should().Throw<ArgumentException>("because the name should not be whitespace")
             .WhichShouldHaveAMessage();
@@ -63,7 +49,7 @@ public sealed class Test_ShoppingList_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenNameIsTooShort()
     {
-        Action sut = () => ShoppingListAggregate.CreateNew(_tooShortShoppingListName);
+        Action sut = () => ShoppingListAggregate.CreateNew(Invalid.ShortShoppingListName);
         sut.Should().Throw<ArgumentException>("because the name should not be too short")
             .WhichShouldHaveAMessage();
     }
@@ -71,7 +57,7 @@ public sealed class Test_ShoppingList_Create
     [Fact]
     public void Should_ThrowArgumentException_WhenNameIsTooLong()
     {
-        Action sut = () => ShoppingListAggregate.CreateNew(_tooLongShoppingListName);
+        Action sut = () => ShoppingListAggregate.CreateNew(Invalid.LongShoppingListName);
         sut.Should().Throw<ArgumentException>("because the name should not be too long")
             .WhichShouldHaveAMessage();
     }

@@ -1,4 +1,4 @@
-﻿namespace HouseholdManager.Api.Domain.Shopping;
+﻿namespace HouseholdManager.Domain.Shopping;
 
 public interface IShoppingListRepository
 {

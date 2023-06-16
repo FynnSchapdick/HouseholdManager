@@ -1,4 +1,4 @@
-﻿namespace HouseholdManager.Api.Domain;
+﻿namespace Shared.Domain;
 
 public abstract record Aggregate
 {

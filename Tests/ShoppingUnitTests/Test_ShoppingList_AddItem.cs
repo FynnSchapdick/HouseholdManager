@@ -1,27 +1,22 @@
-﻿using Bogus;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
-using HouseholdManager.Api.Domain.Shopping;
-using HouseholdManager.Api.Domain.Shopping.Events;
+using HouseholdManager.Domain.Shopping;
+using HouseholdManager.Domain.Shopping.Events;
+using HouseholdManager.Domain.Shopping.ValueObjects;
 using ShoppingUnitTests.Assertions;
+using ShoppingUnitTests.Data;
 using Testing.Shared.Assertions.Assertions;
 
 namespace ShoppingUnitTests;
 
 public sealed class Test_ShoppingList_AddItem
 {
-    private readonly string _validShoppingListName = new Faker()
-        .Random
-        .String(
-            ShoppingListAggregate.Conventions.NAME_MIN_LENGTH,
-            ShoppingListAggregate.Conventions.NAME_MAX_LENGTH);
-
     [Theory]
     [InlineData(0), InlineData(-1)]
     public void Should_ThrowArgumentOutOfRangeException_WhenAmountIsLessThanOne(int amount)
     {
         // Arrange
-        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
+        ShoppingListAggregate shoppingList = Valid.EmptyShoppingList();
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.NewGuid(), amount))
@@ -33,7 +28,7 @@ public sealed class Test_ShoppingList_AddItem
     public void Should_ThrowArgumentException_WhenProductIdIsEmpty()
     {
         // Arrange
-        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
+        ShoppingListAggregate shoppingList = Valid.EmptyShoppingList();
 
         // Act + Assert
         shoppingList.Invoking(x => x.AddItem(Guid.Empty, 1))
@@ -47,7 +42,7 @@ public sealed class Test_ShoppingList_AddItem
         // Arrange
         var productId = Guid.NewGuid();
         const int amount = 10;
-        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
+        ShoppingListAggregate shoppingList = Valid.EmptyShoppingList();
 
         // Act
         shoppingList.AddItem(productId, amount);
@@ -70,25 +65,23 @@ public sealed class Test_ShoppingList_AddItem
             .And.BeForProductId(productId, "because that is the product id of the added item");
     }
 
-    [Fact]
-    public void Should_IncreaseAmount_WhenProductIsAlreadyIncludedInItems()
+    [Theory]
+    [InlineData(10, 10), InlineData(1, 100)]
+    public void Should_IncreaseAmount_WhenProductIsAlreadyIncludedInItems(int initialAmount, int additionalAmount)
     {
         // Arrange
-        int[] amounts = { 1, 99 };
-        var productId = Guid.NewGuid();
-        var shoppingList = ShoppingListAggregate.CreateNew(_validShoppingListName);
-        shoppingList.AddItem(productId, amounts[0]);
-        shoppingList.ClearEvents();
+        ShoppingListAggregate shoppingList = Valid.ShoppingListWithSingleItem(initialAmount);
+        ShoppingListItem item = shoppingList.Items.First();
 
         // Act
-        shoppingList.AddItem(productId, amounts[1]);
+        shoppingList.AddItem(item.ProductId, additionalAmount);
 
         // Assert
         using var scope = new AssertionScope();
         shoppingList
             .AsAggregateShould().NotContainEvents()
             .And.Items.Should().ContainSingle("because adding the same item twice should combine them")
-            .Which.Should().HaveAmount(amounts.Sum(), "because that is the sum of the amount of both items")
-            .And.BeForProductId(productId, "because that is the product id of the targeted item");
+            .Which.Should().HaveAmount(initialAmount + additionalAmount, "because that is the sum of the amount of both operations")
+            .And.BeForProductId(item.ProductId, "because that is the product id of the targeted item");
     }
 }

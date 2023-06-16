@@ -1,8 +1,8 @@
 ﻿using ArchUnitNET.Domain;
 using ArchUnitNET.Loader;
 using ArchUnitNET.xUnit;
-using HouseholdManager.Api.Domain.Product;
-using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Domain.Product;
+using HouseholdManager.Domain.Shopping;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
 namespace ProductUnitTests;

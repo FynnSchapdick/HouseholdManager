@@ -1,4 +1,6 @@
-﻿namespace HouseholdManager.Api.Domain.Shopping.Events;
+﻿using Shared.Domain;
+
+namespace HouseholdManager.Domain.Shopping.Events;
 
 public record ShoppingListItemAddedEvent : DomainEvent
 {

@@ -1,4 +1,4 @@
-using HouseholdManager.Api.Domain.Shopping;
+using HouseholdManager.Domain.Shopping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

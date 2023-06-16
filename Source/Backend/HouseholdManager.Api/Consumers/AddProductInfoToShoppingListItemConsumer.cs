@@ -1,8 +1,8 @@
 ﻿using HouseholdManager.Api.Data;
-using HouseholdManager.Api.Domain.Product;
-using HouseholdManager.Api.Domain.Shopping;
-using HouseholdManager.Api.Domain.Shopping.Events;
-using HouseholdManager.Api.Domain.Shopping.ValueObjects;
+using HouseholdManager.Domain.Product;
+using HouseholdManager.Domain.Shopping;
+using HouseholdManager.Domain.Shopping.Events;
+using HouseholdManager.Domain.Shopping.ValueObjects;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 

@@ -2,9 +2,9 @@
 using FluentValidation;
 using HouseholdManager.Api.Consumers;
 using HouseholdManager.Api.Data;
-using HouseholdManager.Api.Domain.Shopping;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
+using HouseholdManager.Domain.Shopping;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -61,7 +61,7 @@ public static class WebApplicationBuilderExtensions
                 context.ConfigureEndpoints(configurator, new SnakeCaseEndpointNameFormatter(false));
             });
         });
-        
+
         return builder;
     }
 
@@ -84,7 +84,7 @@ public static class WebApplicationBuilderExtensions
             opt.UseSnakeCaseNamingConvention();
             opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
-        
+
         builder.Services.AddTransient<IShoppingListRepository>(x => x.GetRequiredService<ShoppingDbContext>());
 
         return builder;

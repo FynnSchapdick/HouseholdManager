@@ -1,4 +1,4 @@
-﻿using HouseholdManager.Api.Domain.Shopping.ValueObjects;
+﻿using HouseholdManager.Domain.Shopping.ValueObjects;
 
 namespace HouseholdManager.Api.Endpoints.Shopping;
 
