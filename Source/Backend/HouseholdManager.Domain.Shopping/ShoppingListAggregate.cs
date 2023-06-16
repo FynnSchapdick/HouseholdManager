@@ -26,6 +26,10 @@ public record ShoppingListAggregate : Aggregate
         _items = items ?? new HashSet<ShoppingListItem>();
     }
 
+#pragma warning disable CS8618
+    private ShoppingListAggregate() { /*Ef*/ }
+#pragma warning restore CS8618
+
     public static ShoppingListAggregate CreateNew(string name)
     {
         return new ShoppingListAggregate(Guid.NewGuid(), name);

@@ -21,6 +21,10 @@ public sealed record ProductAggregate
         Ean = ean?.Throw().IfEmpty().IfWhiteSpace().IfNotEan8Or13();
     }
 
+#pragma warning disable CS8618
+    private ProductAggregate() { /*Ef*/ }
+#pragma warning restore CS8618
+
     public static ProductAggregate CreateNew(string name, string? ean = null)
     {
         return new ProductAggregate(name, ean);

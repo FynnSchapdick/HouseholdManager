@@ -17,6 +17,10 @@ public sealed record ShoppingListItem
         Amount = amount.Throw().IfLessThan(Conventions.MIN_AMOUNT);
     }
 
+#pragma warning disable CS8618
+    private ShoppingListItem() { /*Ef*/ }
+#pragma warning restore CS8618
+
     public static ShoppingListItem CreateNew(Guid shoppingListId, Guid productId, int amount)
     {
         return new ShoppingListItem(shoppingListId, productId, amount);

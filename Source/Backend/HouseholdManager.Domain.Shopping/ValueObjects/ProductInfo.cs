@@ -11,6 +11,10 @@ public sealed record ProductInfo
         ProductName = productName.ThrowIfNull().IfNullOrWhiteSpace(x => x);
     }
 
+#pragma warning disable CS8618
+    private ProductInfo() { /*Ef*/ }
+#pragma warning restore CS8618
+
     public static ProductInfo Create(string productName)
     {
         return new ProductInfo(productName);
