@@ -2,9 +2,9 @@
 
 namespace HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 
-public sealed class AddShoppingItemParametersValidator : AbstractValidator<AddShoppingItemParameters>
+public sealed class AddShoppingListItemParametersValidator : AbstractValidator<AddShoppingListItemParameters>
 {
-    public AddShoppingItemParametersValidator()
+    public AddShoppingListItemParametersValidator()
     {
         RuleFor(x => x.Body.ProductId)
             .NotEmpty();

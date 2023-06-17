@@ -14,20 +14,20 @@ public static class AddShoppingListItemEndpoint
     public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPost(route, AddShoppingListItem)
-            .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
+            .Accepts<AddShoppingListItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.OK)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.InternalServerError)
-            .AddEndpointFilter<ValidationFilter<AddShoppingItemParameters>>()
+            .AddEndpointFilter<ValidationFilter<AddShoppingListItemParameters>>()
             .WithTags("ShoppingLists");
 
         return builder;
     }
 
-    private static async Task<IResult> AddShoppingListItem([AsParameters] AddShoppingItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingListItem([AsParameters] AddShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {

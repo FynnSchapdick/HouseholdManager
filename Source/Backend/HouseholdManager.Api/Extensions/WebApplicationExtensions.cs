@@ -5,6 +5,7 @@ using HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingLists;
+using HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingList;
 using HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
 using HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 using HouseholdManager.Data.Product;
@@ -62,8 +63,9 @@ public static class WebApplicationExtensions
             .MapCreateShoppingListEndpoint("/")
             .MapGetShoppingListsEndpoint("/")
             .MapGetShoppingListDetailEndpoint("{shoppingListId:guid}")
+            .MapRemoveShoppingListEndpoint("{shoppingListId:guid}")
             .MapAddShoppingListItemEndpoint("{shoppingListId:guid}/items")
-            .MapUpdateShoppingListItemEndpoint("{shoppinglistId:guid}/items/{productId:guid}/amount")
+            .MapUpdateShoppingListItemEndpoint("{shoppingListId:guid}/items/{productId:guid}/amount")
             .MapRemoveShoppingListItemEndpoint("{shoppingListId:guid}/items/{productId:guid}");
 
         return app;
