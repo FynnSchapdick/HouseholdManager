@@ -14,7 +14,7 @@ public static class AddShoppingListItemEndpoint
     public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPost(route, AddShoppingListItem)
-            .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
+            .Accepts<AddShoppingListItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.OK)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int)HttpStatusCode.NotFound)
