@@ -10,14 +10,14 @@ namespace HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 
 public static class UpdateShoppingListItemEndpoint
 {
-    public static IEndpointRouteBuilder MapUpdateShoppingListItemEndpoint(this IEndpointRouteBuilder builder,[StringSyntax("Route"), RouteTemplate] string route)
+    public static IEndpointRouteBuilder MapUpdateShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPut(route, UpdateShoppingListItem)
             .Accepts<UpdateShoppingListItemRequest>(MediaTypeNames.Application.Json)
-            .Produces((int) HttpStatusCode.OK)
-            .Produces((int) HttpStatusCode.NotFound)
-            .Produces((int) HttpStatusCode.Conflict)
-            .Produces((int) HttpStatusCode.InternalServerError)
+            .Produces((int)HttpStatusCode.OK)
+            .Produces((int)HttpStatusCode.NotFound)
+            .Produces((int)HttpStatusCode.Conflict)
+            .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<UpdateShoppingListItemRequest>>()
             .WithTags("ShoppingLists");
 
@@ -48,7 +48,7 @@ public static class UpdateShoppingListItemEndpoint
             return Results.Problem(new ProblemDetails
             {
                 Detail = dbUpdateException.InnerException?.Message ?? dbUpdateException.Message,
-                Status = (int) HttpStatusCode.Conflict
+                Status = (int)HttpStatusCode.Conflict
             });
         }
         catch (Exception exception) when (exception is not ArgumentException)

@@ -8,7 +8,6 @@ namespace UnitTests.Domain.Shopping;
 
 public sealed class Test_ShoppingList_RemoveItem
 {
-
     [Fact]
     public void Should_ReturnTrue_WhenProductIsIncludedInItems()
     {

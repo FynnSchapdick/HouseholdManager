@@ -38,7 +38,7 @@ public static class WebApplicationExtensions
         });
         return app;
     }
-    
+
     public static WebApplication UseDevelopmentConfiguration(this WebApplication app)
     {
         if (!app.Environment.IsDevelopment()) return app;

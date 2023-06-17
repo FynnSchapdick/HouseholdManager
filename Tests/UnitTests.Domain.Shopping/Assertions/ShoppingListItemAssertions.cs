@@ -6,7 +6,10 @@ namespace UnitTests.Domain.Shopping.Assertions;
 
 public sealed class ShoppingListItemAssertions : ReferenceTypeAssertions<ShoppingListItem, ShoppingListItemAssertions>
 {
-    public ShoppingListItemAssertions(ShoppingListItem item) : base(item){}
+    public ShoppingListItemAssertions(ShoppingListItem item) : base(item)
+    {
+    }
+
     protected override string Identifier => "shoppinglist_item";
 
     public AndConstraint<ShoppingListItemAssertions> HaveAmount(int amount, string because = "", params object[] becauseArgs)

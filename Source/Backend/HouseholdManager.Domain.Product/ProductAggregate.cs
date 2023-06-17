@@ -5,8 +5,8 @@ namespace HouseholdManager.Domain.Product;
 
 public sealed record ProductAggregate
 {
-    public  Guid Id { get; }
-    public  string Name { get; private set; }
+    public Guid Id { get; }
+    public string Name { get; private set; }
     public string? Ean { get; private set; }
 
     internal ProductAggregate(string name, string? ean = null)
@@ -22,7 +22,10 @@ public sealed record ProductAggregate
     }
 
 #pragma warning disable CS8618
-    private ProductAggregate() { /*Ef*/ }
+    private ProductAggregate()
+    {
+        /*Ef*/
+    }
 #pragma warning restore CS8618
 
     public static ProductAggregate CreateNew(string name, string? ean = null)

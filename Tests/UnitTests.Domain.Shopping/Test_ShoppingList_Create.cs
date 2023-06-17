@@ -8,8 +8,6 @@ namespace UnitTests.Domain.Shopping;
 
 public sealed class Test_ShoppingList_Create
 {
-
-
     [Fact]
     public void Should_NotThrowArgumentException_WhenNameIsValid()
     {

@@ -6,7 +6,10 @@ namespace UnitTests.Domain.Shopping.Assertions;
 
 public sealed class ShoppingListAssertions : ReferenceTypeAssertions<ShoppingListAggregate, ShoppingListAssertions>
 {
-    public ShoppingListAssertions(ShoppingListAggregate shoppingList) : base(shoppingList){}
+    public ShoppingListAssertions(ShoppingListAggregate shoppingList) : base(shoppingList)
+    {
+    }
+
     protected override string Identifier => "shoppinglist";
 
     public AndConstraint<ShoppingListAssertions> HaveName(string name, string because = "", params object[] becauseArgs)

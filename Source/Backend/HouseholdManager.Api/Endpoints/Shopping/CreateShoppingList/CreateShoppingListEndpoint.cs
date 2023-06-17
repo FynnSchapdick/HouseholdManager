@@ -42,7 +42,7 @@ public static class CreateShoppingListEndpoint
             return Results.Problem(new ProblemDetails
             {
                 Detail = dbUpdateException.InnerException?.Message ?? dbUpdateException.Message,
-                Status = (int) HttpStatusCode.Conflict
+                Status = (int)HttpStatusCode.Conflict
             });
         }
         catch (Exception exception) when (exception is not ArgumentException)

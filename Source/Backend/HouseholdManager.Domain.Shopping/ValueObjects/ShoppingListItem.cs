@@ -18,7 +18,10 @@ public sealed record ShoppingListItem
     }
 
 #pragma warning disable CS8618
-    private ShoppingListItem() { /*Ef*/ }
+    private ShoppingListItem()
+    {
+        /*Ef*/
+    }
 #pragma warning restore CS8618
 
     public static ShoppingListItem CreateNew(Guid shoppingListId, Guid productId, int amount)
