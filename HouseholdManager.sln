@@ -30,6 +30,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdManager.Data.Shopp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdManager.Data.Product", "Source\Backend\HouseholdManager.Data.Product\HouseholdManager.Data.Product.csproj", "{64FC17CD-F666-4900-B431-0E6A8FC52F21}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Http", "Http", "{544ED4A2-4CC8-4249-8ABC-33A4A3C6F7D2}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Http\Product.http = Source\Http\Product.http
+		Source\Http\ShoppingList.http = Source\Http\ShoppingList.http
+		Source\Http\ShoppingListItemLifecycle.http = Source\Http\ShoppingListItemLifecycle.http
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +56,7 @@ Global
 		{E26AEF5E-3BFC-4575-BCA5-45E75714D9FC} = {F9D2805E-79E0-418B-80A2-74647A2B56BA}
 		{E7EB0F0F-63D9-4A46-99A7-C4C7486D5F36} = {9E222113-1E18-4DF7-BB7C-7EE24AFD1C9F}
 		{64FC17CD-F666-4900-B431-0E6A8FC52F21} = {9E222113-1E18-4DF7-BB7C-7EE24AFD1C9F}
+		{544ED4A2-4CC8-4249-8ABC-33A4A3C6F7D2} = {9FAFD3A4-A8AB-4419-981F-25583C759EC2}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

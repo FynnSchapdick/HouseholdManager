@@ -1,0 +1,32 @@
+﻿### Create Product without Ean
+POST http://localhost:5110/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Omas Leberkäse"
+}
+
+> {%
+    client.global.set("productId", response.headers.valueOf("location").split("/").pop());
+%}
+
+### Create Product with Ean
+
+POST http://localhost:5110/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Omas Ofenkäse",
+  "ean": "12345678"
+}
+
+> {%
+    client.global.set("productId", response.headers.valueOf("location").split("/").pop());
+%}
+
+### Get Product Details
+
+< {%
+    //request.variables.set("productId", "")
+%}
+GET http://localhost:5110/api/v1/products/{{productId}}

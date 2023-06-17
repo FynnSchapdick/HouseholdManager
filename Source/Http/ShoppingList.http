@@ -1,0 +1,47 @@
+﻿### Get Overview
+GET http://localhost:5110/api/v1/shoppinglists
+
+### Create List
+POST http://localhost:5110/api/v1/shoppinglists
+Content-Type: application/json
+
+{
+    "name": "Einkaufsliste"
+}
+
+> {%
+    client.global.set("shoppingListId", response.headers.valueOf("location").split("/").pop());
+%}
+
+### Get List Details
+< {%
+    // request.variables.set("shoppingListId", "")
+%}
+GET http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}
+
+### Create Item
+< {%
+    // request.variables.set("shoppingListId", "")
+    request.variables.set("productId", "")
+%}
+POST http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}/items
+Content-Type: application/json
+
+{
+    "productId": "{{productId}}}",
+    "amount": 10
+}
+
+### Update Item Amount
+< {%
+    // request.variables.set("shoppingListId", "")
+    request.variables.set("productId", "")
+%}
+PUT http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}/items/{{productId}}/amount
+
+### Delete Item from List
+< {%
+    // request.variables.set("shoppingListId", "")
+    request.variables.set("productId", "")
+%}
+DELETE http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}/items/{{productId}}
