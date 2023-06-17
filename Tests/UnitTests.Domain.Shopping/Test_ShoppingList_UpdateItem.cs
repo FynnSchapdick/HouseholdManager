@@ -2,10 +2,10 @@
 using FluentAssertions.Execution;
 using HouseholdManager.Domain.Shopping;
 using HouseholdManager.Domain.Shopping.ValueObjects;
-using ShoppingUnitTests.Assertions;
-using ShoppingUnitTests.Data;
+using UnitTests.Domain.Shopping.Assertions;
+using UnitTests.Domain.Shopping.Data;
 
-namespace ShoppingUnitTests;
+namespace UnitTests.Domain.Shopping;
 
 public sealed class Test_ShoppingList_UpdateItem
 {

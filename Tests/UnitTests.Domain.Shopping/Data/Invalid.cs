@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using HouseholdManager.Domain.Shopping;
 
-namespace ShoppingUnitTests.Data;
+namespace UnitTests.Domain.Shopping.Data;
 
 public static class Invalid
 {

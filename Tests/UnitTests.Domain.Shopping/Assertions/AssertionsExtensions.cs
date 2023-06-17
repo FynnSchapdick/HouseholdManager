@@ -2,7 +2,7 @@
 using HouseholdManager.Domain.Shopping;
 using HouseholdManager.Domain.Shopping.ValueObjects;
 
-namespace ShoppingUnitTests.Assertions;
+namespace UnitTests.Domain.Shopping.Assertions;
 
 public static class AssertionsExtensions
 {

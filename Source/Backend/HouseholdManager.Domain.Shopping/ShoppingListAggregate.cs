@@ -27,7 +27,10 @@ public record ShoppingListAggregate : Aggregate
     }
 
 #pragma warning disable CS8618
-    private ShoppingListAggregate() { /*Ef*/ }
+    private ShoppingListAggregate()
+    {
+        /*Ef*/
+    }
 #pragma warning restore CS8618
 
     public static ShoppingListAggregate CreateNew(string name)

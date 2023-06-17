@@ -55,10 +55,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddMassTransit(mt =>
         {
             mt.AddConsumer<AddProductInfoToShoppingListItemConsumer, AddProductInfoToShoppingListItemConsumerDefinition>();
-            mt.UsingInMemory((context, configurator) =>
-            {
-                context.ConfigureEndpoints(configurator, new SnakeCaseEndpointNameFormatter(false));
-            });
+            mt.UsingInMemory((context, configurator) => { context.ConfigureEndpoints(configurator, new SnakeCaseEndpointNameFormatter(false)); });
         });
 
         return builder;

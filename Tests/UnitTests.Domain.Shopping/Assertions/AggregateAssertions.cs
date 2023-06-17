@@ -2,7 +2,7 @@
 using FluentAssertions.Primitives;
 using Shared.Domain;
 
-namespace ShoppingUnitTests.Assertions;
+namespace UnitTests.Domain.Shopping.Assertions;
 
 public sealed class AggregateAssertions<T> : ReferenceTypeAssertions<T, AggregateAssertions<T>> where T : Aggregate
 {
