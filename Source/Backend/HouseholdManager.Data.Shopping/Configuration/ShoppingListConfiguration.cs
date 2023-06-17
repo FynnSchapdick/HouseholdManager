@@ -20,7 +20,9 @@ internal sealed class ShoppingListConfiguration : IEntityTypeConfiguration<Shopp
             item.WithOwner().HasForeignKey(x => x.ShoppingListId);
             item.HasKey(x => new { x.ShoppingListId, x.ProductId });
             item.Property(x => x.ProductId).ValueGeneratedNever();
+            item.Property(x => x.Amount).IsRequired();
             item.OwnsOne(x => x.ProductInfo);
+            item.Navigation(x => x.ProductInfo).AutoInclude();
         });
 
         builder.Navigation(x => x.Items).AutoInclude();

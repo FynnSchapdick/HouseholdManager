@@ -15,6 +15,7 @@ public static class AddShoppingListItemEndpoint
     {
         builder.MapPost(route, AddShoppingListItem)
             .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
+            .Produces((int)HttpStatusCode.OK)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
@@ -37,11 +38,13 @@ public static class AddShoppingListItemEndpoint
                 return Results.NotFound();
             }
 
-            shoppingList.AddItem(request.ProductId, request.Amount);
+            bool newItem = shoppingList.AddItem(request.ProductId, request.Amount);
 
             await repository.SaveAsync(shoppingList, cancellationToken);
 
-            return Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(shoppingListId));
+            return newItem
+                ? Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(shoppingListId))
+                : Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
         {

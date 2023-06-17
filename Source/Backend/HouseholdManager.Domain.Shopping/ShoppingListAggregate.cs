@@ -38,13 +38,13 @@ public record ShoppingListAggregate : Aggregate
         return new ShoppingListAggregate(Guid.NewGuid(), name);
     }
 
-    public void AddItem(Guid productId, int amount)
+    public bool AddItem(Guid productId, int amount)
     {
         switch (_items.SingleOrDefault(x => x.ProductId == productId))
         {
             case { } item:
                 item.IncreaseAmountBy(amount);
-                break;
+                return false;
 
             case null:
                 var newItem = ShoppingListItem.CreateNew(Id, productId, amount);
@@ -55,7 +55,7 @@ public record ShoppingListAggregate : Aggregate
                     ProductId = productId,
                     Amount = amount
                 });
-                break;
+                return true;
         }
     }
 

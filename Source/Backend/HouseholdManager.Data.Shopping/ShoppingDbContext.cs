@@ -18,7 +18,7 @@ public sealed class ShoppingDbContext : DbContext, IShoppingListRepository
 
     public async Task<ShoppingListAggregate?> GetByIdAsync(Guid shoppingListId, CancellationToken cancellationToken = default)
     {
-        return await ShoppingLists.FindAsync(new object[] { shoppingListId }, cancellationToken);
+        return await ShoppingLists.AsTracking().FirstOrDefaultAsync(x => x.Id == shoppingListId, cancellationToken);
     }
 
     public async Task SaveAsync(ShoppingListAggregate aggregate, CancellationToken cancellationToken = default)
