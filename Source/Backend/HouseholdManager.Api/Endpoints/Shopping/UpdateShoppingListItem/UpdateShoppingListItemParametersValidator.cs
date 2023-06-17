@@ -2,9 +2,9 @@
 
 namespace HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 
-public sealed class UpdateShoppingListItemRequestValidator : AbstractValidator<UpdateShoppingListItemParameters>
+public sealed class UpdateShoppingListItemParametersValidator : AbstractValidator<UpdateShoppingListItemParameters>
 {
-    public UpdateShoppingListItemRequestValidator()
+    public UpdateShoppingListItemParametersValidator()
     {
         RuleFor(x => x.Body.Amount)
             .GreaterThan(0);

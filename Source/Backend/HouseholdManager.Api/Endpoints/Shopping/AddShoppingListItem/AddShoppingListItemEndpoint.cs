@@ -21,29 +21,29 @@ public static class AddShoppingListItemEndpoint
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.InternalServerError)
-            .AddEndpointFilter<ValidationFilter<AddShoppingItemRequest>>()
+            .AddEndpointFilter<ValidationFilter<AddShoppingItemParameters>>()
             .WithTags("ShoppingLists");
 
         return builder;
     }
 
-    private static async Task<IResult> AddShoppingListItem(Guid shoppingListId, AddShoppingItemRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingListItem([AsParameters] AddShoppingItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(shoppingListId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ShoppingListId, cancellationToken);
 
             if (shoppingList is null)
             {
                 return Results.NotFound();
             }
 
-            bool newItem = shoppingList.AddItem(request.ProductId, request.Amount);
+            bool isNewItem = shoppingList.AddItem(parameters.Body.ProductId, parameters.Body.Amount);
 
             await repository.SaveAsync(shoppingList, cancellationToken);
 
-            return newItem
-                ? Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(shoppingListId))
+            return isNewItem
+                ? Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(parameters.ShoppingListId))
                 : Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
