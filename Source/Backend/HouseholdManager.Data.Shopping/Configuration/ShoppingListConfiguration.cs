@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HouseholdManager.Data.Shopping.Configuration;
 
-public sealed class ShoppingListConfiguration : IEntityTypeConfiguration<ShoppingListAggregate>
+internal sealed class ShoppingListConfiguration : IEntityTypeConfiguration<ShoppingListAggregate>
 {
     public void Configure(EntityTypeBuilder<ShoppingListAggregate> builder)
     {

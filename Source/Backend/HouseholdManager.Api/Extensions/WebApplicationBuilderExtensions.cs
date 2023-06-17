@@ -3,11 +3,9 @@ using FluentValidation;
 using HouseholdManager.Api.Consumers;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
-using HouseholdManager.Data.Product;
-using HouseholdManager.Data.Shopping;
-using HouseholdManager.Domain.Shopping;
+using HouseholdManager.Data.Product.Extensions;
+using HouseholdManager.Data.Shopping.Extensions;
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Exceptions;
@@ -68,25 +66,17 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder ConfigureDatabase(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<ShoppingDbContext>(opt =>
+        builder.ConfigureProductDbContext("ProductDb", opt =>
         {
-            opt.UseNpgsql(builder.Configuration.GetConnectionString("ShoppingDb"));
             opt.EnableDetailedErrors();
             opt.EnableSensitiveDataLogging();
-            opt.UseSnakeCaseNamingConvention();
-            opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
 
-        builder.Services.AddDbContext<ProductDbContext>(opt =>
+        builder.ConfigureShoppingDbContext("ShoppingDb", opt =>
         {
-            opt.UseNpgsql(builder.Configuration.GetConnectionString("ProductDb"));
             opt.EnableDetailedErrors();
             opt.EnableSensitiveDataLogging();
-            opt.UseSnakeCaseNamingConvention();
-            opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
-
-        builder.Services.AddTransient<IShoppingListRepository>(x => x.GetRequiredService<ShoppingDbContext>());
 
         return builder;
     }
