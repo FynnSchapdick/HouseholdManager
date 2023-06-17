@@ -21,13 +21,13 @@ public static class AddShoppingListItemEndpoint
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.InternalServerError)
-            .AddEndpointFilter<ValidationFilter<AddShoppingItemParameters>>()
+            .AddEndpointFilter<ValidationFilter<AddShoppingListItemParameters>>()
             .WithTags("ShoppingLists");
 
         return builder;
     }
 
-    private static async Task<IResult> AddShoppingListItem([AsParameters] AddShoppingItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingListItem([AsParameters] AddShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
