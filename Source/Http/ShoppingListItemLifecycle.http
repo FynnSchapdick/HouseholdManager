@@ -1,0 +1,82 @@
+﻿### Create List
+POST http://localhost:5110/api/v1/shoppinglists
+Content-Type: application/json
+
+{
+  "name": "Einkaufsliste"
+}
+
+> {%
+    client.global.set("shoppingListId", response.headers.valueOf("location").split("/").pop());
+%}
+
+### Get List Details
+< {%
+    // request.variables.set("shoppingListId", "")
+%}
+
+GET http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}
+
+### Create Product without Ean
+POST http://localhost:5110/api/v1/products
+Content-Type: application/json
+
+{
+  "name": "Omas Leberkäse"
+}
+
+> {%
+    client.global.set("productId", response.headers.valueOf("location").split("/").pop());
+%}
+
+### Get Product Details
+< {%
+    //request.variables.set("productId", "")
+%}
+
+GET http://localhost:5110/api/v1/products/{{productId}}
+
+### Create Item
+< {%
+    client.log(client.global.get("shoppingListId"))
+    client.log(client.global.get("productId"))
+    // request.variables.set("shoppingListId", "")
+    // request.variables.set("productId", "")
+%}
+
+POST http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}/items
+Content-Type: application/json
+
+{
+    "productId": "{{productId}}",
+    "amount": 10
+}
+
+### Update Item Amount
+< {%
+    // request.variables.set("shoppingListId", "")
+    // request.variables.set("productId", "")
+%}
+
+PUT http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}/items/{{productId}}/amount
+Content-Type: application/json
+
+{
+    "amount": 15
+}
+
+### Get List Details again
+GET http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}
+
+### Delete Item from List
+< {%
+    client.log(client.global.get("shoppingListId"))
+    client.log(client.global.get("productId"))
+    // request.variables.set("shoppingListId", "")
+    // request.variables.set("productId", "")
+%}
+
+DELETE http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}/items/{{productId}}
+
+### Get List Details again 2
+GET http://localhost:5110/api/v1/shoppinglists/{{shoppingListId}}
