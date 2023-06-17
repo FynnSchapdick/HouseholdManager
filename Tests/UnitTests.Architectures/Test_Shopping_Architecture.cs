@@ -1,13 +1,9 @@
-﻿using ArchUnitNET.Domain;
-using ArchUnitNET.Loader;
-using ArchUnitNET.xUnit;
-using HouseholdManager.Domain.Product;
+﻿using HouseholdManager.Domain.Product;
 using HouseholdManager.Domain.Shopping;
-using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
-namespace ShoppingUnitTests;
+namespace UnitTests.Architectures;
 
-public sealed class Test_ShoppingList_Architecture
+public sealed class Test_Shopping_Architecture
 {
     private static readonly Architecture ShoppingArchitecture = new ArchLoader().LoadAssembly(typeof(ShoppingListAggregate).Assembly).Build();
 

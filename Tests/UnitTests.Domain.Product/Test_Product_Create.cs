@@ -1,11 +1,11 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using HouseholdManager.Domain.Product;
-using ProductUnitTests.Assertions;
-using ProductUnitTests.Data;
+using UnitTests.Domain.Product.Assertions;
 using Testing.Shared.Assertions.Assertions;
+using UnitTests.Domain.Product.Data;
 
-namespace ProductUnitTests;
+namespace UnitTests.Domain.Product;
 
 public sealed class Test_Product_Create
 {

@@ -2,7 +2,7 @@
 using HouseholdManager.Domain.Shopping;
 using HouseholdManager.Domain.Shopping.ValueObjects;
 
-namespace ShoppingUnitTests.Data;
+namespace UnitTests.Domain.Shopping.Data;
 
 public static class Valid
 {

@@ -1,11 +1,7 @@
-﻿using ArchUnitNET.Domain;
-using ArchUnitNET.Loader;
-using ArchUnitNET.xUnit;
-using HouseholdManager.Domain.Product;
+﻿using HouseholdManager.Domain.Product;
 using HouseholdManager.Domain.Shopping;
-using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
-namespace ProductUnitTests;
+namespace UnitTests.Architectures;
 
 public sealed class Test_Product_Architecture
 {

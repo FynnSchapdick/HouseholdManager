@@ -2,7 +2,7 @@
 using FluentAssertions.Primitives;
 using HouseholdManager.Domain.Shopping;
 
-namespace ShoppingUnitTests.Assertions;
+namespace UnitTests.Domain.Shopping.Assertions;
 
 public sealed class ShoppingListAssertions : ReferenceTypeAssertions<ShoppingListAggregate, ShoppingListAssertions>
 {

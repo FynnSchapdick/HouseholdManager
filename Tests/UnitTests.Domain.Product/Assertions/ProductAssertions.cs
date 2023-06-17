@@ -2,7 +2,7 @@
 using FluentAssertions.Primitives;
 using HouseholdManager.Domain.Product;
 
-namespace ProductUnitTests.Assertions;
+namespace UnitTests.Domain.Product.Assertions;
 
 public sealed class ProductAssertions : ReferenceTypeAssertions<ProductAggregate, ProductAssertions>
 {

@@ -6,9 +6,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{9E22
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F9D2805E-79E0-418B-80A2-74647A2B56BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductUnitTests", "Tests\ProductUnitTests\ProductUnitTests.csproj", "{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Domain.Product", "Tests\UnitTests.Domain.Product\UnitTests.Domain.Product.csproj", "{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingUnitTests", "Tests\ShoppingUnitTests\ShoppingUnitTests.csproj", "{6579950D-C016-441A-8930-C77E8AB4887F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Domain.Shopping", "Tests\UnitTests.Domain.Shopping\UnitTests.Domain.Shopping.csproj", "{6579950D-C016-441A-8930-C77E8AB4887F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{034A5EB1-4B02-4099-8B40-4A21A21401C6}"
 EndProject
@@ -23,6 +23,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8B41CC6A-B6ED-4A49-A5A4-B135D783B816}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "Source\Shared\Shared.Domain\Shared.Domain.csproj", "{F3709712-1903-4A57-B9E6-13BBF35D367A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Architectures", "Tests\UnitTests.Architectures\UnitTests.Architectures.csproj", "{E26AEF5E-3BFC-4575-BCA5-45E75714D9FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,7 @@ Global
 		{830432FB-0A52-42BC-BB3E-3E5E5A6F0267} = {9E222113-1E18-4DF7-BB7C-7EE24AFD1C9F}
 		{8B41CC6A-B6ED-4A49-A5A4-B135D783B816} = {9FAFD3A4-A8AB-4419-981F-25583C759EC2}
 		{F3709712-1903-4A57-B9E6-13BBF35D367A} = {8B41CC6A-B6ED-4A49-A5A4-B135D783B816}
+		{E26AEF5E-3BFC-4575-BCA5-45E75714D9FC} = {F9D2805E-79E0-418B-80A2-74647A2B56BA}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -70,5 +73,9 @@ Global
 		{F3709712-1903-4A57-B9E6-13BBF35D367A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3709712-1903-4A57-B9E6-13BBF35D367A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3709712-1903-4A57-B9E6-13BBF35D367A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E26AEF5E-3BFC-4575-BCA5-45E75714D9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26AEF5E-3BFC-4575-BCA5-45E75714D9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26AEF5E-3BFC-4575-BCA5-45E75714D9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26AEF5E-3BFC-4575-BCA5-45E75714D9FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

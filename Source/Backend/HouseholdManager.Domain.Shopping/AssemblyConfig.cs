@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("ShoppingUnitTests")]
+[assembly:InternalsVisibleTo("UnitTests.Domain.Shopping")]
