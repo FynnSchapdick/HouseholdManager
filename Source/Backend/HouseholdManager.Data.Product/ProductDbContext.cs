@@ -1,9 +1,9 @@
-using HouseholdManager.Api.Data.Configurations;
+using HouseholdManager.Data.Product.Configuration;
 using HouseholdManager.Domain.Product;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouseholdManager.Api.Data;
+namespace HouseholdManager.Data.Product;
 
 public sealed class ProductDbContext : DbContext
 {
@@ -18,6 +18,6 @@ public sealed class ProductDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new ProductConfigurations());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductDbContext).Assembly);
     }
 }

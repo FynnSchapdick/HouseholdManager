@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning.ApiExplorer;
-using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
 using HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
@@ -8,6 +7,8 @@ using HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingLists;
 using HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
 using HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
+using HouseholdManager.Data.Product;
+using HouseholdManager.Data.Shopping;
 using Serilog;
 
 namespace HouseholdManager.Api.Extensions;

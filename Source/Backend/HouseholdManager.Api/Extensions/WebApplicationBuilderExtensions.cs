@@ -1,9 +1,10 @@
 ﻿using Asp.Versioning;
 using FluentValidation;
 using HouseholdManager.Api.Consumers;
-using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Endpoints.Products.CreateProduct;
 using HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
+using HouseholdManager.Data.Product;
+using HouseholdManager.Data.Shopping;
 using HouseholdManager.Domain.Shopping;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;

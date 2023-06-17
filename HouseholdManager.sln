@@ -24,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8B41CC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Domain", "Source\Shared\Shared.Domain\Shared.Domain.csproj", "{F3709712-1903-4A57-B9E6-13BBF35D367A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdManager.Data.Product", "Source\Backend\HouseholdManager.Data.Product\HouseholdManager.Data.Product.csproj", "{303D74DD-2610-4854-B9EA-4A977CAB8FAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdManager.Data.Shopping", "Source\Backend\HouseholdManager.Data.Shopping\HouseholdManager.Data.Shopping.csproj", "{9FEDB7F6-7E3A-4F0E-BF94-4D7A609C208F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,8 @@ Global
 		{830432FB-0A52-42BC-BB3E-3E5E5A6F0267} = {9E222113-1E18-4DF7-BB7C-7EE24AFD1C9F}
 		{8B41CC6A-B6ED-4A49-A5A4-B135D783B816} = {9FAFD3A4-A8AB-4419-981F-25583C759EC2}
 		{F3709712-1903-4A57-B9E6-13BBF35D367A} = {8B41CC6A-B6ED-4A49-A5A4-B135D783B816}
+		{303D74DD-2610-4854-B9EA-4A977CAB8FAC} = {9E222113-1E18-4DF7-BB7C-7EE24AFD1C9F}
+		{9FEDB7F6-7E3A-4F0E-BF94-4D7A609C208F} = {9E222113-1E18-4DF7-BB7C-7EE24AFD1C9F}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C9666E16-39D1-4C4C-8576-00D3B7FC4CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -70,5 +76,13 @@ Global
 		{F3709712-1903-4A57-B9E6-13BBF35D367A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3709712-1903-4A57-B9E6-13BBF35D367A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3709712-1903-4A57-B9E6-13BBF35D367A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{303D74DD-2610-4854-B9EA-4A977CAB8FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{303D74DD-2610-4854-B9EA-4A977CAB8FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{303D74DD-2610-4854-B9EA-4A977CAB8FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{303D74DD-2610-4854-B9EA-4A977CAB8FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FEDB7F6-7E3A-4F0E-BF94-4D7A609C208F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FEDB7F6-7E3A-4F0E-BF94-4D7A609C208F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FEDB7F6-7E3A-4F0E-BF94-4D7A609C208F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FEDB7F6-7E3A-4F0E-BF94-4D7A609C208F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
