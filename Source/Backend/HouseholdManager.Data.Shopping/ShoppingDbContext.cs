@@ -20,7 +20,13 @@ public sealed class ShoppingDbContext : DbContext, IShoppingListRepository
     {
         return await ShoppingLists.AsTracking().FirstOrDefaultAsync(x => x.Id == shoppingListId, cancellationToken);
     }
-    
+
+    public async Task RemoveAsync(ShoppingListAggregate aggregate, CancellationToken cancellationToken = default)
+    {
+        ShoppingLists.Remove(aggregate);
+        await SaveChangesAsync(cancellationToken);
+    }
+
     public async Task SaveAsync(ShoppingListAggregate aggregate, CancellationToken cancellationToken = default)
     {
         if (!ChangeTracker.HasChanges())

@@ -5,13 +5,13 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
+namespace HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingList;
 
-public static class RemoveShoppingListItemEndpoint
+public static class RemoveShoppingListEndpoint
 {
-    public static IEndpointRouteBuilder MapRemoveShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static IEndpointRouteBuilder MapRemoveShoppingListEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
-        builder.MapDelete(route, RemoveShoppingListItem)
+        builder.MapDelete(route, RemoveShoppingList)
             .Produces((int)HttpStatusCode.OK)
             .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
@@ -21,7 +21,7 @@ public static class RemoveShoppingListItemEndpoint
         return builder;
     }
 
-    private static async Task<IResult> RemoveShoppingListItem([AsParameters] RemoveShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
+    private static async Task<IResult> RemoveShoppingList([AsParameters] RemoveShoppingListParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
@@ -32,12 +32,8 @@ public static class RemoveShoppingListItemEndpoint
                 return Results.NotFound();
             }
 
-            if (!shoppingList.RemoveItem(parameters.ProductId))
-            {
-                return Results.NotFound();
-            }
-
-            await repository.SaveAsync(shoppingList, cancellationToken);
+            await repository.RemoveAsync(shoppingList, cancellationToken);
+        
             return Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
