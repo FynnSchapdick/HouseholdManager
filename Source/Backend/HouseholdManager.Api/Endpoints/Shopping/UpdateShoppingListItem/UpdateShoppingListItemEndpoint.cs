@@ -18,7 +18,7 @@ public static class UpdateShoppingListItemEndpoint
             .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.InternalServerError)
-            .AddEndpointFilter<ValidationFilter<UpdateShoppingListItemRequest>>()
+            .AddEndpointFilter<ValidationFilter<UpdateShoppingListItemParameters>>()
             .WithTags("ShoppingLists");
 
         return builder;
