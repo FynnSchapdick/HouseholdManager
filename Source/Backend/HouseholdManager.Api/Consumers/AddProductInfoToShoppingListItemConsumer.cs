@@ -1,4 +1,4 @@
-﻿using HouseholdManager.Api.Data;
+﻿using HouseholdManager.Data.Product;
 using HouseholdManager.Domain.Product;
 using HouseholdManager.Domain.Shopping;
 using HouseholdManager.Domain.Shopping.Events;
