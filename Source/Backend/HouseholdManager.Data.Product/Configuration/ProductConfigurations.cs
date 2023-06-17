@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HouseholdManager.Data.Product.Configuration;
 
-public sealed class ProductConfigurations : IEntityTypeConfiguration<ProductAggregate>
+internal sealed class ProductConfigurations : IEntityTypeConfiguration<ProductAggregate>
 {
     public void Configure(EntityTypeBuilder<ProductAggregate> builder)
     {
