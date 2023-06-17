@@ -13,3 +13,8 @@ await WebApplication.CreateBuilder(args)
     .UseVersionedSwagger()
     .UseDevelopmentConfiguration()
     .RunAsync();
+
+public partial class Program
+{
+
+}
