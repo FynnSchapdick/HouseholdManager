@@ -2,7 +2,7 @@
 
 namespace HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 
-public sealed class AddShoppingItemRequestValidator : AbstractValidator<AddShoppingItemRequest>
+public sealed class AddShoppingItemRequestValidator : AbstractValidator<AddShoppingListItemRequest>
 {
     public AddShoppingItemRequestValidator()
     {

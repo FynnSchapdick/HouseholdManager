@@ -1,4 +1,3 @@
-using HouseholdManager.Data.Product.Configuration;
 using HouseholdManager.Domain.Product;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;

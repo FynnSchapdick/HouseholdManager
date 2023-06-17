@@ -14,19 +14,19 @@ public static class AddShoppingListItemEndpoint
     public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPost(route, AddShoppingListItem)
-            .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
+            .Accepts<AddShoppingListItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.InternalServerError)
-            .AddEndpointFilter<ValidationFilter<AddShoppingItemRequest>>()
+            .AddEndpointFilter<ValidationFilter<AddShoppingListItemRequest>>()
             .WithTags("ShoppingLists");
 
         return builder;
     }
 
-    private static async Task<IResult> AddShoppingListItem(Guid shoppingListId, AddShoppingItemRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingListItem(Guid shoppingListId, AddShoppingListItemRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
