@@ -1,15 +1,13 @@
 using FluentAssertions;
 using HouseholdManager.Domain.Shopping;
-using ShoppingUnitTests.Assertions;
-using ShoppingUnitTests.Data;
+using UnitTests.Domain.Shopping.Assertions;
 using Testing.Shared.Assertions.Assertions;
+using UnitTests.Domain.Shopping.Data;
 
-namespace ShoppingUnitTests;
+namespace UnitTests.Domain.Shopping;
 
 public sealed class Test_ShoppingList_Create
 {
-
-
     [Fact]
     public void Should_NotThrowArgumentException_WhenNameIsValid()
     {

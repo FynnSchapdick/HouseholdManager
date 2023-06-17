@@ -1,6 +1,5 @@
 {
-  "stryker-config":
-  {
+  "stryker-config": {
     "solution": "../../HouseholdManager.sln",
     "project": "ShoppingService.csproj"
   }

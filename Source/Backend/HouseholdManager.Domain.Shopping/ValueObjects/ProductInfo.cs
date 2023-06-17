@@ -12,7 +12,10 @@ public sealed record ProductInfo
     }
 
 #pragma warning disable CS8618
-    private ProductInfo() { /*Ef*/ }
+    private ProductInfo()
+    {
+        /*Ef*/
+    }
 #pragma warning restore CS8618
 
     public static ProductInfo Create(string productName)

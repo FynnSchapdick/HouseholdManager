@@ -12,10 +12,10 @@ public static class RemoveShoppingListItemEndpoint
     public static IEndpointRouteBuilder MapRemoveShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapDelete(route, RemoveShoppingListItem)
-            .Produces((int) HttpStatusCode.OK)
-            .Produces((int) HttpStatusCode.NotFound)
-            .Produces((int) HttpStatusCode.Conflict)
-            .Produces((int) HttpStatusCode.InternalServerError)
+            .Produces((int)HttpStatusCode.OK)
+            .Produces((int)HttpStatusCode.NotFound)
+            .Produces((int)HttpStatusCode.Conflict)
+            .Produces((int)HttpStatusCode.InternalServerError)
             .WithTags("ShoppingLists");
 
         return builder;
@@ -45,7 +45,7 @@ public static class RemoveShoppingListItemEndpoint
             return Results.Problem(new ProblemDetails
             {
                 Detail = dbUpdateException.InnerException?.Message ?? dbUpdateException.Message,
-                Status = (int) HttpStatusCode.Conflict
+                Status = (int)HttpStatusCode.Conflict
             });
         }
         catch (Exception exception) when (exception is not ArgumentException)

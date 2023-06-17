@@ -16,7 +16,7 @@ public static class AddShoppingListItemEndpoint
         builder.MapPost(route, AddShoppingListItem)
             .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
             .Produces((int)HttpStatusCode.Created)
-            .Produces((int) HttpStatusCode.NotFound)
+            .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.InternalServerError)
@@ -48,7 +48,7 @@ public static class AddShoppingListItemEndpoint
             return Results.Problem(new ProblemDetails
             {
                 Detail = dbUpdateException.InnerException?.Message ?? dbUpdateException.Message,
-                Status = (int) HttpStatusCode.Conflict
+                Status = (int)HttpStatusCode.Conflict
             });
         }
         catch (Exception exception) when (exception is not ArgumentException)

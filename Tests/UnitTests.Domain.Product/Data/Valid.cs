@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using HouseholdManager.Domain.Product;
 
-namespace ProductUnitTests.Data;
+namespace UnitTests.Domain.Product.Data;
 
 public static class Valid
 {
