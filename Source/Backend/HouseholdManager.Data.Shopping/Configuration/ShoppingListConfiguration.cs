@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HouseholdManager.Data.Shopping.Configuration;
 
-public sealed class ShoppingListConfiguration : IEntityTypeConfiguration<ShoppingListAggregate>
+internal sealed class ShoppingListConfiguration : IEntityTypeConfiguration<ShoppingListAggregate>
 {
     public void Configure(EntityTypeBuilder<ShoppingListAggregate> builder)
     {
@@ -20,7 +20,9 @@ public sealed class ShoppingListConfiguration : IEntityTypeConfiguration<Shoppin
             item.WithOwner().HasForeignKey(x => x.ShoppingListId);
             item.HasKey(x => new { x.ShoppingListId, x.ProductId });
             item.Property(x => x.ProductId).ValueGeneratedNever();
+            item.Property(x => x.Amount).IsRequired();
             item.OwnsOne(x => x.ProductInfo);
+            item.Navigation(x => x.ProductInfo).AutoInclude();
         });
 
         builder.Navigation(x => x.Items).AutoInclude();

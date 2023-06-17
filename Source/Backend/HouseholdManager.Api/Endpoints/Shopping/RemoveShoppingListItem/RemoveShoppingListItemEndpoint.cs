@@ -25,7 +25,7 @@ public static class RemoveShoppingListItemEndpoint
     {
         try
         {
-            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ProductId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ShoppinglistId, cancellationToken);
 
             if (shoppingList is null)
             {

@@ -14,34 +14,37 @@ public static class AddShoppingListItemEndpoint
     public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
     {
         builder.MapPost(route, AddShoppingListItem)
-            .Accepts<AddShoppingListItemRequest>(MediaTypeNames.Application.Json)
+            .Accepts<AddShoppingItemRequest>(MediaTypeNames.Application.Json)
+            .Produces((int)HttpStatusCode.OK)
             .Produces((int)HttpStatusCode.Created)
             .Produces((int)HttpStatusCode.NotFound)
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.BadRequest)
             .Produces((int)HttpStatusCode.InternalServerError)
-            .AddEndpointFilter<ValidationFilter<AddShoppingListItemRequest>>()
+            .AddEndpointFilter<ValidationFilter<AddShoppingItemParameters>>()
             .WithTags("ShoppingLists");
 
         return builder;
     }
 
-    private static async Task<IResult> AddShoppingListItem(Guid shoppingListId, AddShoppingListItemRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
+    private static async Task<IResult> AddShoppingListItem([AsParameters] AddShoppingItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(shoppingListId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ShoppingListId, cancellationToken);
 
             if (shoppingList is null)
             {
                 return Results.NotFound();
             }
 
-            shoppingList.AddItem(request.ProductId, request.Amount);
+            bool isNewItem = shoppingList.AddItem(parameters.Body.ProductId, parameters.Body.Amount);
 
             await repository.SaveAsync(shoppingList, cancellationToken);
 
-            return Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(shoppingListId));
+            return isNewItem
+                ? Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(parameters.ShoppingListId))
+                : Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
         {

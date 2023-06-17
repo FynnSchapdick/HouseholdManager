@@ -4,7 +4,7 @@ namespace HouseholdManager.Domain.Shopping.ValueObjects;
 
 public sealed record ProductInfo
 {
-    public string ProductName { get; }
+    public string ProductName { get; private init; }
 
     internal ProductInfo(string productName)
     {
