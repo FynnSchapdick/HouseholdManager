@@ -1,10 +1,9 @@
-﻿using HouseholdManager.Api.Data.Configurations;
-using HouseholdManager.Domain.Shopping;
+﻿using HouseholdManager.Domain.Shopping;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Shared.Domain;
 
-namespace HouseholdManager.Api.Data;
+namespace HouseholdManager.Data.Shopping;
 
 public sealed class ShoppingDbContext : DbContext, IShoppingListRepository
 {
@@ -39,6 +38,6 @@ public sealed class ShoppingDbContext : DbContext, IShoppingListRepository
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new ShoppingListConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingDbContext).Assembly);
     }
 }

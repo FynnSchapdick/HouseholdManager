@@ -26,7 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Source\Backend\HouseholdManager.Api\HouseholdManager.Api.csproj" />
+        <ProjectReference Include="..\..\Source\Backend\HouseholdManager.Domain.Product\HouseholdManager.Domain.Product.csproj" />
+        <ProjectReference Include="..\..\Source\Backend\HouseholdManager.Domain.Shopping\HouseholdManager.Domain.Shopping.csproj" />
         <ProjectReference Include="..\Shared\Testing.Shared.Assertions\Testing.Shared.Assertions.csproj" />
     </ItemGroup>
 

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Mime;
-using HouseholdManager.Api.Data;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
+using HouseholdManager.Data.Product;
 using HouseholdManager.Domain.Product;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;

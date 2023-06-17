@@ -2,7 +2,7 @@ using HouseholdManager.Domain.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HouseholdManager.Api.Data.Configurations;
+namespace HouseholdManager.Data.Product.Configuration;
 
 public sealed class ProductConfigurations : IEntityTypeConfiguration<ProductAggregate>
 {
