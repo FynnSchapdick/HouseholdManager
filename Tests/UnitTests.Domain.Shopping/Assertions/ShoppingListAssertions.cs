@@ -20,7 +20,7 @@ public sealed class ShoppingListAssertions : ReferenceTypeAssertions<ShoppingLis
 
     public AndConstraint<ShoppingListAssertions> NotHaveDefaultId(string because = "", params object[] becauseArgs)
     {
-        Subject.Id.Should().NotBeEmpty(because, becauseArgs);
+        Subject.ShoppingListId.Should().NotBeEmpty(because, becauseArgs);
         return new AndConstraint<ShoppingListAssertions>(this);
     }
 

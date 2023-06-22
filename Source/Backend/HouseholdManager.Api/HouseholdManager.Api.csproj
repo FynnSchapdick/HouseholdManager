@@ -29,10 +29,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Endpoints\Shopping\GetShoppingLists\" />
-    </ItemGroup>
-    
-    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\Shared.Http\Shared.Http.csproj" />
       <ProjectReference Include="..\HouseholdManager.Data.Product\HouseholdManager.Data.Product.csproj" />
       <ProjectReference Include="..\HouseholdManager.Data.Shopping\HouseholdManager.Data.Shopping.csproj" />
       <ProjectReference Include="..\HouseholdManager.Domain.Product\HouseholdManager.Domain.Product.csproj" />

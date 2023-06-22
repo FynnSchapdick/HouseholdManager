@@ -1,18 +1,17 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Endpoints.Products.GetProduct;
 using HouseholdManager.Data.Product;
 using HouseholdManager.Domain.Product;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Products.CreateProduct;
 
-public static class CreateProductEndpoint
+public sealed class CreateProductEndpoint : IEndpoint
 {
-    public static IEndpointRouteBuilder MapCreateProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapPost(route, CreateProduct)
             .Accepts<CreateProductRequest>(MediaTypeNames.Application.Json)
@@ -22,8 +21,6 @@ public static class CreateProductEndpoint
             .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<CreateProductRequest>>()
             .WithTags("Products");
-
-        return builder;
     }
 
     private static async Task<IResult> CreateProduct(CreateProductRequest request, ProductDbContext productDbContext, CancellationToken cancellationToken)
@@ -33,7 +30,7 @@ public static class CreateProductEndpoint
             var product = ProductAggregate.CreateNew(request.Name, request.Ean);
             productDbContext.Add(product);
             await productDbContext.SaveChangesAsync(cancellationToken);
-            return Results.CreatedAtRoute(GetProductEndpoint.ENDPOINT_NAME, new GetProductParameters(product.Id));
+            return Results.CreatedAtRoute(GetProductEndpoint.ENDPOINT_NAME, new GetProductParameters(product.ProductId));
         }
         catch (DbUpdateException dbUpdateException)
         {

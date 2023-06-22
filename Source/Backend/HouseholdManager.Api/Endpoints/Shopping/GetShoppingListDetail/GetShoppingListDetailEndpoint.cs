@@ -1,16 +1,17 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
+using HouseholdManager.Data.Shopping;
 using HouseholdManager.Domain.Shopping;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
 
-public static class GetShoppingListDetailEndpoint
+public sealed class GetShoppingListDetailEndpoint : IEndpoint
 {
     public const string ENDPOINT_NAME = "GetShoppingListById";
 
-    public static IEndpointRouteBuilder MapGetShoppingListDetailEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapGet(route, GetShoppingList)
             .Produces<ShoppingListDetailDto>()
@@ -18,18 +19,16 @@ public static class GetShoppingListDetailEndpoint
             .Produces((int)HttpStatusCode.NotFound)
             .WithName(ENDPOINT_NAME)
             .WithTags("ShoppingLists");
-
-        return builder;
     }
 
     private static async Task<IResult> GetShoppingList(
         [AsParameters] GetShoppingListDetailParameters parameters,
-        IShoppingListRepository repository,
+        ShoppingDbContext context,
         CancellationToken cancellationToken)
     {
         try
         {
-            ShoppingListAggregate? shoppingList = await repository.GetByIdAsync(parameters.ShoppingListId, cancellationToken);
+            ShoppingListAggregate? shoppingList = await context.ShoppingLists.SingleOrDefaultAsync(x => x.ShoppingListId == parameters.ShoppingListId, cancellationToken: cancellationToken);
 
             return shoppingList is null
                 ? Results.NotFound(new { parameters.ShoppingListId })

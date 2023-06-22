@@ -1,19 +1,18 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Data.Product;
 using HouseholdManager.Domain.Product;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Products.GetProduct;
 
-public static class GetProductEndpoint
+public sealed class GetProductEndpoint : IEndpoint
 {
     public const string ENDPOINT_NAME = "GetProductById";
 
-    public static IEndpointRouteBuilder MapGetProductEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapGet(route, GetProduct)
             .Produces<ProductDto>(contentType: MediaTypeNames.Application.Json)
@@ -21,8 +20,6 @@ public static class GetProductEndpoint
             .Produces((int)HttpStatusCode.NotFound)
             .WithName(ENDPOINT_NAME)
             .WithTags("Products");
-
-        return builder;
     }
 
     private static async Task<IResult> GetProduct(
@@ -34,11 +31,11 @@ public static class GetProductEndpoint
         {
             ProductAggregate? product = await productDbContext
                 .Products
-                .FirstOrDefaultAsync(x => x.Id == parameters.ProductId, cancellationToken);
+                .FirstOrDefaultAsync(x => x.ProductId == parameters.ProductId, cancellationToken);
 
             return product is null
                 ? Results.NotFound(new { ProductId = parameters.ProductId })
-                : Results.Ok(new ProductDto(product.Id, product.Name, product.Ean));
+                : Results.Ok(new ProductDto(product.ProductId, product.Name, product.Ean));
         }
         catch (Exception exception)
         {

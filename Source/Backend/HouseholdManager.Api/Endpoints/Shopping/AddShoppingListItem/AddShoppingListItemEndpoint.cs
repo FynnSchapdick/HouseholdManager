@@ -1,17 +1,16 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
 using HouseholdManager.Domain.Shopping;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.AddShoppingListItem;
 
-public static class AddShoppingListItemEndpoint
+public sealed class AddShoppingListItemEndpoint : IEndpoint
 {
-    public static IEndpointRouteBuilder MapAddShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapPost(route, AddShoppingListItem)
             .Accepts<AddShoppingListItemRequest>(MediaTypeNames.Application.Json)
@@ -24,7 +23,6 @@ public static class AddShoppingListItemEndpoint
             .AddEndpointFilter<ValidationFilter<AddShoppingListItemParameters>>()
             .WithTags("ShoppingLists");
 
-        return builder;
     }
 
     private static async Task<IResult> AddShoppingListItem([AsParameters] AddShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)

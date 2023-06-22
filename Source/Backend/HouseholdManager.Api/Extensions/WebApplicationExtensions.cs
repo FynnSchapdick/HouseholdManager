@@ -11,6 +11,7 @@ using HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 using HouseholdManager.Data.Product;
 using HouseholdManager.Data.Shopping;
 using Serilog;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Extensions;
 
@@ -54,19 +55,19 @@ public static class WebApplicationExtensions
         app.NewVersionedApi("Products")
             .MapGroup("api/v{version:apiVersion}/products")
             .HasApiVersion(1.0)
-            .MapCreateProductEndpoint("/")
-            .MapGetProductEndpoint("{productId:guid}");
+            .Map<CreateProductEndpoint>()
+            .Map<GetProductEndpoint>("{productId:guid}");
 
         app.NewVersionedApi("Shopping")
             .MapGroup("api/v{version:apiVersion}/shoppinglists")
             .HasApiVersion(1.0)
-            .MapCreateShoppingListEndpoint("/")
-            .MapGetShoppingListsEndpoint("/")
-            .MapGetShoppingListDetailEndpoint("{shoppingListId:guid}")
-            .MapRemoveShoppingListEndpoint("{shoppingListId:guid}")
-            .MapAddShoppingListItemEndpoint("{shoppingListId:guid}/items")
-            .MapUpdateShoppingListItemEndpoint("{shoppingListId:guid}/items/{productId:guid}/amount")
-            .MapRemoveShoppingListItemEndpoint("{shoppingListId:guid}/items/{productId:guid}");
+            .Map<CreateShoppingListEndpoint>()
+            .Map<GetShoppingListsEndpoint>()
+            .Map<GetShoppingListDetailEndpoint>("{shoppingListId:guid}")
+            .Map<RemoveShoppingListEndpoint>("{shoppingListId:guid}")
+            .Map<AddShoppingListItemEndpoint>("{shoppingListId:guid}/items")
+            .Map<UpdateShoppingListItemEndpoint>("{shoppingListId:guid}/items/{productId:guid}/amount")
+            .Map<RemoveShoppingListItemEndpoint>("{shoppingListId:guid}/items/{productId:guid}");
 
         return app;
     }

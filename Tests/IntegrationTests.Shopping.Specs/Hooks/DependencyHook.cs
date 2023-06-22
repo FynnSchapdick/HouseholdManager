@@ -1,5 +1,4 @@
 ﻿using BoDi;
-using TechTalk.SpecFlow.Infrastructure;
 using Testing.Shared.Setup;
 using Xunit.Abstractions;
 

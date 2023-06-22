@@ -13,7 +13,7 @@ public sealed class ProductDbContext : DbContext
         _dispatcher = dispatcher;
     }
 
-    public DbSet<ProductAggregate> Products { get; set; } = null!;
+    public DbSet<ProductAggregate> Products { get; private set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

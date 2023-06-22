@@ -1,15 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using HouseholdManager.Domain.Shopping;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingListItem;
 
-public static class RemoveShoppingListItemEndpoint
+public sealed class RemoveShoppingListItemEndpoint : IEndpoint
 {
-    public static IEndpointRouteBuilder MapRemoveShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapDelete(route, RemoveShoppingListItem)
             .Produces((int)HttpStatusCode.OK)
@@ -17,8 +16,6 @@ public static class RemoveShoppingListItemEndpoint
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.InternalServerError)
             .WithTags("ShoppingLists");
-
-        return builder;
     }
 
     private static async Task<IResult> RemoveShoppingListItem([AsParameters] RemoveShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)

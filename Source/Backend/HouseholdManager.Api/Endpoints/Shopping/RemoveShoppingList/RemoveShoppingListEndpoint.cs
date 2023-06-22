@@ -1,15 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using HouseholdManager.Domain.Shopping;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.RemoveShoppingList;
 
-public static class RemoveShoppingListEndpoint
+public sealed class RemoveShoppingListEndpoint : IEndpoint
 {
-    public static IEndpointRouteBuilder MapRemoveShoppingListEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapDelete(route, RemoveShoppingList)
             .Produces((int)HttpStatusCode.OK)
@@ -17,8 +16,6 @@ public static class RemoveShoppingListEndpoint
             .Produces((int)HttpStatusCode.Conflict)
             .Produces((int)HttpStatusCode.InternalServerError)
             .WithTags("ShoppingLists");
-
-        return builder;
     }
 
     private static async Task<IResult> RemoveShoppingList([AsParameters] RemoveShoppingListParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)
@@ -33,7 +30,7 @@ public static class RemoveShoppingListEndpoint
             }
 
             await repository.RemoveAsync(shoppingList, cancellationToken);
-        
+
             return Results.Ok();
         }
         catch (DbUpdateException dbUpdateException)
