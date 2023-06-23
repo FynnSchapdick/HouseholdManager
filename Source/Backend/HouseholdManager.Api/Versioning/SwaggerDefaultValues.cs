@@ -11,6 +11,10 @@ namespace HouseholdManager.Api.Versioning;
 /// </summary>
 /// <remarks>This <see cref="IOperationFilter"/> is only required due to bugs in the <see cref="SwaggerGenerator"/>.
 /// Once they are fixed and published, this class can be removed.</remarks>
+// REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1752#issue-663991077 -> open
+// REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/412 -> evaluate
+// REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/413 -> evaluate
+// REF: https://github.com/Microsoft/aspnet-api-versioning/issues/429#issuecomment-605402330 -> open
 [UsedImplicitly]
 public sealed class SwaggerDefaultValues : IOperationFilter
 {
