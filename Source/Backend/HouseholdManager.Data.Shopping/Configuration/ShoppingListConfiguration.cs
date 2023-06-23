@@ -8,7 +8,7 @@ internal sealed class ShoppingListConfiguration : IEntityTypeConfiguration<Shopp
 {
     public void Configure(EntityTypeBuilder<ShoppingListAggregate> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.ShoppingListId);
 
         builder.Property(x => x.Name)
             .HasMaxLength(ShoppingListAggregate.Conventions.NAME_MAX_LENGTH);

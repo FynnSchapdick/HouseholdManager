@@ -56,11 +56,11 @@ public sealed class Test_ShoppingList_AddItem
                 {
                     Amount = amount,
                     ProductId = productId,
-                    ShoppingListId = shoppingList.Id
+                    ShoppingListId = shoppingList.ShoppingListId
                 }, opt => opt.Excluding(x => x.Timestamp),
                 "because that is the expected data"))
             .And.Items.Should().ContainSingle("because only a single item was added")
-            .Which.Should().BeForShoppingListId(shoppingList.Id, "because that is the id of the shoppingList")
+            .Which.Should().BeForShoppingListId(shoppingList.ShoppingListId, "because that is the id of the shoppingList")
             .And.HaveAmount(amount, "because that is the amount of the added item")
             .And.BeForProductId(productId, "because that is the product id of the added item");
     }

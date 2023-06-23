@@ -8,7 +8,7 @@ internal sealed class ProductConfigurations : IEntityTypeConfiguration<ProductAg
 {
     public void Configure(EntityTypeBuilder<ProductAggregate> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.ProductId);
 
         builder.Property(x => x.Name)
             .IsRequired()

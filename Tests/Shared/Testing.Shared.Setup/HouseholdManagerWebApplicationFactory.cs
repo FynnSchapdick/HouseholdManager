@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using HouseholdManager.Api;
 using HouseholdManager.Data.Product;
 using HouseholdManager.Data.Shopping;
 using MassTransit;

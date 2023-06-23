@@ -26,7 +26,7 @@ public sealed class ProductAssertions : ReferenceTypeAssertions<ProductAggregate
 
     public AndConstraint<ProductAssertions> NotHaveDefaultId(string because = "", params object[] becauseArgs)
     {
-        Subject.Id.Should().NotBeEmpty(because, becauseArgs);
+        Subject.ProductId.Should().NotBeEmpty(because, becauseArgs);
         return new AndConstraint<ProductAssertions>(this);
     }
 }

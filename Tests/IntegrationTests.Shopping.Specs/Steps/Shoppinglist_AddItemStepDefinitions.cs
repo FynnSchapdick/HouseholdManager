@@ -48,7 +48,7 @@ public class Shoppinglist_AddItemStepDefinitions
         var product = _scenarioContext.Get<ProductAggregate>();
         var list = _scenarioContext.Get<ShoppingListAggregate>();
 
-        HttpResponseMessage result = await client.PostAsJsonAsync($"/api/v1/shoppinglists/{list.Id}/items", new AddShoppingListItemRequest(product.Id));
+        HttpResponseMessage result = await client.PostAsJsonAsync($"/api/v1/shoppinglists/{list.ShoppingListId}/items", new AddShoppingListItemRequest(product.ProductId));
 
         _scenarioContext.Set(result);
     }
@@ -67,6 +67,6 @@ public class Shoppinglist_AddItemStepDefinitions
         var list = _scenarioContext.Get<ShoppingListAggregate>();
         var client = _scenarioContext.Get<HttpClient>();
         response.Headers.Location.Should().NotBeNull()
-            .And.BeEquivalentTo(new Uri(client.BaseAddress!, $"api/v1/shoppinglists/{list.Id}"));
+            .And.BeEquivalentTo(new Uri(client.BaseAddress!, $"api/v1/shoppinglists/{list.ShoppingListId}"));
     }
 }

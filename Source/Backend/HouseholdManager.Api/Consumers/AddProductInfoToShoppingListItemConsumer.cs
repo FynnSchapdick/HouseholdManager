@@ -31,7 +31,7 @@ public sealed class AddProductInfoToShoppingListItemConsumer : IConsumer<Shoppin
     {
         ShoppingListItemAddedEvent msg = context.Message;
 
-        ProductAggregate? product = await _productDbContext.Products.FirstOrDefaultAsync(x => x.Id == msg.ProductId, context.CancellationToken);
+        ProductAggregate? product = await _productDbContext.Products.FirstOrDefaultAsync(x => x.ProductId == msg.ProductId, context.CancellationToken);
         ShoppingListAggregate? shoppingList = await _shoppingListRepository.GetByIdAsync(msg.ShoppingListId, context.CancellationToken);
 
         if (product is null || shoppingList is null) throw new NotImplementedException();

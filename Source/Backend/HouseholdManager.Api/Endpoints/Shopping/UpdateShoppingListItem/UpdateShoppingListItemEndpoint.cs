@@ -1,16 +1,15 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Domain.Shopping;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.UpdateShoppingListItem;
 
-public static class UpdateShoppingListItemEndpoint
+public sealed class UpdateShoppingListItemEndpoint : IEndpoint
 {
-    public static IEndpointRouteBuilder MapUpdateShoppingListItemEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapPut(route, UpdateShoppingListItem)
             .Accepts<UpdateShoppingListItemRequest>(MediaTypeNames.Application.Json)
@@ -20,8 +19,6 @@ public static class UpdateShoppingListItemEndpoint
             .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<UpdateShoppingListItemParameters>>()
             .WithTags("ShoppingLists");
-
-        return builder;
     }
 
     private static async Task<IResult> UpdateShoppingListItem([AsParameters] UpdateShoppingListItemParameters parameters, IShoppingListRepository repository, CancellationToken cancellationToken)

@@ -5,13 +5,20 @@ namespace HouseholdManager.Domain.Product;
 
 public sealed record ProductAggregate
 {
-    public Guid Id { get; }
+    public Guid ProductId { get; }
     public string Name { get; private set; }
     public string? Ean { get; private set; }
 
+#pragma warning disable CS8618
+    private ProductAggregate()
+    {
+        /*Ef*/
+    }
+#pragma warning restore CS8618
+
     internal ProductAggregate(string name, string? ean = null)
     {
-        Id = Guid.NewGuid();
+        ProductId = Guid.NewGuid();
         Name = name
             .ThrowIfNull()
             .IfEmpty()
@@ -21,16 +28,14 @@ public sealed record ProductAggregate
         Ean = ean?.Throw().IfEmpty().IfWhiteSpace().IfNotEan8Or13();
     }
 
-#pragma warning disable CS8618
-    private ProductAggregate()
-    {
-        /*Ef*/
-    }
-#pragma warning restore CS8618
-
     public static ProductAggregate CreateNew(string name, string? ean = null)
     {
         return new ProductAggregate(name, ean);
+    }
+
+    public override string ToString()
+    {
+        return $"Product {ProductId} '{Name}'";
     }
 
     public static class Conventions

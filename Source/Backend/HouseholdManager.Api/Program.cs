@@ -14,7 +14,10 @@ await WebApplication.CreateBuilder(args)
     .UseDevelopmentConfiguration()
     .RunAsync();
 
-public partial class Program
+namespace HouseholdManager.Api
 {
+    public partial class Program
+    {
 
+    }
 }

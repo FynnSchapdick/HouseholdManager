@@ -7,16 +7,23 @@ namespace HouseholdManager.Domain.Shopping;
 
 public record ShoppingListAggregate : Aggregate
 {
-    public Guid Id { get; }
+    public Guid ShoppingListId { get; }
     public string Name { get; private set; }
 
     private readonly HashSet<ShoppingListItem> _items;
 
     public IEnumerable<ShoppingListItem> Items => _items.ToList();
 
-    internal ShoppingListAggregate(Guid id, string name, HashSet<ShoppingListItem>? items = default)
+#pragma warning disable CS8618
+    private ShoppingListAggregate()
     {
-        Id = id;
+        /*Ef*/
+    }
+#pragma warning restore CS8618
+
+    internal ShoppingListAggregate(Guid shoppingListId, string name, HashSet<ShoppingListItem>? items = default)
+    {
+        ShoppingListId = shoppingListId;
         Name = name
             .ThrowIfNull()
             .IfEmpty()
@@ -25,13 +32,6 @@ public record ShoppingListAggregate : Aggregate
             .IfLongerThan(Conventions.NAME_MAX_LENGTH);
         _items = items ?? new HashSet<ShoppingListItem>();
     }
-
-#pragma warning disable CS8618
-    private ShoppingListAggregate()
-    {
-        /*Ef*/
-    }
-#pragma warning restore CS8618
 
     public static ShoppingListAggregate CreateNew(string name)
     {
@@ -47,11 +47,11 @@ public record ShoppingListAggregate : Aggregate
                 return false;
 
             case null:
-                var newItem = ShoppingListItem.CreateNew(Id, productId, amount);
+                var newItem = ShoppingListItem.CreateNew(ShoppingListId, productId, amount);
                 _items.Add(newItem);
                 EnqueueEvent(new ShoppingListItemAddedEvent
                 {
-                    ShoppingListId = Id,
+                    ShoppingListId = ShoppingListId,
                     ProductId = productId,
                     Amount = amount
                 });
@@ -75,6 +75,11 @@ public record ShoppingListAggregate : Aggregate
 
         shoppingListItem.SetAmount(amount);
         return true;
+    }
+
+    public override string ToString()
+    {
+        return $"ShoppingList {ShoppingListId} '{Name}' with {_items.Count} Items";
     }
 
     public static class Conventions

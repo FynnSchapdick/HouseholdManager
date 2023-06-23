@@ -10,6 +10,6 @@ public sealed class DesignFactory : IDesignTimeDbContextFactory<ShoppingDbContex
         var builder = new DbContextOptionsBuilder<ShoppingDbContext>();
         builder.UseNpgsql();
         builder.UseSnakeCaseNamingConvention();
-        return new ShoppingDbContext(builder.Options, null!);
+        return new ShoppingDbContext(builder.Options, null!, null!);
     }
 }

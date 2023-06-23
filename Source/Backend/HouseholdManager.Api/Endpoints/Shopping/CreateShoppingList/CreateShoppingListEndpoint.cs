@@ -1,18 +1,16 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mime;
 using HouseholdManager.Api.Endpoints.Shopping.GetShoppingListDetail;
-using HouseholdManager.Data.Shopping;
 using HouseholdManager.Domain.Shopping;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Http;
 
 namespace HouseholdManager.Api.Endpoints.Shopping.CreateShoppingList;
 
-public static class CreateShoppingListEndpoint
+public sealed class CreateShoppingListEndpoint : IEndpoint
 {
-    public static IEndpointRouteBuilder MapCreateShoppingListEndpoint(this IEndpointRouteBuilder builder, [StringSyntax("Route"), RouteTemplate] string route)
+    public static void Configure(IEndpointRouteBuilder builder, string route)
     {
         builder.MapPost(route, CreateShoppingList)
             .Accepts<CreateShoppingListRequest>(MediaTypeNames.Application.Json)
@@ -22,20 +20,16 @@ public static class CreateShoppingListEndpoint
             .Produces((int)HttpStatusCode.InternalServerError)
             .AddEndpointFilter<ValidationFilter<CreateShoppingListRequest>>()
             .WithTags("ShoppingLists");
-
-        return builder;
     }
 
-    private static async Task<IResult> CreateShoppingList(CreateShoppingListRequest request, ShoppingDbContext shoppingDbContext, CancellationToken cancellationToken)
+    private static async Task<IResult> CreateShoppingList(CreateShoppingListRequest request, IShoppingListRepository repository, CancellationToken cancellationToken)
     {
         try
         {
             var shoppingList = ShoppingListAggregate.CreateNew(request.Name);
+            await repository.SaveNewAsync(shoppingList, cancellationToken);
 
-            shoppingDbContext.Add(shoppingList);
-            await shoppingDbContext.SaveChangesAsync(cancellationToken);
-
-            return Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(shoppingList.Id));
+            return Results.CreatedAtRoute(GetShoppingListDetailEndpoint.ENDPOINT_NAME, new GetShoppingListDetailParameters(shoppingList.ShoppingListId));
         }
         catch (DbUpdateException dbUpdateException)
         {
