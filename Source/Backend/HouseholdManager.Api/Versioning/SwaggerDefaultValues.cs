@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -10,50 +11,58 @@ namespace HouseholdManager.Api.Versioning;
 /// </summary>
 /// <remarks>This <see cref="IOperationFilter"/> is only required due to bugs in the <see cref="SwaggerGenerator"/>.
 /// Once they are fixed and published, this class can be removed.</remarks>
-public class SwaggerDefaultValues : IOperationFilter
+[UsedImplicitly]
+public sealed class SwaggerDefaultValues : IOperationFilter
 {
     /// <inheritdoc />
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         ApiDescription? apiDescription = context.ApiDescription;
-
         operation.Deprecated |= apiDescription.IsDeprecated();
 
-        // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1752#issue-663991077
-        foreach (ApiResponseType responseType in context.ApiDescription.SupportedResponseTypes)
-        {
-            // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/blob/b7cf75e7905050305b115dd96640ddd6e74c7ac9/src/Swashbuckle.AspNetCore.SwaggerGen/SwaggerGenerator/SwaggerGenerator.cs#L383-L387
-            string responseKey = responseType.IsDefaultResponse ? "default" : responseType.StatusCode.ToString();
-            OpenApiResponse? response = operation.Responses[responseKey];
+        RemoveUnsupportedContentTypes(operation, context.ApiDescription);
 
-            foreach (string? contentType in response.Content.Keys)
+        if (operation.Parameters != null)
+        {
+            UpdateOperationParameters(operation, context.ApiDescription);
+        }
+    }
+    
+    private void RemoveUnsupportedContentTypes(OpenApiOperation operation, ApiDescription apiDescription)
+    {
+        foreach (ApiResponseType responseType in apiDescription.SupportedResponseTypes)
+        {
+            string responseKey = responseType.IsDefaultResponse ? "default" : responseType.StatusCode.ToString();
+            if (!operation.Responses.TryGetValue(responseKey, out OpenApiResponse? response))
             {
-                if (responseType.ApiResponseFormats.All(x => x.MediaType != contentType))
-                {
-                    response.Content.Remove(contentType);
-                }
+                continue;
+            }
+
+            List<string> unsupportedContentTypes = response.Content.Keys
+                .Where(contentType => responseType.ApiResponseFormats.All(x => x.MediaType != contentType))
+                .ToList();
+
+            foreach (string unsupportedContentType in unsupportedContentTypes)
+            {
+                response.Content.Remove(unsupportedContentType);
             }
         }
-
-        if (operation.Parameters == null)
+    }
+    
+    private void UpdateOperationParameters(OpenApiOperation operation, ApiDescription apiDescription)
+    {
+        foreach (OpenApiParameter parameter in operation.Parameters)
         {
-            return;
-        }
+            ApiParameterDescription description = apiDescription.ParameterDescriptions
+                .First(p => p.Name == parameter.Name);
 
-        // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/412
-        // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/413
-        foreach (OpenApiParameter? parameter in operation.Parameters)
-        {
-            ApiParameterDescription description = apiDescription.ParameterDescriptions.First(p => p.Name == parameter.Name);
+            parameter.Description ??= description.ModelMetadata.Description;
 
-            parameter.Description ??= description.ModelMetadata?.Description;
-
-            if (parameter.Schema.Default == null &&
-                description.DefaultValue != null &&
+            if (parameter.Schema.Default is null &&
+                description.DefaultValue is not null &&
                 description.DefaultValue is not DBNull &&
                 description.ModelMetadata is { } modelMetadata)
             {
-                // REF: https://github.com/Microsoft/aspnet-api-versioning/issues/429#issuecomment-605402330
                 string json = JsonSerializer.Serialize(description.DefaultValue, modelMetadata.ModelType);
                 parameter.Schema.Default = OpenApiAnyFactory.CreateFromJson(json);
             }
